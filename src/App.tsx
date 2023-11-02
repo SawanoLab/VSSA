@@ -1,13 +1,14 @@
-import './App.css';
+import React from "react";
+import { useRoutes } from "react-router-dom";
+import AboutIndex from "./pages/about";
+import HomeIndex from "./pages/home";
 
 function App() {
-  return (
-    <div>
-      <h1 className='text-4xl text-center text-blue-500'>
-        VolleyStation Pro clone
-      </h1>
-    </div>
-  );
+  let element = useRoutes([
+    { path: "/", element: <HomeIndex /> },
+    { path: "about", element: <AboutIndex />},
+  ]);
+  return element;
 }
 
 export default App;
