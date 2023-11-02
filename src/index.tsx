@@ -1,15 +1,15 @@
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import Route from "./Route";
+import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
-import Layout from './pages/Layout';
+import { ProvideAuth } from "./hooks/use-auth";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Router>
-    <Layout>
-      <App />
-    </Layout>
+    <ProvideAuth>
+        <Route />
+    </ProvideAuth>
   </Router>
 );
 
