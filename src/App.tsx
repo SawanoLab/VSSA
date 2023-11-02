@@ -6,7 +6,7 @@ import HomeIndex from "./pages/home";
 function App() {
   let element = useRoutes([
     { path: "/", element: <HomeIndex /> },
-    { path: "about", element: <AboutIndex />},
+    { path: "/about", element: <AboutIndex />},
   ]);
   return element;
 }

@@ -10,7 +10,7 @@ interface IProps {}
 
 export const Component: React.FC<IProps> = () => {
   return (
-    <p>Hello About</p>
+    <p>Hello Home</p>
   )
 }
 
