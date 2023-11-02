@@ -5,7 +5,7 @@
 $ npm isntall
 $ npm start
 ```
-
+.env.local.exampleを.env.localに変換して，AWS congnitoの情報を書いてください．
 
 
 ### `npm run build`
