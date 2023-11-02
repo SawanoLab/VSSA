@@ -1,6 +1,7 @@
 import { FaVolleyballBall } from 'react-icons/fa';
 import { FaPersonBooth } from 'react-icons/fa';
 import { FaCalendar } from 'react-icons/fa';
+import { FaChessKing } from 'react-icons/fa';
 import Items from '../composents/items';
 
 export default function Navgetion() {
@@ -9,10 +10,10 @@ export default function Navgetion() {
     {
       category: "データベース",
       items: [
-        { icon: <FaVolleyballBall />, to: "/about", text: "試合" },
-        { icon: <FaPersonBooth />, to: "/contact", text: "プレイヤー" },
+        { icon: <FaVolleyballBall />, to: "/match", text: "試合" },
+        { icon: <FaPersonBooth />, to: "/player", text: "プレイヤー" },
         { icon: <FaCalendar />, to: "/team", text: "チーム" },
-        { icon: <FaCalendar />, to: "/season", text: "シーズン" },
+        { icon: <FaChessKing />, to: "/season", text: "シーズン" },
       ],
     },
   ];

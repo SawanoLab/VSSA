@@ -20,8 +20,7 @@ export default function Items({ links }: ItemsProps) {
 
   return (
     <nav className="flex flex-col" role="navigation">
-      {/* logo.svgを表示 */}
-      <img src="./logo192.png" alt="Logo" className="h-20 w-20" />
+      <img src="./logo192.png" alt="Logo" className="h-20 w-20 mx-auto m-2" />
       {links.map((category, categoryIndex) => (
         <div key={categoryIndex}>
           <h3>{category.category}</h3>

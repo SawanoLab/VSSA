@@ -1,4 +1,4 @@
-import Header from "./Nav";
+import Navgetion from "./Nav";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ export default function Layout(props: LayoutProps) {
       ">
         <div className="col-span-1 row-span-1 bg-blue-100
         ">
-          <Header />
+          <Navgetion />
         </div>
         <div className="col-span-5">
           {props.children}
