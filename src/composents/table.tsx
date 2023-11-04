@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface Column {
   header: string;
@@ -11,6 +12,9 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({ data, columns }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
     <table className="min-w-full">
       <thead>
@@ -27,9 +31,18 @@ const Table: React.FC<TableProps> = ({ data, columns }) => {
       </thead>
       <tbody>
         {data.map((item, index) => (
-          <tr key={index}>
+          <tr
+            key={index}
+            className="hover:bg-gray-100"
+            onClick={() =>
+              console.log("item", item)
+            }
+          >
             {columns.map((column, colIndex) => (
-              <td key={colIndex} className="px-6 py-4 text-sm leading-5 text-gray-500 border-b">
+              <td
+                key={colIndex}
+                className="px-6 py-4 text-sm leading-5 text-gray-500 border-b"
+              >
                 {item[column.accessor]}
               </td>
             ))}

@@ -1,11 +1,6 @@
-import {Amplify, Auth } from 'aws-amplify';
+import { Amplify, Auth } from "aws-amplify";
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import AwsConfigAuth from "../aws-config/auth";
 
 declare global {
@@ -54,13 +49,14 @@ const useProvideAuth = (): UseAuth => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
+    setIsLoading(true);
     Auth.currentAuthenticatedUser()
-      .then((result) => {
-        setUsername(result.username);
+      .then((user) => {
+        setUsername(user.username);
         setIsAuthenticated(true);
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
         setUsername("");
         setIsAuthenticated(false);
         setIsLoading(false);
