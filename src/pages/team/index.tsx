@@ -3,31 +3,33 @@ import Table from "../../composents/table";
 import { Link } from "react-router-dom";
 import { getTeams } from "../../lib/api/api";
 import { useAuth } from "../../hooks/use-auth";
-
-interface TeamData {
-  uuid: string;
-  team_name: string;
-}
+import { useTeam } from "../../hooks/use-team";
 
 const TeamIndex: React.FC = () => {
   const { username } = useAuth();
-  const [teams, setTeams] = React.useState<TeamData[]>([]);
-
+  const { teams, setTeamsData } = useTeam();
   useEffect(() => {
     const fetchData = async () => {
       const data = await getTeams(username);
-      let item = data.map((item: any) => {
+      let items = data.map((item: any) => {
         return {
           uuid: item.uuid,
-          team_name: item.name,
+          name: item.name,
+          code: item.code,
+          director: item.director,
+          doctor: item.doctor,
+          coach: item.coach,
+          trainer: item.trainer,
+          season_id: item.season_id,
+          user_id: item.user_id,
         };
       });
-      setTeams(item);
+      setTeamsData(items);
     };
     fetchData();
   }, []);
 
-  const header = [{ header: "名称", accessor: "team_name" }];
+  const header = [{ header: "名称", accessor: "name" }];
 
   return (
     <div>

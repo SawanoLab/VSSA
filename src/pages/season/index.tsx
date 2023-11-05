@@ -3,20 +3,11 @@ import { Link } from "react-router-dom";
 import Table from "../../composents/table";
 import { getSeasons } from "../../lib/api/api";
 import { useAuth } from "../../hooks/use-auth";
-
-
-interface seaonsData {
-  uuid: string;
-  start_day: string;
-  end_day: string;
-  season_name: string;
-  game_format: string;
-}
+import { useSeason } from "../../hooks/use-season";
 
 const SeasonIndex: React.FC = () => {
   const { username } = useAuth();
-  const [seaons, setSeasons] = React.useState<seaonsData[]>([]);
-
+  const { seasons, setSeasonsData } = useSeason();
 
   const header = [
     { header: "開始日", accessor: "start_day" },
@@ -28,7 +19,7 @@ const SeasonIndex: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getSeasons(username);
-      let item = data.map((item: any) => {
+      let items = data.map((item: any) => {
         return {
           uuid: item.uuid,
           start_day: item.start_day,
@@ -37,22 +28,22 @@ const SeasonIndex: React.FC = () => {
           game_format: item.game_format,
         };
       })
-      setSeasons(item);
+      setSeasonsData(items);
     };
     fetchData();
-  }, []);
+  }, [username, setSeasonsData]);
 
   return (
     <div>
       <div className="flex justify-between p-4">
         <h1 className="text-3sm">シーズン</h1>
-          <Link to="/season/create"
-          className="bg-blue-400 hover:bg-blue-500 text-white  py-1 px-4 rounded">
+        <Link to="/season/create"
+          className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded">
           シーズンを作成
-          </Link>
+        </Link>
       </div>
       <div className=" bg-blue-100 p-4 border" />
-      <Table data={seaons} columns={header} />
+      <Table data={seasons} columns={header} />
     </div>
   );
 };

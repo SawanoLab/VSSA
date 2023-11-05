@@ -4,6 +4,8 @@ import reportWebVitals from "./reportWebVitals";
 import React from "react";
 import Layout from "./pages/Layout";
 import { ProvideAuth } from "./hooks/use-auth";
+import SeasonProvider from "./hooks/use-season";
+import TeamProvider from "./hooks/use-team";
 import HomeIndex from "./pages/home";
 import MatchIndex from "./pages/match";
 import PlayerIndex from "./pages/player";
@@ -48,7 +50,11 @@ function RouteConfig() {
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ProvideAuth>
-      <RouteConfig />
+      <SeasonProvider>
+        <TeamProvider>
+          <RouteConfig />
+        </TeamProvider>
+      </SeasonProvider>
     </ProvideAuth>
   </React.StrictMode>
 );
