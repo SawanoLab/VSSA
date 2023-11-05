@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
-import { postSeason } from "../../lib/api/api";
+import { postTeam } from "../../lib/api/api";
 
 
 type Season = {
@@ -24,18 +24,41 @@ const TeamCreate: React.FC = () => {
   const [doctor, setDoctor] = React.useState("");
 
   useEffect(() => {
-    console.log("username", username);
-    console.log("isAuthenticated", isAuthenticated);
-    console.log("isLoading", isLoading);
-  }, []);
+    console.log("teamName", teamName);
+    console.log("code", code);
+    console.log("seasonName", seasonName);
+    console.log("director", director);
+    console.log("coach", coach);
+    console.log("trainer", trainer);
+    console.log("doctor", doctor);
+    
+  }, [ teamName, code, seasonName, director, coach, trainer, doctor ]);
 
   const handleSubmit = async () => {
     if (
-      seasonName === "" ||
+      teamName === "" ||
       code === ""
     ) {
       alert("全ての入力を完了してください");
       return;
+    } else {
+      const data = {
+        name: teamName,
+        code: code,
+        season: seasonName,
+        director: director,
+        coach: coach,
+        trainer: trainer,
+        doctor: doctor,
+        season_id: "33d655fa-e3a1-46d0-ba86-55ec0529bd5a",
+        user_id: username,
+      };
+      try {
+        const response = await postTeam(data);
+        console.log("response", response);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -50,7 +73,7 @@ const TeamCreate: React.FC = () => {
           </label>
           <input
             type="text"
-            defaultValue={"シーズン名"}
+            defaultValue={"名称"}
             className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
             onChange={(e) => setTeamName(e.target.value)}
           />
@@ -63,9 +86,9 @@ const TeamCreate: React.FC = () => {
           </label>
           <input
             type="text"
-            defaultValue={"シーズン名"}
+            defaultValue={"コード"}
             className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-            onChange={(e) => setSeasonName(e.target.value)}
+            onChange={(e) => setCode(e.target.value)}
           />
         </div>
         
@@ -114,7 +137,7 @@ const TeamCreate: React.FC = () => {
           />
         </div>
         <Link
-          to="/season"
+          to="/team"
           className="bg-blue-400 hover:bg-blue-500 text-white  py-1 px-4 rounded"
           onClick={handleSubmit}
         >

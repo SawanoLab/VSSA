@@ -14,8 +14,8 @@ interface seaonsData {
 }
 
 const SeasonIndex: React.FC = () => {
-  const [seaons, setSeasons] = React.useState<seaonsData[]>([]);
   const { username } = useAuth();
+  const [seaons, setSeasons] = React.useState<seaonsData[]>([]);
 
 
   const header = [

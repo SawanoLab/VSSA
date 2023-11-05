@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "../../composents/table";
 import { Link } from "react-router-dom";
+import { getTeams } from "../../lib/api/api";
+import { useAuth } from "../../hooks/use-auth";
+
+interface TeamData {
+  uuid: string;
+  team_name: string;
+}
 
 const TeamIndex: React.FC = () => {
-  const tableData = [
-    {
-      team_abbreviation: "ITA",
-      team_name: "イタリア",
-    },
-  ];
+  const { username } = useAuth();
+  const [teams, setTeams] = React.useState<TeamData[]>([]);
 
-  const header = [
-    { header: "略称", accessor: "team_abbreviation" },
-    { header: "名称", accessor: "team_name" },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getTeams(username);
+      let item = data.map((item: any) => {
+        return {
+          uuid: item.uuid,
+          team_name: item.name,
+        };
+      });
+      setTeams(item);
+    };
+    fetchData();
+  }, []);
+
+  const header = [{ header: "名称", accessor: "team_name" }];
 
   return (
     <div>
@@ -22,12 +36,15 @@ const TeamIndex: React.FC = () => {
         <button className="bg-red-400 hover:bg-red-500 text-white  py-1 px-4 rounded left-0">
           チームの削除
         </button>
-        <Link to="/team/create" className="bg-blue-400 hover:bg-blue-500 text-white  py-1 px-4 rounded">
+        <Link
+          to="/team/create"
+          className="bg-blue-400 hover:bg-blue-500 text-white  py-1 px-4 rounded"
+        >
           チームの追加
         </Link>
       </div>
       <div className=" bg-blue-100 p-4 border" />
-      <Table data={tableData} columns={header} />
+      <Table data={teams} columns={header} />
     </div>
   );
 };
