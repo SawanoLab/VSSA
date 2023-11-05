@@ -22,8 +22,6 @@ export const getSeasons = async (user_id: string) => {
   const response = await axios.get<ISeason[]>(
     `http://localhost:10444/seasons/?user_id=${user_id}`
   );
-  console.log("response", response.data);
-  
   return response.data;
 };
 
@@ -52,7 +50,6 @@ export const getTeams = async (user_id: string) => {
     const response = await axios.get<Team[]>(
       `http://localhost:10444/teams/?user_id=${user_id}`
     );
-    console.log("response", response.data);
     return response.data;
   }catch (error) {
     console.error(error);

@@ -10,13 +10,6 @@ const SeasonCreate: React.FC = () => {
   const [code, setCode] = React.useState<string>("");
   const [startDay, setStartDay] = React.useState<string>("");
   const [endDay, setEndDay] = React.useState<string>("");
-
-  useEffect(() => {
-    console.log("username", username);
-    console.log("isAuthenticated", isAuthenticated);
-    console.log("isLoading", isLoading);
-  }, []);
-
   const handleSubmit = async () => {
     if (
       seasonName === "" ||

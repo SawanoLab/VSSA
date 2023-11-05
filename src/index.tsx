@@ -38,8 +38,16 @@ function RouteConfig() {
             }/>
             <Route path="match" element={<MatchIndex />} />
             <Route path="player" element={<PlayerIndex />} />
-            <Route path="team" element={<TeamIndex />} />
-            <Route path="team/create" element={<TeamCreate />} />
+            <Route path="team" element={
+            <PrivateRoute>
+              <TeamIndex />
+            </PrivateRoute>
+            } />
+            <Route path="team/create" element={
+            <PrivateRoute>
+              <TeamCreate />
+            </PrivateRoute>
+            } />
           </Routes>
         </Layout>
       </BrowserRouter>
