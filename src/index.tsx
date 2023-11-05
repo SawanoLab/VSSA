@@ -13,6 +13,7 @@ import { SignIn } from "./pages/SignIn";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./composents/PrivateRoute";
 import SeasonCreate from "./pages/season/create";
+import TeamCreate from "./pages/team/create";
 
 
 function RouteConfig() {
@@ -36,6 +37,7 @@ function RouteConfig() {
             <Route path="match" element={<MatchIndex />} />
             <Route path="player" element={<PlayerIndex />} />
             <Route path="team" element={<TeamIndex />} />
+            <Route path="team/create" element={<TeamCreate />} />
           </Routes>
         </Layout>
       </BrowserRouter>
