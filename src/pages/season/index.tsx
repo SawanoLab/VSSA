@@ -31,7 +31,7 @@ const SeasonIndex: React.FC = () => {
       setSeasonsData(items);
     };
     fetchData();
-  }, [username, setSeasonsData]);
+  }, []);
 
   return (
     <div>
