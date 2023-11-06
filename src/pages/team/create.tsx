@@ -4,14 +4,6 @@ import { useAuth } from "../../hooks/use-auth";
 import { useSeason } from "../../hooks/use-season";
 import { postTeam } from "../../lib/api/api";
 
-type Season = {
-  seasonName: string;
-  gameFormat: string;
-  code: string;
-  startDay: string;
-  endDay: string;
-};
-
 const TeamCreate: React.FC = () => {
   const { username } = useAuth();
   const { getSeasonNames, seasons } = useSeason();

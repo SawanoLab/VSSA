@@ -12,11 +12,17 @@ interface TeamsData {
   user_id: string;
 }
 
+interface TeamNames {
+  uuid: string;
+  name: string;
+}
+
 export interface TeamContextType {
   teams: TeamsData[];
   addTeam: (team: TeamsData) => void;
   setTeams: (teams: TeamsData[]) => void;
   setTeamsData: (teams: TeamsData[]) => void;
+  getTeamNames: (teams: TeamsData[]) => TeamNames[];
 }
 
 const initialContextState: TeamContextType = {
@@ -24,6 +30,7 @@ const initialContextState: TeamContextType = {
   addTeam: () => {},
   setTeams: () => {},
   setTeamsData: () => {},
+  getTeamNames: () => [],
 };
 
 export const TeamContext =
@@ -42,8 +49,23 @@ export default function TeamProvider({ children }: any) {
     setTeams(teams);
   };
 
+  const getTeamNames = (teams: TeamsData[]) => {
+    return teams.map((team) => {
+      return {
+        uuid: team.uuid,
+        name: team.name,
+      };
+    });
+  };
+
   return (
-    <TeamContext.Provider value={{ teams, addTeam, setTeams, setTeamsData }}>
+    <TeamContext.Provider value={{
+      teams,
+      addTeam,
+      setTeams,
+      setTeamsData,
+      getTeamNames
+      }}>
       {children}
     </TeamContext.Provider>
   );

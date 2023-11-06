@@ -1,21 +1,23 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import { ProvideAuth } from "./hooks/use-auth";
 import SeasonProvider from "./hooks/use-season";
 import TeamProvider from "./hooks/use-team";
+import PlayerProvider from "./hooks/use-player";
+import { SignIn } from "./pages/SignIn";
 import HomeIndex from "./pages/home";
 import MatchIndex from "./pages/match";
 import PlayerIndex from "./pages/player";
 import SeasonIndex from "./pages/season";
 import TeamIndex from "./pages/team";
-import { SignIn } from "./pages/SignIn";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./composents/PrivateRoute";
 import SeasonCreate from "./pages/season/create";
 import TeamCreate from "./pages/team/create";
+import PlayerCreate from "./pages/player/create";
 
 
 function RouteConfig() {
@@ -38,6 +40,7 @@ function RouteConfig() {
             }/>
             <Route path="match" element={<MatchIndex />} />
             <Route path="player" element={<PlayerIndex />} />
+            <Route path="player/create" element={<PlayerCreate />} />
             <Route path="team" element={
             <PrivateRoute>
               <TeamIndex />
@@ -60,7 +63,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ProvideAuth>
       <SeasonProvider>
         <TeamProvider>
-          <RouteConfig />
+          <PlayerProvider>
+            <RouteConfig />
+          </PlayerProvider>
         </TeamProvider>
       </SeasonProvider>
     </ProvideAuth>
