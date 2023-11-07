@@ -1,14 +1,8 @@
 import axios from "axios";
+import { PlayerData } from "../../interface/player";
+import { SeasonData } from "../../interface/season";
+import { TeamsData } from "../../interface/team";
 
-interface ISeason {
-  uuid: string;
-  start_day: string;
-  end_day: string;
-  season_name: string;
-  game_format: string;
-  code: string;
-  user_id: string;
-}
 interface PostSeason {
   season_name: string;
   game_format: string;
@@ -19,7 +13,7 @@ interface PostSeason {
 }
 
 export const getSeasons = async (user_id: string) => {
-  const response = await axios.get<ISeason[]>(
+  const response = await axios.get<SeasonData[]>(
     `http://localhost:10444/seasons/?user_id=${user_id}`
   );
   return response.data;
@@ -40,14 +34,10 @@ export const postSeason = async (data: PostSeason) => {
   }
 };
 
-type Team = {
-  uuid: string;
-  team_name: string;
-};
 
 export const getTeams = async (user_id: string) => {
   try {
-    const response = await axios.get<Team[]>(
+    const response = await axios.get<TeamsData[]>(
       `http://localhost:10444/teams/?user_id=${user_id}`
     );
     return response.data;
@@ -82,18 +72,6 @@ export const postTeam = async (data: PostTeam) => {
   }
 };
 
-interface Player {
-  uuid: string;
-  name: string;
-  player_number: number;
-  code: string;
-  position: string;
-  weight: number;
-  height: number;
-  user_id: string;
-  team_id: string;
-  season_id: string;
-}
 
 interface PostPlayer {
   name: string;
@@ -109,7 +87,7 @@ interface PostPlayer {
 
 export const getPlayers = async (user_id: string) => {
   try {
-    const response = await axios.get<Player[]>(
+    const response = await axios.get<PlayerData[]>(
       `http://localhost:10444/players/?user_id=${user_id}`
     );
     return response.data;

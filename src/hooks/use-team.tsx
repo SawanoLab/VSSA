@@ -1,16 +1,7 @@
-import React from "react";
-
-interface TeamsData {
-  uuid: string;
-  name: string;
-  code: string;
-  director: string;
-  doctor: string;
-  coach: string;
-  trainer: string;
-  season_id: string;
-  user_id: string;
-}
+import React, { useEffect } from "react";
+import { TeamsData } from "../interface/team";
+import { getTeams } from "../lib/api/api";
+import { useAuth } from "./use-auth";
 
 interface TeamNames {
   uuid: string;
@@ -38,8 +29,34 @@ export const TeamContext =
 
 export const useTeam = () => React.useContext(TeamContext);
 
+const getInitialTeamData = async (username: string) => {
+  try {
+    const data = await getTeams(username);
+    return data;
+  } catch (error) {
+    alert("Error fetching team data");
+    return [];
+  }
+};
+
 export default function TeamProvider({ children }: any) {
+  const { username } = useAuth();
   const [teams, setTeams] = React.useState<TeamsData[]>([]);
+
+  useEffect(() => {
+    if (!username) {
+      return;
+    }
+    const fetchData = async () => {
+      try {
+        const teamData = await getInitialTeamData(username);
+        setTeams(teamData);
+      } catch (error) {
+        console.error("Error fetching team data", error);
+      }
+    };
+    fetchData();
+  }, [username]);
 
   const addTeam = (team: TeamsData) => {
     setTeams((prevTeams) => [...prevTeams, team]);
@@ -59,13 +76,15 @@ export default function TeamProvider({ children }: any) {
   };
 
   return (
-    <TeamContext.Provider value={{
-      teams,
-      addTeam,
-      setTeams,
-      setTeamsData,
-      getTeamNames
-      }}>
+    <TeamContext.Provider
+      value={{
+        teams,
+        addTeam,
+        setTeams,
+        setTeamsData,
+        getTeamNames,
+      }}
+    >
       {children}
     </TeamContext.Provider>
   );

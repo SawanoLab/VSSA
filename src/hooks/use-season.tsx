@@ -1,12 +1,7 @@
-import React from "react";
-
-interface SeasonsData {
-  uuid: string;
-  start_day: string;
-  end_day: string;
-  season_name: string;
-  game_format: string;
-}
+import React, { useEffect } from "react";
+import { useAuth } from "./use-auth";
+import { SeasonData } from "../interface/season";
+import { getSeasons } from "../lib/api/api";
 
 interface SeasonNames {
   uuid: string;
@@ -14,19 +9,19 @@ interface SeasonNames {
 }
 
 export interface SeasonContextType {
-  seasons: SeasonsData[];
-  addSeason: (season: SeasonsData) => void;
-  setSeasons: (seasons: SeasonsData[]) => void;
-  setSeasonsData: (seasons: SeasonsData[]) => void;
-  getSeasonNames: (seasons: SeasonsData[]) => SeasonNames[];
+  seasons: SeasonData[];
+  addSeason: (season: SeasonData) => void;
+  setSeasons: (seasons: SeasonData[]) => void;
+  setSeasonsData: (seasons: SeasonData[]) => void;
+  getSeasonNames: (seasons: SeasonData[]) => SeasonNames[];
 }
 
 // Set initial context state
 const initialContextState: SeasonContextType = {
   seasons: [],
-  addSeason: () => {},
-  setSeasons: () => {},
-  setSeasonsData: () => {},
+  addSeason: () => { },
+  setSeasons: () => { },
+  setSeasonsData: () => { },
   getSeasonNames: () => []
 };
 
@@ -34,22 +29,44 @@ export const SeasonContext = React.createContext<SeasonContextType>(initialConte
 
 export const useSeason = () => React.useContext(SeasonContext);
 
-export default function SeasonProvider({ children }: any) {
-  const [seasons, setSeasons] = React.useState<SeasonsData[]>([]);
+const getInitialSeasonData = async (username: string) => {
+  try {
+    const data = await getSeasons(username);
+    return data;
+  } catch (error) {
+    alert("Error fetching season data");
+    return [];
+  }
+}
 
-  const addSeason = (season: SeasonsData) => {
+export default function SeasonProvider({ children }: any) {
+  const { username } = useAuth();
+  const [seasons, setSeasons] = React.useState<SeasonData[]>([]);
+
+  useEffect(() => {
+    if (!username) {
+      return;
+    }
+    const fetchData = async () => {
+      try {
+        const seasonData = await getInitialSeasonData(username);
+        setSeasons(seasonData);
+      } catch (error) {
+        alert("Error fetching season data");
+      }
+    };
+    fetchData();
+  }
+    , [username]);
+  const addSeason = (season: SeasonData) => {
     setSeasons((prevSeasons) => [...prevSeasons, season]);
   }
 
-  const setSeason = (season: SeasonsData) => {
-    setSeasons([season]);
-  }
-
-  const setSeasonsData = (seasons: SeasonsData[]) => {
+  const setSeasonsData = (seasons: SeasonData[]) => {
     setSeasons(seasons);
   }
 
-  const getSeasonNames = (seasons: SeasonsData[]) => {
+  const getSeasonNames = (seasons: SeasonData[]) => {
     return seasons.map((season) => {
       return {
         uuid: season.uuid,
@@ -65,7 +82,7 @@ export default function SeasonProvider({ children }: any) {
       setSeasons,
       setSeasonsData,
       getSeasonNames,
-      }}>
+    }}>
       {children}
     </SeasonContext.Provider>
   );
