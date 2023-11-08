@@ -11,6 +11,7 @@ import PlayerProvider from "./hooks/use-player";
 import { SignIn } from "./pages/SignIn";
 import HomeIndex from "./pages/home";
 import MatchIndex from "./pages/match";
+import MatchCreate from "./pages/match/create";
 import PlayerIndex from "./pages/player";
 import SeasonIndex from "./pages/season";
 import TeamIndex from "./pages/team";
@@ -18,6 +19,7 @@ import PrivateRoute from "./composents/PrivateRoute";
 import SeasonCreate from "./pages/season/create";
 import TeamCreate from "./pages/team/create";
 import PlayerCreate from "./pages/player/create";
+import {Screen} from "./pages/match/tmp";
 
 
 function RouteConfig() {
@@ -25,6 +27,7 @@ function RouteConfig() {
       <BrowserRouter>
         <Layout>
           <Routes>
+            <Route path="/tmp" element={<Screen />} />
             <Route path="*" element={<HomeIndex />} />
             <Route path="signin" element={<SignIn />} />
             <Route path="dashboard" element={<PrivateRoute />} />
@@ -38,7 +41,16 @@ function RouteConfig() {
               <SeasonCreate />
             </PrivateRoute>
             }/>
-            <Route path="match" element={<MatchIndex />} />
+            <Route path="match" element={
+            <PrivateRoute>
+              <MatchIndex />
+            </PrivateRoute>
+            } />
+            <Route path="match/create" element={
+            <PrivateRoute>
+              <MatchCreate />
+            </PrivateRoute>
+            } />
             <Route path="player" element={
             <PrivateRoute>
               <PlayerIndex />
@@ -67,7 +79,7 @@ function RouteConfig() {
 
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+  <>
     <ProvideAuth>
       <SeasonProvider>
         <TeamProvider>
@@ -77,7 +89,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </TeamProvider>
       </SeasonProvider>
     </ProvideAuth>
-  </React.StrictMode>
+  </>
 );
 
 reportWebVitals();

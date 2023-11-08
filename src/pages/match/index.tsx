@@ -1,5 +1,6 @@
 import React from "react";
 import Table from "../../composents/table";
+import { Link } from "react-router-dom";
 
 const MatchIndex: React.FC = () => {
   const tableData = [
@@ -31,9 +32,9 @@ const MatchIndex: React.FC = () => {
     <div>
       <div className="flex justify-between p-4">
         <h1 className="text-3sm">試合</h1>
-        <button className="bg-blue-400 hover:bg-blue-500 text-white  py-1 px-4 rounded">
+        <Link className="bg-blue-400 hover:bg-blue-500 text-white  py-1 px-4 rounded" to="/match/create">
           新しい試合
-        </button>
+        </Link>
       </div>
       <div className=" bg-blue-100 p-4 border" />
       <Table data={tableData} columns={header} />

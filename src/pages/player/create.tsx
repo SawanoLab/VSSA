@@ -47,7 +47,7 @@ const PlayerCreate: React.FC = () => {
   }
   return (
     <div className="m-2">
-      <h1>Info</h1>
+      <h1>新しいプレイヤーを追加</h1>
       <form className="flex flex-wrap border bg-blue-50 p-5">
         <div className="flex flex-row m-1">
           <label className="text-gray-500 text-sm">

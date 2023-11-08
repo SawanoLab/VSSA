@@ -18,16 +18,7 @@ const SeasonIndex: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getSeasons(username);
-      let items = data.map((item: any) => {
-        return {
-          uuid: item.uuid,
-          start_day: item.start_day,
-          end_day: item.end_day,
-          season_name: item.season_name,
-          game_format: item.game_format,
-        };
-      })
+      const items = await getSeasons(username);
       setSeasonsData(items);
     };
     fetchData();
