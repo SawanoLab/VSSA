@@ -3,8 +3,8 @@ import Table from "../../composents/table";
 import { Link } from "react-router-dom";
 import { getPlayers } from "../../lib/api/api";
 import { useAuth } from "../../hooks/use-auth";
-import { useTeam } from "../../hooks/use-team";
-import { usePlayer } from "../../hooks/use-player";
+import { useTeam } from "../../hooks/match/use-team";
+import { usePlayer } from "../../hooks/match/use-player";
 
 const PlayerIndex: React.FC = () => {
   const { username } = useAuth();

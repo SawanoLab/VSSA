@@ -5,9 +5,9 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import { ProvideAuth } from "./hooks/use-auth";
-import SeasonProvider from "./hooks/use-season";
-import TeamProvider from "./hooks/use-team";
-import PlayerProvider from "./hooks/use-player";
+import SeasonProvider from "./hooks/match/use-season";
+import TeamProvider from "./hooks/match/use-team";
+import PlayerProvider from "./hooks/match/use-player";
 import { SignIn } from "./pages/SignIn";
 import HomeIndex from "./pages/home";
 import MatchIndex from "./pages/match";
@@ -20,6 +20,7 @@ import SeasonCreate from "./pages/season/create";
 import TeamCreate from "./pages/team/create";
 import PlayerCreate from "./pages/player/create";
 import {Screen} from "./pages/match/tmp";
+import MatchProvider from "./hooks/match/matchProvider";
 
 
 function RouteConfig() {
@@ -48,7 +49,9 @@ function RouteConfig() {
             } />
             <Route path="match/create" element={
             <PrivateRoute>
-              <MatchCreate />
+              <MatchProvider>
+                <MatchCreate />
+              </MatchProvider>
             </PrivateRoute>
             } />
             <Route path="player" element={
@@ -79,7 +82,7 @@ function RouteConfig() {
 
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <>
+  <React.StrictMode>
     <ProvideAuth>
       <SeasonProvider>
         <TeamProvider>
@@ -89,7 +92,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </TeamProvider>
       </SeasonProvider>
     </ProvideAuth>
-  </>
+  </React.StrictMode>,
 );
 
 reportWebVitals();

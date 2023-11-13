@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Table from "../../composents/table";
 import { getSeasons } from "../../lib/api/api";
 import { useAuth } from "../../hooks/use-auth";
-import { useSeason } from "../../hooks/use-season";
+import { useSeason } from "../../hooks/match/use-season";
 
 const SeasonIndex: React.FC = () => {
   const { username } = useAuth();

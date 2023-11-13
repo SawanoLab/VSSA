@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useAuth } from "./use-auth";
-import { SeasonData } from "../interface/season";
-import { getSeasons } from "../lib/api/api";
+import { useAuth } from "../use-auth";
+import { SeasonData } from "../../interface/season";
+import { getSeasons } from "../../lib/api/api";
 
 interface SeasonNames {
   uuid: string;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PlayerData } from "../../interface/player";
+import { PlayerInfo } from "../../interface/player";
 import { SeasonData } from "../../interface/season";
 import { TeamsData } from "../../interface/team";
 
@@ -87,7 +87,7 @@ interface PostPlayer {
 
 export const getPlayers = async (user_id: string) => {
   try {
-    const response = await axios.get<PlayerData[]>(
+    const response = await axios.get<PlayerInfo[]>(
       `http://localhost:10444/players/?user_id=${user_id}`
     );
     return response.data;

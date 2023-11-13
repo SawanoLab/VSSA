@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { TeamsData } from "../interface/team";
-import { getTeams } from "../lib/api/api";
-import { useAuth } from "./use-auth";
+import { TeamsData } from "../../interface/team";
+import { getTeams } from "../../lib/api/api";
+import { useAuth } from "../use-auth";
 
 interface TeamNames {
   uuid: string;

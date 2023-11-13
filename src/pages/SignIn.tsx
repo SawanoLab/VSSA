@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/use-auth';
 export function SignIn() {
   const auth = useAuth();
   const navigate = useNavigate();
-  const [username, setUsername] = useState('fuu05160@gmail.com');
+  const [username, setUsername] = useState('b23723bb@aitech.ac.jp');
   const [password, setPassword] = useState('hoge1234');
 
   const executeSignIn = async (event: React.FormEvent<HTMLFormElement>) => {

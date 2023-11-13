@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
-import { useSeason } from "../../hooks/use-season";
+import { useSeason } from "../../hooks/match/use-season";
 import { postTeam } from "../../lib/api/api";
 
 const TeamCreate: React.FC = () => {

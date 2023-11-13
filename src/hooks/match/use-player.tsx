@@ -1,14 +1,14 @@
-import { getPlayers } from "../lib/api/api";
-import { useAuth } from "../hooks/use-auth";
+import { getPlayers } from "../../lib/api/api";
+import { useAuth } from "../use-auth";
 import React, {useEffect} from "react";
-import { PlayerData } from "../interface/player";
+import { PlayerInfo } from "../../interface/player";
 
 export interface PlayerContextType {
-  players: PlayerData[];
-  addPlayer: (player: PlayerData) => void;
-  setPlayers: (players: PlayerData[]) => void;
-  setPlayersData: (players: PlayerData[]) => void;
-  getTeamPlayers: (players: PlayerData[], team_id: string) => PlayerData[];
+  players: PlayerInfo[];
+  addPlayer: (player: PlayerInfo) => void;
+  setPlayers: (players: PlayerInfo[]) => void;
+  setPlayersData: (players: PlayerInfo[]) => void;
+  getTeamPlayers: (players: PlayerInfo[], team_id: string) => PlayerInfo[];
 }
 
 const initialContextState: PlayerContextType = {
@@ -38,7 +38,7 @@ const getInitialPlayerData = async (username: string) => {
 
 export default function PlayerProvider({ children }: any) {
   const { username } = useAuth();
-  const [players, setPlayers] = React.useState<PlayerData[]>([]);
+  const [players, setPlayers] = React.useState<PlayerInfo[]>([]);
 
   useEffect(() => {
     if (!username) {
@@ -55,15 +55,15 @@ export default function PlayerProvider({ children }: any) {
     fetchData();
   }, [username]);
 
-  const addPlayer = (player: PlayerData) => {
+  const addPlayer = (player: PlayerInfo) => {
     setPlayers((prevPlayers) => [...prevPlayers, player]);
   }
 
-  const setPlayersData = (players: PlayerData[]) => {
+  const setPlayersData = (players: PlayerInfo[]) => {
     setPlayers(players);
   }
 
-  const getTeamPlayers = (players: PlayerData[], team_id: string) => {
+  const getTeamPlayers = (players: PlayerInfo[], team_id: string) => {
     return players.filter((player) => player.team_id === team_id);
   }
 

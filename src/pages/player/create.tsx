@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
 import { postPlayer } from "../../lib/api/api";
-import { useSeason } from "../../hooks/use-season";
-import { useTeam } from "../../hooks/use-team";
+import { useSeason } from "../../hooks/match/use-season";
+import { useTeam } from "../../hooks/match/use-team";
 
 const PlayerCreate: React.FC = () => {
   const { username } = useAuth();
