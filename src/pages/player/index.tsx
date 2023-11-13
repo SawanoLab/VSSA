@@ -3,7 +3,6 @@ import Table from "../../composents/table";
 import { Link } from "react-router-dom";
 import { getPlayers } from "../../lib/api/api";
 import { useAuth } from "../../hooks/use-auth";
-import { useTeam } from "../../hooks/match/use-team";
 import { usePlayer } from "../../hooks/match/use-player";
 
 const PlayerIndex: React.FC = () => {
@@ -20,8 +19,6 @@ const PlayerIndex: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getPlayers(username);
-      console.log(data);
-      
       let items = data.map((item: any) => {
         return {
           uuid: item.uuid,
@@ -39,27 +36,7 @@ const PlayerIndex: React.FC = () => {
       setPlayersData(items);
     }
     fetchData();
-  }, []);
-
-  const tableData = [
-    {
-      number: 1,
-      player_code: "ITA1",
-      surname: "Donnarumma",
-      name: "Gianluigi",
-      nickname: "Gigi",
-      position: "GK",
-    },
-    {
-      number: 2,
-      player_code: "ITA1",
-      surname: "Donnarumma",
-      name: "Gianluigi",
-      nickname: "Gigi",
-      position: "GK",
-    },
-  ];
-
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>

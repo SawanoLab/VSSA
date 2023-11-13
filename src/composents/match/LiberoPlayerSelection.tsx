@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useMatch } from "../../hooks/match/matchProvider";
 
 
@@ -7,7 +7,7 @@ interface LiberoPlayerSelectionProps {
 }
 
 const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({ type }) => {
-  const { match, togglePlayerOnCourt, togglePlayerLibero, getPlayers } = useMatch();
+  const { togglePlayerOnCourt, togglePlayerLibero, getPlayers } = useMatch();
   const [selectedPlayer, setSelectedPlayer] = useState<string>("");
   const players = getPlayers(type);
 
@@ -24,10 +24,6 @@ const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({ type }) =
       togglePlayerLibero(type, selectedValue);
     }
   };
-
-  useEffect(() => {
-    console.log("match", match);
-  }, [match]);
 
   return (
     <div>

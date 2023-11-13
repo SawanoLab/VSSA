@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/use-auth";
 import { useSeason } from "../../hooks/match/use-season";
