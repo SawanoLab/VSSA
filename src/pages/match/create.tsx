@@ -5,6 +5,7 @@ import { useMatch } from "../../hooks/match/matchProvider";
 import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
 import { usePlayer } from "../../hooks/match/use-player";
+import { typeOfTeam } from "../../interface/team";
 
 
 const MatchCreate: React.FC = () => {
@@ -27,8 +28,8 @@ const MatchCreate: React.FC = () => {
     const awayPlayers = getTeamPlayers(players, awayTeamUUID);
     const teamNameHome = getTeamName(homeTeamUUID);
     const teamNameAway = getTeamName(awayTeamUUID);
-    setTeamPlayer("home", teamNameHome, homePlayers);
-    setTeamPlayer("away", teamNameAway, awayPlayers);
+    setTeamPlayer(typeOfTeam.home, teamNameHome, homePlayers);
+    setTeamPlayer(typeOfTeam.away, teamNameAway, awayPlayers);
   }, [homeTeamUUID, awayTeamUUID, players]); // eslint-disable-line react-hooks/exhaustive-deps
 
 

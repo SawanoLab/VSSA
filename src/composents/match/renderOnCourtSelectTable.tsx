@@ -11,7 +11,7 @@ export const renderOnCourtSelectTable = (
 ) => (
   <table
     className={`table-auto absolute top-20 ${
-      type === "home" ? "left-8" : "right-8"
+      type === typeOfTeam.home ? "left-8" : "right-8"
     }`}
   >
     <tbody>
@@ -21,12 +21,12 @@ export const renderOnCourtSelectTable = (
             <OnCourtSelect
               type={type}
               uniformImage={
-                type === "home" ? "/uniform.png" : "/away_uniform.png"
+                type === typeOfTeam.home ? "/uniform.png" : "/away_uniform.png"
               }
               key={`${row}-${col}`}
               isSetter={
                 courtZoneName[row][col] ===
-                (type === "home" ? setterPositionHome : setterPositionAway)
+                (type === typeOfTeam.home ? setterPositionHome : setterPositionAway)
               }
             />
           ))}

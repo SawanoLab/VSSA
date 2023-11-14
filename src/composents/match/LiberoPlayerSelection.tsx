@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from "react";
 import { useMatch } from "../../hooks/match/matchProvider";
-
+import { typeOfTeam } from "../../interface/team";
 
 interface LiberoPlayerSelectionProps {
-  type: "home" | "away";
+  type: typeOfTeam;
 }
 
 const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({ type }) => {

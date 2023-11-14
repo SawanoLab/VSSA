@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { SetterPositionName } from "../../interface/player";
 import { useMatch } from "../../hooks/match/matchProvider";
+import { typeOfTeam } from "../../interface/team";
 
 interface SetPositionSelectProps {
-  type: "home" | "away";
+  type: typeOfTeam;
   courtZoneName: SetterPositionName[][];
 }
 

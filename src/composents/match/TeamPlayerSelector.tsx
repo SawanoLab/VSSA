@@ -9,10 +9,10 @@ import { typeOfTeam } from "../../interface/team";
 
 const TeamPlayerSelector: React.FC = () => {
   const { getOffCourtPlayers, getSetterPosition } = useMatch();
-  const setterPositionHome = getSetterPosition("home");
-  const setterPositionAway = getSetterPosition("away");
-  const onCourtHomePlayers = getOffCourtPlayers("home");
-  const onCourtAwayPlayers = getOffCourtPlayers("away");
+  const setterPositionHome = getSetterPosition(typeOfTeam.home);
+  const setterPositionAway = getSetterPosition(typeOfTeam.away);
+  const onCourtHomePlayers = getOffCourtPlayers(typeOfTeam.home);
+  const onCourtAwayPlayers = getOffCourtPlayers(typeOfTeam.away);
 
   const courtHomeZoneName: SetterPositionName[][] = [
     [SetterPositionName.Z5, SetterPositionName.Z4],
@@ -43,8 +43,8 @@ const TeamPlayerSelector: React.FC = () => {
         />
       </div>
       <div className="flex flex-row justify-between">
-        <SetPositionSelect type="home" courtZoneName={courtHomeZoneName} />
-        <SetPositionSelect type="away" courtZoneName={courtAwayZoneName} />
+        <SetPositionSelect type={typeOfTeam.home} courtZoneName={courtHomeZoneName} />
+        <SetPositionSelect type={typeOfTeam.away} courtZoneName={courtAwayZoneName} />
       </div>
       <div className="flex flex-row">
         <div className="flex flex-col w-1/2">
