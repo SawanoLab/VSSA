@@ -4,8 +4,8 @@ import SetPositionSelect from "./SetPositionSelect";
 import LiberoPlayerSelect from "./LiberoPlayerSelection";
 import { renderOnCourtSelectTable } from "./renderOnCourtSelectTable";
 import { useMatch } from "../../hooks/match/matchProvider";
-import { SetterPositionName } from "../../interface/player";
-import { typeOfTeam } from "../../interface/team";
+import { SetterPositionName } from "../../types/player";
+import { typeOfTeam } from "../../types/team";
 
 const TeamPlayerSelector: React.FC = () => {
   const { getOffCourtPlayers, getSetterPosition } = useMatch();

@@ -5,7 +5,7 @@ import { useMatch } from "../../hooks/match/matchProvider";
 import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
 import { usePlayer } from "../../hooks/match/use-player";
-import { typeOfTeam } from "../../interface/team";
+import { typeOfTeam } from "../../types/team";
 
 
 const MatchCreate: React.FC = () => {

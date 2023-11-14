@@ -1,7 +1,7 @@
 import { getPlayers } from "../../lib/api/api";
 import { useAuth } from "../use-auth";
 import React, {useEffect} from "react";
-import { PlayerInfo } from "../../interface/player";
+import { PlayerInfo } from "../../types/player";
 
 export interface PlayerContextType {
   players: PlayerInfo[];

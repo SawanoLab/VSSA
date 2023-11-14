@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { useMatch } from "../../hooks/match/matchProvider";
-import { typeOfTeam } from "../../interface/team";
+import { typeOfTeam } from "../../types/team";
 
 interface LiberoPlayerSelectionProps {
   type: typeOfTeam;

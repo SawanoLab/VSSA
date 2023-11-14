@@ -2,8 +2,8 @@
 
 import React from "react";
 import OnCourtSelect from "./OnCourtSelect";
-import { typeOfTeam } from "../../interface/team";
-import { SetterPositionName } from "../../interface/player";
+import { typeOfTeam } from "../../types/team";
+import { SetterPositionName } from "../../types/player";
 import { useMatch } from "../../hooks/match/matchProvider";
 
 interface OnCourtSelectTableProps {

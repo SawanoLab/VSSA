@@ -1,6 +1,6 @@
 import OnCourtSelect from "./OnCourtSelect";
-import { SetterPositionName } from "../../interface/player";
-import { typeOfTeam } from "../../interface/team";
+import { SetterPositionName } from "../../types/player";
+import { typeOfTeam } from "../../types/team";
 
 
 export const renderOnCourtSelectTable = (

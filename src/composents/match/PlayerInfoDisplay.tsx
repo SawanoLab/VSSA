@@ -1,5 +1,5 @@
 import React from "react";
-import { PlayerInfo } from "../../interface/player";
+import { PlayerInfo } from "../../types/player";
 
 interface PlayerInfoDisplayProps {
   selectedPlayer: string;

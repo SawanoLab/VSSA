@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useAuth } from "../use-auth";
-import { SeasonData } from "../../interface/season";
+import { SeasonData } from "../../types/season";
 import { getSeasons } from "../../lib/api/api";
 
 interface SeasonNames {

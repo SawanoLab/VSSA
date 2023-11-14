@@ -1,7 +1,7 @@
 import axios from "axios";
-import { PlayerInfo } from "../../interface/player";
-import { SeasonData } from "../../interface/season";
-import { TeamsData } from "../../interface/team";
+import { PlayerInfo } from "../../types/player";
+import { SeasonData } from "../../types/season";
+import { TeamsData } from "../../types/team";
 
 interface PostSeason {
   season_name: string;

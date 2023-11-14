@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { TeamsData } from "../../interface/team";
+import { TeamsData } from "../../types/team";
 import { getTeams } from "../../lib/api/api";
 import { useAuth } from "../use-auth";
 
