@@ -1,6 +1,4 @@
-import { getPlayers } from "../../lib/api/api";
-import { useAuth } from "../use-auth";
-import React, {useEffect} from "react";
+import React  from "react";
 import { PlayerInfo } from "../../types/player";
 
 export interface PlayerContextType {
@@ -19,41 +17,13 @@ const initialContextState: PlayerContextType = {
   getTeamPlayers: () => []
 };
 
-
 export const PlayerContext =
 React.createContext<PlayerContextType>(initialContextState);
 
 export const usePlayer = () => React.useContext(PlayerContext);
 
-const getInitialPlayerData = async (username: string) => {
-  try {
-    const data = await getPlayers(username);    
-    return data;
-  } catch (error) {
-    // エラーハンドリングを行うか、適切な処理を行ってください
-    console.error("Error fetching player data", error);
-    return [];
-  }
-}
-
 export default function PlayerProvider({ children }: any) {
-  const { username } = useAuth();
   const [players, setPlayers] = React.useState<PlayerInfo[]>([]);
-
-  useEffect(() => {
-    if (!username) {
-      return;
-    }
-    const fetchData = async () => {
-      try {
-        const playerData = await getInitialPlayerData(username);
-        setPlayers(playerData);
-      } catch (error) {
-        alert("Error fetching player data");
-      }
-    };
-    fetchData();
-  }, [username]);
 
   const addPlayer = (player: PlayerInfo) => {
     setPlayers((prevPlayers) => [...prevPlayers, player]);

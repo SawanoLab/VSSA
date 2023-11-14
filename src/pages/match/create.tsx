@@ -6,12 +6,15 @@ import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
 import { usePlayer } from "../../hooks/match/use-player";
 import { typeOfTeam } from "../../types/team";
+import { useAuth } from "../../hooks/use-auth";
+
 
 
 const MatchCreate: React.FC = () => {
+  const { username } = useAuth();
   const { setTeamPlayer } = useMatch();
-  const { getSeasonNames, seasons } = useSeason();
   const { teams } = useTeam();
+  const { getSeasonNames, seasons } = useSeason();
   const { getTeamPlayers, players } = usePlayer();
   const [homeTeamUUID, setHomeTeamUUID] = useState<string>("");
   const [awayTeamUUID, setAwayTeamUUID] = useState<string>("");

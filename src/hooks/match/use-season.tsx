@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import { useAuth } from "../use-auth";
+import React from "react";
 import { SeasonData } from "../../types/season";
-import { getSeasons } from "../../lib/api/api";
+
 
 interface SeasonNames {
   uuid: string;
@@ -29,35 +28,9 @@ export const SeasonContext = React.createContext<SeasonContextType>(initialConte
 
 export const useSeason = () => React.useContext(SeasonContext);
 
-const getInitialSeasonData = async (username: string) => {
-  try {
-    const data = await getSeasons(username);
-    return data;
-  } catch (error) {
-    alert("Error fetching season data");
-    return [];
-  }
-}
-
 export default function SeasonProvider({ children }: any) {
-  const { username } = useAuth();
   const [seasons, setSeasons] = React.useState<SeasonData[]>([]);
 
-  useEffect(() => {
-    if (!username) {
-      return;
-    }
-    const fetchData = async () => {
-      try {
-        const seasonData = await getInitialSeasonData(username);
-        setSeasons(seasonData);
-      } catch (error) {
-        alert("Error fetching season data");
-      }
-    };
-    fetchData();
-  }
-    , [username]);
   const addSeason = (season: SeasonData) => {
     setSeasons((prevSeasons) => [...prevSeasons, season]);
   }

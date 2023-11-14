@@ -19,7 +19,6 @@ import PrivateRoute from "./composents/PrivateRoute";
 import SeasonCreate from "./pages/season/create";
 import TeamCreate from "./pages/team/create";
 import PlayerCreate from "./pages/player/create";
-import {Screen} from "./pages/match/tmp";
 import MatchProvider from "./hooks/match/matchProvider";
 
 
@@ -28,7 +27,6 @@ function RouteConfig() {
       <BrowserRouter>
         <Layout>
           <Routes>
-            <Route path="/tmp" element={<Screen />} />
             <Route path="*" element={<HomeIndex />} />
             <Route path="signin" element={<SignIn />} />
             <Route path="dashboard" element={<PrivateRoute />} />
