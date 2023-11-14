@@ -9,3 +9,9 @@ export interface TeamsData {
   season_id: string;
   user_id: string;
 }
+
+
+export enum typeOfTeam {
+  home = "home",
+  away = "away",
+}

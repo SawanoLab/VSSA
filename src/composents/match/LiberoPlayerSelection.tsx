@@ -29,8 +29,11 @@ const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({ type }) =
     <div>
       <select
         onChange={handleSelect}
+        className="w-40 h-10 m-1 border flex items-center justify-center cursor-pointer text-gray-500 text-sm"
       >
-        <option value="" className="text-gray-500 text-sm">
+        <option
+        value=""
+        className="text-gray-500 text-sm">
           リベロを選択
         </option>
         {players.map((player) => (

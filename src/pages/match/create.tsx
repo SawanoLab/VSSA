@@ -6,8 +6,9 @@ import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
 import { usePlayer } from "../../hooks/match/use-player";
 
+
 const MatchCreate: React.FC = () => {
-  const { setTeam } = useMatch();
+  const { setTeamPlayer } = useMatch();
   const { getSeasonNames, seasons } = useSeason();
   const { teams } = useTeam();
   const { getTeamPlayers, players } = usePlayer();
@@ -26,8 +27,8 @@ const MatchCreate: React.FC = () => {
     const awayPlayers = getTeamPlayers(players, awayTeamUUID);
     const teamNameHome = getTeamName(homeTeamUUID);
     const teamNameAway = getTeamName(awayTeamUUID);
-    setTeam("home", teamNameHome, homePlayers);
-    setTeam("away", teamNameAway, awayPlayers);
+    setTeamPlayer("home", teamNameHome, homePlayers);
+    setTeamPlayer("away", teamNameAway, awayPlayers);
   }, [homeTeamUUID, awayTeamUUID, players]); // eslint-disable-line react-hooks/exhaustive-deps
 
 

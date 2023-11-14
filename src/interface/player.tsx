@@ -28,6 +28,17 @@ export interface Players {
 export interface Team {
   team_name: string;
   players: Players;
+  setter_position: SetterPositionName;
+}
+
+export enum SetterPositionName {
+  Z1 = "Z1",
+  Z2 = "Z2",
+  Z3 = "Z3",
+  Z4 = "Z4",
+  Z5 = "Z5",
+  Z6 = "Z6",
+  NULL = "NULL",
 }
 
 export interface Match {

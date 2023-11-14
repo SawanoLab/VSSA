@@ -6,9 +6,10 @@ import PlayerInfoDisplay from "./PlayerInfoDisplay";
 interface OnCourtSelectProps {
   type: "home" | "away";
   uniformImage: string;
+  isSetter: boolean;
 }
 
-const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage }) => {
+const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, isSetter }) => {
   const { togglePlayerOnCourt, getPlayers } = useMatch();
   const homePlayers = getPlayers(type);
   const [selectedPlayer, setSelectedPlayer] = useState<string>('');
@@ -27,19 +28,18 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage }) => 
   return (
     <td style={{ width: "150px", height: "90px" }}>
       <div className="h-full flex flex-col justify-center items-center relative">
-        <img
-          src={uniformImage}
-          alt="uniform"
-          style={{ width: "55px", height: "55px" }}
+        <img src={uniformImage} alt="uniform" style={{ width: "70px", height: "70px" }} />
+        <PlayerInfoDisplay
+          selectedPlayer={selectedPlayer}
+          players={homePlayers.map((player) => player.PlayerInfo)}
+          isSetter={isSetter}
         />
-        <PlayerInfoDisplay selectedPlayer={selectedPlayer} players={
-          homePlayers.map((player) => player.PlayerInfo)
-        } />
         <select
           onChange={handleSelect}
           value={selectedPlayer}
+          className="mt-2 text-sm"
         >
-          <option value="">Select a player</option>
+          <option value="">選手を選択</option>
           {homePlayers.map((player) => (
             <option
               key={player.PlayerInfo.uuid}
@@ -50,6 +50,7 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage }) => 
             </option>
           ))}
         </select>
+
       </div>
     </td>
   );
