@@ -1,26 +1,28 @@
-// PlayerIndex.tsx
 import React, { useEffect, useState } from "react";
-import Table from "../../composents/table";
-import PlayerModal from "../../composents/player/PlayerModal";
 import { Link } from "react-router-dom";
-import { getPlayers, deletePlayer } from "../../lib/api/players";
-import { usePlayer } from "../../hooks/match/use-player";
+import { getTeams } from "../../lib/api/teams";
+import Edit from "./edit";
+import Modal from "../../composents/Modal";
+import Table from "../../composents/table";
 import LoadingSpinner from "../../composents/LoadingSpinner";
+import { usePlayer } from "../../hooks/match/use-player";
 import { useAuth } from "../../hooks/use-auth";
+import { getPlayers, deletePlayer } from "../../lib/api/players";
 import { PlayerInfo } from "../../types/player";
+import { TeamName } from "../../types/team";
 
 const PlayerIndex: React.FC = () => {
   const { username } = useAuth();
   const { players, setPlayersData } = usePlayer();
+  const [teams, setTeams] = useState<TeamName[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerInfo | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const header = [
-    // { header: "No.", accessor: "uuid" },
-    { header: "コード", accessor: "player_number" },
-    { header: "名", accessor: "name" },
+  const tableHeader = [
+    { header: "名前", accessor: "name" },
+    { header: "背番号", accessor: "player_number" },
     { header: "ポジション", accessor: "postion" },
     {
       header: "",
@@ -49,6 +51,7 @@ const PlayerIndex: React.FC = () => {
   ];
 
   const handleEditClick = (player: PlayerInfo) => {
+    console.log("player: ", player);
     setSelectedPlayer(player);
     setModalOpen(true);
   };
@@ -56,6 +59,23 @@ const PlayerIndex: React.FC = () => {
   const handleCloseModal = () => {
     setSelectedPlayer(null);
     setModalOpen(false);
+  };
+
+  const fetchTeamData = async () => {
+    try {
+      const { data, loading } = await getTeams(username);
+      if (loading || !data) return;
+      const formattedData = data.map((item: any) => ({
+        uuid: item.uuid,
+        name: item.name,
+      }));
+      setTeams(formattedData);
+      setError(null);
+    } catch (error) {
+      console.error("チームデータの取得中にエラーが発生しました:", error);
+      setError("チームデータの取得に失敗しました。もう一度試してください。");
+      setTeams([]);
+    }
   };
 
   const fetchPlayerData = async () => {
@@ -77,8 +97,10 @@ const PlayerIndex: React.FC = () => {
       setPlayersData(formattedData);
       setError(null);
     } catch (error) {
-      console.error("データの取得中にエラーが発生しました:", error);
-      setError("データの取得に失敗しました。もう一度試してください。");
+      console.error("プレイヤーデータの取得中にエラーが発生しました:", error);
+      setError(
+        "プレイヤーデータの取得に失敗しました。もう一度試してください。"
+      );
     } finally {
       setLoading(false);
     }
@@ -96,8 +118,14 @@ const PlayerIndex: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchPlayerData();
-  }, [username, setPlayersData]);
+    fetchTeamData(); // チームデータを取得
+  }, []);
+
+  useEffect(() => {
+    if (teams.length > 0) {
+      fetchPlayerData();
+    }
+  }, [teams]);
 
   return (
     <div>
@@ -106,7 +134,15 @@ const PlayerIndex: React.FC = () => {
       ) : (
         <div>
           {isModalOpen && (
-            <PlayerModal player={selectedPlayer} onClose={handleCloseModal} />
+            <Modal onClose={handleCloseModal}>
+              {selectedPlayer && (
+                <Edit
+                  playerData={selectedPlayer}
+                  teamData={teams}
+                  onClose={handleCloseModal}
+                />
+              )}
+            </Modal>
           )}
           <div className="flex justify-between p-4">
             <h1 className="text-3sm">プレイヤー</h1>
@@ -118,7 +154,7 @@ const PlayerIndex: React.FC = () => {
             </Link>
           </div>
           <div className="bg-blue-100 p-4 border" />
-          <Table data={players} columns={header} />
+          <Table data={players} columns={tableHeader} />
         </div>
       )}
     </div>

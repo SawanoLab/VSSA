@@ -57,3 +57,18 @@ export const deletePlayer = async (playerId: string, userID: string): Promise<Ap
     return { loading: false };
   }
 }
+
+
+export const putPlayer = async (playerID: string, userID: string, data: PlayerInfo): Promise<ApiResponse<PlayerInfo>> => {
+  try {
+    const response: AxiosResponse<PlayerInfo> = await axios.put(
+      `http://localhost:10444/players/?player_id=${playerID}&user_id=${userID}`,
+      data,
+      { headers: { 'Content-Type': 'application/json' }}
+    );
+    return { data: response.data, loading: false };
+  } catch (error) {
+    handleApiError("データの更新中にエラーが発生しました", error as AxiosError);
+    return { loading: false };
+  }
+}

@@ -39,7 +39,7 @@ const TeamIndex: React.FC = () => {
       }
     };
     fetchData();
-  }, [username, setTeamsData]);
+  }, []);
 
   const header = [{ header: "名称", accessor: "name" }];
 

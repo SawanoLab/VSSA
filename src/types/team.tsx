@@ -15,3 +15,8 @@ export enum typeOfTeam {
   home = "home",
   away = "away",
 }
+
+export interface TeamName {
+  uuid: string;
+  name: string;
+}
