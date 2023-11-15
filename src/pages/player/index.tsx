@@ -74,7 +74,7 @@ const PlayerIndex: React.FC = () => {
       }));
       setTeams(formattedData);
     } catch (error) {
-      errorHandling(error, "チームデータ");
+      errorHandling("チームデータ");
     }
   };
 
@@ -84,7 +84,7 @@ const PlayerIndex: React.FC = () => {
       if (loading || !data) return;
       setPlayersData(formatPlayerData(data));
     } catch (error) {
-      errorHandling(error, "プレイヤーデータ");
+      errorHandling("プレイヤーデータ");
     } finally {
       setLoading(false);
     }
@@ -124,7 +124,7 @@ const PlayerIndex: React.FC = () => {
       if (loading || !data) return;
       fetchPlayerData();
     } catch (error) {
-      errorHandling(error, "プレイヤーの削除");
+      errorHandling( "プレイヤーの削除");
     }
   };
 

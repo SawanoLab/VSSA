@@ -28,11 +28,13 @@ interface Result {
   message: string;
 }
 
+interface ProvideAuthProps {
+  children: React.ReactNode;
+}
+
 const authContext = createContext({} as UseAuth);
 
-export const ProvideAuth: React.FC<React.PropsWithChildren<Record<string, never>>> = ({
-  children,
-}: React.PropsWithChildren<Record<string, never>>) => {
+export const ProvideAuth: React.FC<ProvideAuthProps> = ({ children }: ProvideAuthProps) => {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 };

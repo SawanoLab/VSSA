@@ -29,7 +29,6 @@ function RouteConfig() {
         <Routes>
           <Route path="*" element={<HomeIndex />} />
           <Route path="signin" element={<SignIn />} />
-          <Route path="dashboard" element={<PrivateRoute />} />
           <Route
             path="season"
             element={
