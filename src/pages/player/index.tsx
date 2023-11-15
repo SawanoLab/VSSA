@@ -1,26 +1,64 @@
+// PlayerIndex.tsx
 import React, { useEffect, useState } from "react";
 import Table from "../../composents/table";
+import PlayerModal from "../../composents/player/PlayerModal";
 import { Link } from "react-router-dom";
-import { getPlayers } from "../../lib/api/players";
+import { getPlayers, deletePlayer } from "../../lib/api/players";
 import { usePlayer } from "../../hooks/match/use-player";
-import { PlayerInfo } from "../../types/player";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import { useAuth } from "../../hooks/use-auth";
+import { PlayerInfo } from "../../types/player";
 
 const PlayerIndex: React.FC = () => {
   const { username } = useAuth();
   const { players, setPlayersData } = usePlayer();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerInfo | null>(null);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const header = [
-    { header: "No.", accessor: "uuid" },
+    // { header: "No.", accessor: "uuid" },
     { header: "コード", accessor: "player_number" },
     { header: "名", accessor: "name" },
     { header: "ポジション", accessor: "postion" },
+    {
+      header: "",
+      accessor: "edit",
+      cellRenderer: (item: PlayerInfo) => (
+        <button
+          className="bg-blue-400 hover:bg-blue-700 text-white py-1 px-4 rounded"
+          onClick={() => handleEditClick(item)}
+        >
+          編集
+        </button>
+      ),
+    },
+    {
+      header: "",
+      accessor: "delete",
+      cellRenderer: (item: PlayerInfo) => (
+        <button
+          className="bg-red-400 hover:bg-red-700 text-white py-1 px-4 rounded"
+          onClick={() => handleDeleteClick(item.uuid)}
+        >
+          削除
+        </button>
+      ),
+    },
   ];
 
-  const fetchData = async () => {
+  const handleEditClick = (player: PlayerInfo) => {
+    setSelectedPlayer(player);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedPlayer(null);
+    setModalOpen(false);
+  };
+
+  const fetchPlayerData = async () => {
     try {
       const { data, loading } = await getPlayers(username);
       if (loading || !data) return;
@@ -46,21 +84,30 @@ const PlayerIndex: React.FC = () => {
     }
   };
 
+  const handleDeleteClick = async (playerId: string) => {
+    try {
+      const { data, loading } = await deletePlayer(playerId, username);
+      if (loading || !data) return;
+      fetchPlayerData();
+    } catch (error) {
+      console.error("プレイヤーの削除中にエラーが発生しました:", error);
+      setError("プレイヤーの削除に失敗しました。もう一度試してください。");
+    }
+  };
+
   useEffect(() => {
-    fetchData();
+    fetchPlayerData();
   }, [username, setPlayersData]);
 
   return (
     <div>
-      {loading && <LoadingSpinner />}
-      {error && (
-        <div className="fixed top-0 right-0 p-4 bg-red-500 text-white">
-          {error}
-        </div>
-      )}
-
-      {!loading && (
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
         <div>
+          {isModalOpen && (
+            <PlayerModal player={selectedPlayer} onClose={handleCloseModal} />
+          )}
           <div className="flex justify-between p-4">
             <h1 className="text-3sm">プレイヤー</h1>
             <Link

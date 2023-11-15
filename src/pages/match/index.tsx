@@ -28,6 +28,10 @@ const MatchIndex: React.FC = () => {
     { header: "アウェイ", accessor: "away_team" },
   ];
 
+  const tableClickHandler = (item: any) => {
+    console.log(item);
+  }
+
   return (
     <div>
       <div className="flex justify-between p-4">
@@ -37,7 +41,11 @@ const MatchIndex: React.FC = () => {
         </Link>
       </div>
       <div className=" bg-blue-100 p-4 border" />
-      <Table data={tableData} columns={header} />
+      <Table
+      data={tableData}
+      columns={header}
+      onRowClick={tableClickHandler}
+      />
     </div>
   );
 };

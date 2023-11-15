@@ -44,3 +44,16 @@ export const postPlayer = async (data: PostPlayer): Promise<ApiResponse<PostPlay
     return { loading: false };
   }
 }
+
+
+export const deletePlayer = async (playerId: string, userID: string): Promise<ApiResponse<PlayerInfo>> => {
+  try {
+    const response: AxiosResponse<PlayerInfo> = await axios.delete(
+      `http://localhost:10444/players/?player_id=${playerId}&&user_id=${userID}`
+    );
+    return { data: response.data, loading: false };
+  } catch (error) {
+    handleApiError("データの削除中にエラーが発生しました", error as AxiosError);
+    return { loading: false };
+  }
+}

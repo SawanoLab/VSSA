@@ -6,26 +6,24 @@ import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
 import { usePlayer } from "../../hooks/match/use-player";
 import { typeOfTeam } from "../../types/team";
-import { useAuth } from "../../hooks/use-auth";
 
 
 
 const MatchCreate: React.FC = () => {
-  const { username } = useAuth();
   const { setTeamPlayer } = useMatch();
   const { teams } = useTeam();
   const { getSeasonNames, seasons } = useSeason();
   const { getTeamPlayers, players } = usePlayer();
   const [homeTeamUUID, setHomeTeamUUID] = useState<string>("");
   const [awayTeamUUID, setAwayTeamUUID] = useState<string>("");
-  
+
   const getTeamName = useCallback(
     (teamId: string) => {
       const selectedTeam = teams.find((team) => team.uuid === teamId);
       return selectedTeam ? selectedTeam.name : "";
     },[teams]
   );
-  
+
   useEffect(() => {
     const homePlayers = getTeamPlayers(players, homeTeamUUID);
     const awayPlayers = getTeamPlayers(players, awayTeamUUID);
@@ -34,7 +32,6 @@ const MatchCreate: React.FC = () => {
     setTeamPlayer(typeOfTeam.home, teamNameHome, homePlayers);
     setTeamPlayer(typeOfTeam.away, teamNameAway, awayPlayers);
   }, [homeTeamUUID, awayTeamUUID, players]); // eslint-disable-line react-hooks/exhaustive-deps
-
 
   const seasonNames = getSeasonNames(seasons);
 

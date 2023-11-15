@@ -1,4 +1,3 @@
-
 export  interface SeasonData {
   uuid: string;
   start_day: string;
