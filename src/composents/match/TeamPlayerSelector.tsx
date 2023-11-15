@@ -1,8 +1,9 @@
 import React from "react";
-import PlayerTable from "./PlayerTable";
-import SetPositionSelect from "./SetPositionSelect";
+
 import LiberoPlayerSelect from "./LiberoPlayerSelection";
+import PlayerTable from "./PlayerTable";
 import { renderOnCourtSelectTable } from "./renderOnCourtSelectTable";
+import SetPositionSelect from "./SetPositionSelect";
 import { useMatch } from "../../hooks/match/matchProvider";
 import { SetterPositionName } from "../../types/player";
 import { typeOfTeam } from "../../types/team";

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
+
+import { useAuth } from "../../hooks/use-auth";
+import { putPlayer } from "../../lib/api/players";
 import { PositonNameEnum } from "../../types/player";
 import { PlayerInfo } from "../../types/player";
 import { TeamName } from "../../types/team";
-import { putPlayer } from "../../lib/api/players";
-import { useAuth } from "../../hooks/use-auth";
 
 interface Field {
   key: string;

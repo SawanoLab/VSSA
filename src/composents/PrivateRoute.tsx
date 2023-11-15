@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom';
+
 import { useAuth } from '../hooks/use-auth';
 
 const PrivateRoute: React.FC<React.PropsWithChildren<{}>> = ({

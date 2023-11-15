@@ -1,6 +1,7 @@
 import React from "react";
-import Table from "../../composents/table";
 import { Link } from "react-router-dom";
+
+import Table from "../../composents/table";
 
 const MatchIndex: React.FC = () => {
   const tableData = [

@@ -1,6 +1,7 @@
 import React from 'react';
-import Table from '../table';
+
 import { PlayerInfo } from "../../types/player";
+import Table from '../table';
 
 
 interface PlayerTableProps {

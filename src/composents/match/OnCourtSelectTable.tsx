@@ -1,10 +1,11 @@
 // OnCourtSelectTable.tsx
 
 import React from "react";
+
 import OnCourtSelect from "./OnCourtSelect";
-import { typeOfTeam } from "../../types/team";
-import { SetterPositionName } from "../../types/player";
 import { useMatch } from "../../hooks/match/matchProvider";
+import { SetterPositionName } from "../../types/player";
+import { typeOfTeam } from "../../types/team";
 
 interface OnCourtSelectTableProps {
   type: typeOfTeam;

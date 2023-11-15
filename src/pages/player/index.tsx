@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getTeams } from "../../lib/api/teams";
+
 import Edit from "./edit";
+import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
 import Table from "../../composents/table";
-import LoadingSpinner from "../../composents/LoadingSpinner";
 import { usePlayer } from "../../hooks/match/use-player";
 import { useAuth } from "../../hooks/use-auth";
 import { getPlayers, deletePlayer } from "../../lib/api/players";
+import { getTeams } from "../../lib/api/teams";
 import { PlayerInfo } from "../../types/player";
 import { TeamName } from "../../types/team";
+import errorHandling from "../../utility/ErrorHandling";
+
 
 const PlayerIndex: React.FC = () => {
   const { username } = useAuth();
   const { players, setPlayersData } = usePlayer();
   const [teams, setTeams] = useState<TeamName[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerInfo | null>(null);
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -51,7 +53,6 @@ const PlayerIndex: React.FC = () => {
   ];
 
   const handleEditClick = (player: PlayerInfo) => {
-    console.log("player: ", player);
     setSelectedPlayer(player);
     setModalOpen(true);
   };
@@ -59,6 +60,7 @@ const PlayerIndex: React.FC = () => {
   const handleCloseModal = () => {
     setSelectedPlayer(null);
     setModalOpen(false);
+    fetchPlayerData();
   };
 
   const fetchTeamData = async () => {
@@ -70,11 +72,8 @@ const PlayerIndex: React.FC = () => {
         name: item.name,
       }));
       setTeams(formattedData);
-      setError(null);
     } catch (error) {
-      console.error("チームデータの取得中にエラーが発生しました:", error);
-      setError("チームデータの取得に失敗しました。もう一度試してください。");
-      setTeams([]);
+      errorHandling(error, "チームデータ");
     }
   };
 
@@ -82,28 +81,40 @@ const PlayerIndex: React.FC = () => {
     try {
       const { data, loading } = await getPlayers(username);
       if (loading || !data) return;
-      const formattedData = data.map((item: PlayerInfo) => ({
-        uuid: item.uuid,
-        name: item.name,
-        player_number: item.player_number,
-        code: item.code,
-        postion: item.postion,
-        weight: item.weight || 0,
-        height: item.height || 0,
-        user_id: item.user_id,
-        team_id: item.team_id,
-        season_id: item.season_id,
-      }));
-      setPlayersData(formattedData);
-      setError(null);
+      setPlayersData(formatPlayerData(data));
     } catch (error) {
-      console.error("プレイヤーデータの取得中にエラーが発生しました:", error);
-      setError(
-        "プレイヤーデータの取得に失敗しました。もう一度試してください。"
-      );
+      errorHandling(error, "プレイヤーデータ");
     } finally {
       setLoading(false);
     }
+  };
+
+  const formatPlayerData = (data: PlayerInfo[]) => {
+    return data.map(
+      ({
+        uuid,
+        name,
+        player_number,
+        code,
+        postion,
+        weight = 0,
+        height = 0,
+        user_id,
+        team_id,
+        season_id,
+      }: PlayerInfo) => ({
+        uuid,
+        name,
+        player_number,
+        code,
+        postion,
+        weight,
+        height,
+        user_id,
+        team_id,
+        season_id,
+      })
+    );
   };
 
   const handleDeleteClick = async (playerId: string) => {
@@ -112,13 +123,12 @@ const PlayerIndex: React.FC = () => {
       if (loading || !data) return;
       fetchPlayerData();
     } catch (error) {
-      console.error("プレイヤーの削除中にエラーが発生しました:", error);
-      setError("プレイヤーの削除に失敗しました。もう一度試してください。");
+      errorHandling(error, "プレイヤーの削除");
     }
   };
 
   useEffect(() => {
-    fetchTeamData(); // チームデータを取得
+    fetchTeamData();
   }, []);
 
   useEffect(() => {

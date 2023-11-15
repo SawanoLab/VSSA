@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+
 import TeamSelectorTable from "../../composents/match/TeamPlayerSelector";
 import { useMatch } from "../../hooks/match/matchProvider";
+import { usePlayer } from "../../hooks/match/use-player";
 import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
-import { usePlayer } from "../../hooks/match/use-player";
 import { typeOfTeam } from "../../types/team";
 
 

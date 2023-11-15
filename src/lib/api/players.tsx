@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+
 import handleApiError from "./handleApiError";
 import { PlayerInfo } from "../../types/player";
 

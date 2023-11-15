@@ -1,25 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+
 import "./index.css";
-import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./pages/Layout";
-import { ProvideAuth } from "./hooks/use-auth";
+
+import PrivateRoute from "./composents/PrivateRoute";
+import MatchProvider from "./hooks/match/matchProvider";
+import PlayerProvider from "./hooks/match/use-player";
 import SeasonProvider from "./hooks/match/use-season";
 import TeamProvider from "./hooks/match/use-team";
-import PlayerProvider from "./hooks/match/use-player";
-import { SignIn } from "./pages/SignIn";
+import { ProvideAuth } from "./hooks/use-auth";
 import HomeIndex from "./pages/home";
+import Layout from "./pages/Layout";
 import MatchIndex from "./pages/match";
 import MatchCreate from "./pages/match/create";
 import PlayerIndex from "./pages/player";
-import SeasonIndex from "./pages/season";
-import TeamIndex from "./pages/team";
-import PrivateRoute from "./composents/PrivateRoute";
-import SeasonCreate from "./pages/season/create";
-import TeamCreate from "./pages/team/create";
 import PlayerCreate from "./pages/player/create";
-import MatchProvider from "./hooks/match/matchProvider";
+import SeasonIndex from "./pages/season";
+import SeasonCreate from "./pages/season/create";
+import { SignIn } from "./pages/SignIn";
+import TeamIndex from "./pages/team";
+import TeamCreate from "./pages/team/create";
+import reportWebVitals from "./reportWebVitals";
 
 
 function RouteConfig() {

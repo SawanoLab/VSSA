@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import Table from "../../composents/table";
 import { Link } from "react-router-dom";
-import { getTeams } from "../../lib/api/teams";
-import { useAuth } from "../../hooks/use-auth";
-import { useTeam } from "../../hooks/match/use-team";
+
 import LoadingSpinner from "../../composents/LoadingSpinner";
+import Table from "../../composents/table";
+import { useTeam } from "../../hooks/match/use-team";
+import { useAuth } from "../../hooks/use-auth";
+import { getTeams } from "../../lib/api/teams";
 
 const TeamIndex: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -18,7 +19,7 @@ const TeamIndex: React.FC = () => {
         if (loading || !data) {
           return;
         }
-        let items = data.map((item: any) => {
+        const items = data.map((item: any) => {
           return {
             uuid: item.uuid,
             name: item.name,

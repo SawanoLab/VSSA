@@ -1,6 +1,6 @@
 import { Amplify, Auth } from "aws-amplify";
-
 import React, { createContext, useContext, useEffect, useState } from "react";
+
 import AwsConfigAuth from "../aws-config/auth";
 
 declare global {

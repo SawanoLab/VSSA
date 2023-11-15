@@ -17,7 +17,6 @@ export default function Layout(props: LayoutProps) {
           {props.children}
         </div>
       </div>
-
     </div>
   );
 }

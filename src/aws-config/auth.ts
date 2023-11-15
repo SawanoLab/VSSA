@@ -4,12 +4,12 @@ const Auth = {
   userPoolWebClientId: process.env.REACT_APP_AUTH_USER_POOL_WEB_CLIENT_ID,
   cookieStorage: {
     domain: process.env.REACT_APP_AUTH_COOKIE_STORAGE_DOMAIN,
-    path: '/',
+    path: "/",
     expires: 365,
     sameSite: "strict",
-    secure: true
+    secure: true,
   },
-  authenticationFlowType: 'USER_SRP_AUTH',
-}
+  authenticationFlowType: "USER_SRP_AUTH",
+};
 
 export default Auth;

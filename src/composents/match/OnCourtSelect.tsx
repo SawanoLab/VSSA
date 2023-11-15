@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
-import { useMatch } from "../../hooks/match/matchProvider";
+
 import PlayerInfoDisplay from "./PlayerInfoDisplay";
+import { useMatch } from "../../hooks/match/matchProvider";
 
 
 interface OnCourtSelectProps {

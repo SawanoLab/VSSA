@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Table from "../../composents/table";
-import { getSeasons } from "../../lib/api/seasons";
-import { useAuth } from "../../hooks/use-auth";
-import { useSeason } from "../../hooks/match/use-season";
+
 import LoadingSpinner from "../../composents/LoadingSpinner";
+import Table from "../../composents/table";
+import { useSeason } from "../../hooks/match/use-season";
+import { useAuth } from "../../hooks/use-auth";
+import { getSeasons } from "../../lib/api/seasons";
 
 const SeasonIndex: React.FC = () => {
   const { username } = useAuth();

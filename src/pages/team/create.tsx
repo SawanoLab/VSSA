@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/use-auth";
+
 import { useSeason } from "../../hooks/match/use-season";
+import { useAuth } from "../../hooks/use-auth";
 import { postTeam } from "../../lib/api/teams";
 
 const TeamCreate: React.FC = () => {
