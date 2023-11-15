@@ -7,7 +7,7 @@ import { PlayerInfo } from "../../types/player";
 import { TeamName } from "../../types/team";
 
 interface Field {
-  key: string;
+  key: keyof PlayerInfo;
   label: string;
   type: string;
 }
@@ -39,26 +39,28 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
           <input
             className="border border-gray-400 p-2 rounded w-full"
             type="text"
-            // value={fieldValue}
+            defaultValue={playerData[key]}
             onChange={(e) => handleInputChange(key, e.target.value)}
           />
         )}
-        { key === "postion" && (
+        {key === "postion" && (
           <select
             className="border border-gray-400 p-2 rounded w-full"
+            value={fieldValue[key]}
             onChange={(e) => handleInputChange(key, e.target.value)}
           >
             <option value="">ポジションを選択</option>
-            {Object.entries(positionOptions).map(([key, value]) => (
-              <option key={key} value={key}>
+            {Object.entries(positionOptions).map(([positionKey, value]) => (
+              <option key={positionKey} value={positionKey}>
                 {value}
               </option>
             ))}
           </select>
         )}
-        { key === "team_id" && (
+        {key === "team_id" && (
           <select
             className="border border-gray-400 p-2 rounded w-full"
+            value={fieldValue[key]}
             onChange={(e) => handleInputChange(key, e.target.value)}
           >
             <option value="">チームを選択</option>
@@ -97,11 +99,11 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     console.log(playerData);
   }, [playerData]);
 
-  const handleInputChange = (fieldKey: string, value: string) => {
-    setFieldValue((prev) => ({
-      ...prev,
-      [fieldKey]: value,
-    }));
+  const handleInputChange = (key: keyof PlayerInfo, value: string) => {
+    setFieldValue({
+      ...fieldValue,
+      [key]: value,
+    });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -111,18 +113,21 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     feachPutPlayer(playerData);
   };
 
+  const fields: Field[] = [
+    { key: "name", label: "名前", type: "text" },
+    { key: "player_number", label: "背番号", type: "text" },
+    { key: "code", label: "コード", type: "text" },
+    { key: "postion", label: "ポジション", type: "select" },
+    { key: "weight", label: "体重", type: "text" },
+    { key: "height", label: "身長", type: "text" },
+    { key: "team_id", label: "チーム", type: "select" },
+  ];
+  
+
   return (
     <div>
       <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
-        {[
-          { key: "name", label: "名前", type: "text" },
-          { key: "player_number", label: "背番号", type: "text" },
-          { key: "code", label: "コード", type: "text" },
-          { key: "postion", label: "ポジション", type: "select" },
-          { key: "weight", label: "体重", type: "text" },
-          { key: "height", label: "身長", type: "text" },
-          { key: "team_id", label: "チーム", type: "select" },
-        ].map(renderField)}
+        {fields.map((field: Field) => renderField(field))}
         <button className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded col-span-2">
           登録
         </button>
