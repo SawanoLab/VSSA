@@ -19,9 +19,15 @@ export interface SeasonContextType {
 // Set initial context state
 const initialContextState: SeasonContextType = {
   seasons: [],
-  addSeason: () => { },
-  setSeasons: () => { },
-  setSeasonsData: () => { },
+  addSeason: () => {
+    return
+  },
+  setSeasons: () => {
+    return
+  },
+  setSeasonsData: () => {
+    return
+  },
   getSeasonNames: () => []
 };
 
@@ -29,7 +35,7 @@ export const SeasonContext = React.createContext<SeasonContextType>(initialConte
 
 export const useSeason = () => React.useContext(SeasonContext);
 
-export default function SeasonProvider({ children }: any) {
+export default function SeasonProvider({ children }: { children: React.ReactNode }) {
   const [seasons, setSeasons] = React.useState<SeasonData[]>([]);
 
   const addSeason = (season: SeasonData) => {

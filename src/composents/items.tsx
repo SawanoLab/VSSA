@@ -1,7 +1,8 @@
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 interface LinkItem {
-  icon: any;
+  icon: React.ReactNode;
   to: string;
   text: string;
 }

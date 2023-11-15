@@ -1,12 +1,13 @@
-import { Navigate } from 'react-router-dom';
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-import { useAuth } from '../hooks/use-auth';
+import { useAuth } from "../hooks/use-auth";
 
-const PrivateRoute: React.FC<React.PropsWithChildren<{}>> = ({
-  children,
-}: React.PropsWithChildren<{}>) => {
+const PrivateRoute: React.FC<
+  React.PropsWithChildren<Record<string, never>>
+> = ({ children }: React.PropsWithChildren<Record<string, never>>) => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <>{children}</> : <Navigate to="/signin" />;
+  return isAuthenticated ? <div>{children}</div> : <Navigate to="/signin" />;
 };
 
 export default PrivateRoute;

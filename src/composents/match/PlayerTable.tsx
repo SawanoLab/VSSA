@@ -4,9 +4,14 @@ import { PlayerInfo } from "../../types/player";
 import Table from '../table';
 
 
+interface Column {
+  header: string;
+  accessor: string;
+}
+
 interface PlayerTableProps {
   playerData: PlayerInfo[];
-  columns: any[];
+  columns: Column[];
 }
 
 const PlayerTable: React.FC<PlayerTableProps> = ({ playerData, columns }) =>{

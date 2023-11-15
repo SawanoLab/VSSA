@@ -80,7 +80,7 @@ const TeamCreate: React.FC = () => {
             onChange={(e) => setSeasonName(e.target.value)}
           >
             {seasonNames.map((seasonName) => (
-              <option value={seasonName.uuid}>{seasonName.season_name}</option>
+              <option value={seasonName.uuid} key={seasonName.uuid}>{seasonName.season_name}</option>
             ))}
           </select>
         </div>

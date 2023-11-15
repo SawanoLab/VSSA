@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 
 import handleApiError from "./handleApiError";
-import { useAuth } from "../../hooks/use-auth";
 import { TeamsData } from "../../types/team";
 
 type PostTeam = {

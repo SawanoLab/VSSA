@@ -32,7 +32,7 @@ const MatchCreate: React.FC = () => {
     const teamNameAway = getTeamName(awayTeamUUID);
     setTeamPlayer(typeOfTeam.home, teamNameHome, homePlayers);
     setTeamPlayer(typeOfTeam.away, teamNameAway, awayPlayers);
-  }, [homeTeamUUID, awayTeamUUID, players]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [homeTeamUUID, awayTeamUUID, players]);
 
   const seasonNames = getSeasonNames(seasons);
 

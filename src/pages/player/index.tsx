@@ -11,6 +11,7 @@ import { getPlayers, deletePlayer } from "../../lib/api/players";
 import { getTeams } from "../../lib/api/teams";
 import { PlayerInfo } from "../../types/player";
 import { TeamName } from "../../types/team";
+import { TeamsData } from "../../types/team";
 import errorHandling from "../../utility/ErrorHandling";
 
 
@@ -67,7 +68,7 @@ const PlayerIndex: React.FC = () => {
     try {
       const { data, loading } = await getTeams(username);
       if (loading || !data) return;
-      const formattedData = data.map((item: any) => ({
+      const formattedData = data.map((item: TeamsData) => ({
         uuid: item.uuid,
         name: item.name,
       }));

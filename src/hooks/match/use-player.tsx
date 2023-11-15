@@ -12,9 +12,9 @@ export interface PlayerContextType {
 
 const initialContextState: PlayerContextType = {
   players: [],
-  addPlayer: () => {},
-  setPlayers: () => {},
-  setPlayersData: () => {},
+  addPlayer: () => [],
+  setPlayers: () => [],
+  setPlayersData: () => [],
   getTeamPlayers: () => []
 };
 
@@ -23,7 +23,7 @@ React.createContext<PlayerContextType>(initialContextState);
 
 export const usePlayer = () => React.useContext(PlayerContext);
 
-export default function PlayerProvider({ children }: any) {
+export default function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [players, setPlayers] = React.useState<PlayerInfo[]>([]);
 
   const addPlayer = (player: PlayerInfo) => {

@@ -11,7 +11,6 @@ declare global {
 
 window.Amplify = Amplify;
 
-// @ts-ignore
 Amplify.configure(AwsConfigAuth);
 
 interface UseAuth {
@@ -31,9 +30,9 @@ interface Result {
 
 const authContext = createContext({} as UseAuth);
 
-export const ProvideAuth: React.FC<React.PropsWithChildren<{}>> = ({
+export const ProvideAuth: React.FC<React.PropsWithChildren<Record<string, never>>> = ({
   children,
-}: React.PropsWithChildren<{}>) => {
+}: React.PropsWithChildren<Record<string, never>>) => {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 };
@@ -56,7 +55,7 @@ const useProvideAuth = (): UseAuth => {
         setIsAuthenticated(true);
         setIsLoading(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setUsername("");
         setIsAuthenticated(false);
         setIsLoading(false);

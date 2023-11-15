@@ -29,8 +29,8 @@ const MatchIndex: React.FC = () => {
     { header: "アウェイ", accessor: "away_team" },
   ];
 
-  const tableClickHandler = (item: any) => {
-    console.log(item);
+  const tableClickHandler = () => {
+    console.log("click");
   }
 
   return (

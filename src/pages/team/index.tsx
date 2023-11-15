@@ -6,6 +6,7 @@ import Table from "../../composents/table";
 import { useTeam } from "../../hooks/match/use-team";
 import { useAuth } from "../../hooks/use-auth";
 import { getTeams } from "../../lib/api/teams";
+import { TeamsData } from "../../types/team";
 
 const TeamIndex: React.FC = () => {
   const [loading, setLoading] = React.useState(true);
@@ -19,7 +20,7 @@ const TeamIndex: React.FC = () => {
         if (loading || !data) {
           return;
         }
-        const items = data.map((item: any) => {
+        const items = data.map((item: TeamsData) => {
           return {
             uuid: item.uuid,
             name: item.name,

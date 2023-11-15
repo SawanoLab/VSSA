@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -23,63 +22,85 @@ import TeamIndex from "./pages/team";
 import TeamCreate from "./pages/team/create";
 import reportWebVitals from "./reportWebVitals";
 
-
 function RouteConfig() {
   return (
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="*" element={<HomeIndex />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="dashboard" element={<PrivateRoute />} />
-            <Route path="season" element={
-            <PrivateRoute>
-              <SeasonIndex />
-            </PrivateRoute>
-            } />
-            <Route path="season/create" element={
-            <PrivateRoute>
-              <SeasonCreate />
-            </PrivateRoute>
-            }/>
-            <Route path="match" element={
-            <PrivateRoute>
-              <MatchIndex />
-            </PrivateRoute>
-            } />
-            <Route path="match/create" element={
-            <PrivateRoute>
-              <MatchProvider>
-                <MatchCreate />
-              </MatchProvider>
-            </PrivateRoute>
-            } />
-            <Route path="player" element={
-            <PrivateRoute>
-              <PlayerIndex />
-            </PrivateRoute>
-            } />
-            <Route path="player/create" element={
-            <PrivateRoute>
-              <PlayerCreate />
-            </PrivateRoute>
-            } />
-            <Route path="team" element={
-            <PrivateRoute>
-              <TeamIndex />
-            </PrivateRoute>
-            } />
-            <Route path="team/create" element={
-            <PrivateRoute>
-              <TeamCreate />
-            </PrivateRoute>
-            } />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="*" element={<HomeIndex />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="dashboard" element={<PrivateRoute />} />
+          <Route
+            path="season"
+            element={
+              <PrivateRoute>
+                <SeasonIndex />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="season/create"
+            element={
+              <PrivateRoute>
+                <SeasonCreate />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="match"
+            element={
+              <PrivateRoute>
+                <MatchIndex />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="match/create"
+            element={
+              <PrivateRoute>
+                <MatchProvider>
+                  <MatchCreate />
+                </MatchProvider>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="player"
+            element={
+              <PrivateRoute>
+                <PlayerIndex />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="player/create"
+            element={
+              <PrivateRoute>
+                <PlayerCreate />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="team"
+            element={
+              <PrivateRoute>
+                <TeamIndex />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="team/create"
+            element={
+              <PrivateRoute>
+                <TeamCreate />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
-
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -92,7 +113,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </TeamProvider>
       </SeasonProvider>
     </ProvideAuth>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
 
 reportWebVitals();

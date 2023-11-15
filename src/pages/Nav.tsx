@@ -1,12 +1,12 @@
-import { FaVolleyballBall } from 'react-icons/fa';
-import { FaPersonBooth } from 'react-icons/fa';
-import { FaCalendar } from 'react-icons/fa';
-import { FaChessKing } from 'react-icons/fa';
+import React from "react";
+import { FaVolleyballBall } from "react-icons/fa";
+import { FaPersonBooth } from "react-icons/fa";
+import { FaCalendar } from "react-icons/fa";
+import { FaChessKing } from "react-icons/fa";
 
-import Items from '../composents/items';
+import Items from "../composents/items";
 
 export default function Navgetion() {
-
   const links = [
     {
       category: "データベース",
@@ -18,9 +18,6 @@ export default function Navgetion() {
       ],
     },
   ];
-  
 
-  return (
-    <Items links={links} />
-  );
+  return <Items links={links} />;
 }

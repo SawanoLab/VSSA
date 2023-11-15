@@ -1,3 +1,5 @@
+import React from "react";
+
 import Navgetion from "./Nav";
 
 interface LayoutProps {

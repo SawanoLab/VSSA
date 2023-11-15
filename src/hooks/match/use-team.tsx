@@ -2,7 +2,6 @@ import React from "react";
 
 import { TeamsData } from "../../types/team";
 
-
 interface TeamNames {
   uuid: string;
   name: string;
@@ -18,9 +17,15 @@ export interface TeamContextType {
 
 const initialContextState: TeamContextType = {
   teams: [],
-  addTeam: () => {},
-  setTeams: () => {},
-  setTeamsData: () => {},
+  addTeam: () => {
+    return
+  },
+  setTeams: () => {
+    return
+  },
+  setTeamsData: () => {
+    return
+  },
   getTeamNames: () => [],
 };
 
@@ -29,7 +34,7 @@ export const TeamContext =
 
 export const useTeam = () => React.useContext(TeamContext);
 
-export default function TeamProvider({ children }: any) {
+export default function TeamProvider({ children }: { children: React.ReactNode }) {
   const [teams, setTeams] = React.useState<TeamsData[]>([]);
   const addTeam = (team: TeamsData) => {
     setTeams((prevTeams) => [...prevTeams, team]);

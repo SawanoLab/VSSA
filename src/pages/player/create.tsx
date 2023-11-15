@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { useSeason } from "../../hooks/match/use-season";
@@ -108,7 +108,10 @@ const PlayerCreate: React.FC = () => {
             onChange={(e) => setSeason(e.target.value)}
           >
             {seasonNames.map((seasonName) => (
-              <option value={seasonName.uuid}>{seasonName.season_name}</option>
+              <option
+                value={seasonName.uuid}
+                key={seasonName.uuid}
+              >{seasonName.season_name}</option>
             ))}
           </select>
         </div>
@@ -122,7 +125,10 @@ const PlayerCreate: React.FC = () => {
             onChange={(e) => setTeam(e.target.value)}
           >
             {teamNames.map((teamName) => (
-              <option value={teamName.uuid}>{teamName.name}</option>
+              <option
+              value={teamName.uuid}
+              key={teamName.uuid}
+              >{teamName.name}</option>
             ))}
           </select>
         </div>

@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../../hooks/use-auth";
 import { postSeason } from "../../lib/api/seasons";
 
 const SeasonCreate: React.FC = () => {
-  const { username, isAuthenticated, isLoading } = useAuth();
+  const { username } = useAuth();
   const [seasonName, setSeasonName] = React.useState<string>("");
   const [gameFormat, setGameFormat] = React.useState<string>("");
   const [code, setCode] = React.useState<string>("");
