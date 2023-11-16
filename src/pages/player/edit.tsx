@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
+import { InputForm, SelectForm } from "./InputForm";
 import { useAuth } from "../../hooks/use-auth";
 import { putPlayer } from "../../lib/api/players";
 import { PositonNameEnum } from "../../types/player";
@@ -9,7 +10,8 @@ import { TeamName } from "../../types/team";
 interface Field {
   key: keyof PlayerInfo;
   label: string;
-  type: string;
+  type: "text" | "number" | "select";
+  options?: Record<string, string>;
 }
 
 interface EditProps {
@@ -20,7 +22,7 @@ interface EditProps {
 
 const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
   const { username } = useAuth();
-  const [fieldValue, setFieldValue] = React.useState<PlayerInfo>(playerData);
+  const [fieldValue, setFieldValue] = useState<PlayerInfo>(playerData);
 
   const positionOptions: PositonNameEnum = {
     setter: "セッター",
@@ -30,46 +32,35 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     libero: "リベロ",
   };
 
+  const handleInputChange = (key: keyof PlayerInfo, value: string) => {
+    setFieldValue((prevValue) => ({
+      ...prevValue,
+      [key]: value,
+    }));
+  };
+
   const renderField = (field: Field) => {
-    const { key, label, type } = field;
+    const { key, label, type, options } = field;
+  
     return (
       <div key={key} className="mb-4">
-        <label className="text-sm text-gray-500 mb-1">{label}</label>
-        {type === "text" && (
-          <input
-            className="border border-gray-400 p-2 rounded w-full"
-            type="text"
+        {["text", "number"].includes(type) && (
+          <InputForm
+            label={label}
+            isRequired={true}
+            type={type}
             defaultValue={playerData[key]}
             onChange={(e) => handleInputChange(key, e.target.value)}
           />
         )}
-        {key === "postion" && (
-          <select
-            className="border border-gray-400 p-2 rounded w-full"
-            value={fieldValue[key]}
+        {type === "select" && (
+          <SelectForm
+            label={label}
+            isRequired={true}
+            defaultTitle={`Select ${label}`}
+            items={options ? Object.entries(options).map(([uuid, name]) => ({ uuid, name })) : []} // Ensure items is an array
             onChange={(e) => handleInputChange(key, e.target.value)}
-          >
-            <option value="">ポジションを選択</option>
-            {Object.entries(positionOptions).map(([positionKey, value]) => (
-              <option key={positionKey} value={positionKey}>
-                {value}
-              </option>
-            ))}
-          </select>
-        )}
-        {key === "team_id" && (
-          <select
-            className="border border-gray-400 p-2 rounded w-full"
-            value={fieldValue[key]}
-            onChange={(e) => handleInputChange(key, e.target.value)}
-          >
-            <option value="">チームを選択</option>
-            {teamData.map((team) => (
-              <option key={team.uuid} value={team.uuid}>
-                {team.name}
-              </option>
-            ))}
-          </select>
+          />
         )}
       </div>
     );
@@ -99,13 +90,6 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     console.log(playerData);
   }, [playerData]);
 
-  const handleInputChange = (key: keyof PlayerInfo, value: string) => {
-    setFieldValue({
-      ...fieldValue,
-      [key]: value,
-    });
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(playerData);
@@ -117,17 +101,16 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     { key: "name", label: "名前", type: "text" },
     { key: "player_number", label: "背番号", type: "text" },
     { key: "code", label: "コード", type: "text" },
-    { key: "postion", label: "ポジション", type: "select" },
-    { key: "weight", label: "体重", type: "text" },
-    { key: "height", label: "身長", type: "text" },
-    { key: "team_id", label: "チーム", type: "select" },
+    { key: "postion", label: "ポジション", type: "select", options: positionOptions },
+    { key: "weight", label: "体重", type: "number" },
+    { key: "height", label: "身長", type: "number" },
+    { key: "team_id", label: "チーム", type: "select", options: teamData.reduce((acc, team) => ({ ...acc, [team.uuid]: team.name }), {}) },
   ];
-  
 
   return (
     <div>
       <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
-        {fields.map((field: Field) => renderField(field))}
+        {fields.map(renderField)}
         <button className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded col-span-2">
           登録
         </button>
