@@ -14,9 +14,7 @@ import Layout from "./pages/Layout";
 import MatchIndex from "./pages/match";
 import MatchCreate from "./pages/match/create";
 import PlayerIndex from "./pages/player";
-import PlayerCreate from "./pages/player/create";
 import SeasonIndex from "./pages/season";
-import SeasonCreate from "./pages/season/create";
 import { SignIn } from "./pages/SignIn";
 import TeamIndex from "./pages/team";
 import TeamCreate from "./pages/team/create";
@@ -34,14 +32,6 @@ function RouteConfig() {
             element={
               <PrivateRoute>
                 <SeasonIndex />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="season/create"
-            element={
-              <PrivateRoute>
-                <SeasonCreate />
               </PrivateRoute>
             }
           />
@@ -68,14 +58,6 @@ function RouteConfig() {
             element={
               <PrivateRoute>
                 <PlayerIndex />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="player/create"
-            element={
-              <PrivateRoute>
-                <PlayerCreate />
               </PrivateRoute>
             }
           />

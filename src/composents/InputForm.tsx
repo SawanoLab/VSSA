@@ -5,7 +5,7 @@ interface InputFormProps {
   label: string;
   isRequired: boolean;
   type: string;
-  defaultValue: string | number;
+  defaultValue?: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

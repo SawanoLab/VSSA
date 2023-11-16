@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { InputForm, SelectForm } from "./InputForm";
+import { InputForm, SelectForm } from "../../composents/InputForm";
 import { useAuth } from "../../hooks/use-auth";
 import { putPlayer } from "../../lib/api/players";
 import { PositonNameEnum } from "../../types/player";
@@ -41,7 +41,7 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
 
   const renderField = (field: Field) => {
     const { key, label, type, options } = field;
-  
+
     return (
       <div key={key} className="mb-4">
         {["text", "number"].includes(type) && (
@@ -58,7 +58,14 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
             label={label}
             isRequired={true}
             defaultTitle={`Select ${label}`}
-            items={options ? Object.entries(options).map(([uuid, name]) => ({ uuid, name })) : []} // Ensure items is an array
+            items={
+              options
+                ? Object.entries(options).map(([uuid, name]) => ({
+                    uuid,
+                    name,
+                  }))
+                : []
+            } // Ensure items is an array
             onChange={(e) => handleInputChange(key, e.target.value)}
           />
         )}
@@ -82,18 +89,8 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     }
   };
 
-  useEffect(() => {
-    console.log(fieldValue);
-  }, [fieldValue]);
-
-  useEffect(() => {
-    console.log(playerData);
-  }, [playerData]);
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(playerData);
-    console.log(fieldValue);
     feachPutPlayer(playerData);
   };
 
@@ -101,10 +98,23 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     { key: "name", label: "名前", type: "text" },
     { key: "player_number", label: "背番号", type: "text" },
     { key: "code", label: "コード", type: "text" },
-    { key: "postion", label: "ポジション", type: "select", options: positionOptions },
+    {
+      key: "postion",
+      label: "ポジション",
+      type: "select",
+      options: positionOptions,
+    },
     { key: "weight", label: "体重", type: "number" },
     { key: "height", label: "身長", type: "number" },
-    { key: "team_id", label: "チーム", type: "select", options: teamData.reduce((acc, team) => ({ ...acc, [team.uuid]: team.name }), {}) },
+    {
+      key: "team_id",
+      label: "チーム",
+      type: "select",
+      options: teamData.reduce(
+        (acc, team) => ({ ...acc, [team.uuid]: team.name }),
+        {}
+      ),
+    },
   ];
 
   return (

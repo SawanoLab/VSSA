@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
+import PlayerCreate from "./create";
 import Edit from "./edit";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
@@ -8,8 +8,10 @@ import Table from "../../composents/table";
 import { usePlayer } from "../../hooks/match/use-player";
 import { useAuth } from "../../hooks/use-auth";
 import { getPlayers, deletePlayer } from "../../lib/api/players";
+import { getSeasons } from "../../lib/api/seasons";
 import { getTeams } from "../../lib/api/teams";
 import { PlayerInfo } from "../../types/player";
+import { SeasonData } from "../../types/season";
 import { TeamName } from "../../types/team";
 import { TeamsData } from "../../types/team";
 import errorHandling from "../../utility/ErrorHandling";
@@ -19,9 +21,12 @@ const PlayerIndex: React.FC = () => {
   const { username } = useAuth();
   const { players, setPlayersData } = usePlayer();
   const [teams, setTeams] = useState<TeamName[]>([]);
+  const [seasons, setSeasons] = useState<SeasonData[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerInfo | null>(null);
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isNewModalOpen, setNewModalOpen] = useState(false);
+
 
   const tableHeader = [
     { header: "名前", accessor: "name" },
@@ -55,12 +60,12 @@ const PlayerIndex: React.FC = () => {
 
   const handleEditClick = (player: PlayerInfo) => {
     setSelectedPlayer(player);
-    setModalOpen(true);
+    setEditModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setSelectedPlayer(null);
-    setModalOpen(false);
+    setEditModalOpen(false);
     fetchPlayerData();
   };
 
@@ -89,6 +94,18 @@ const PlayerIndex: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const fetchSeasonData = async () => {
+    try {
+      const { data, loading } = await getSeasons(username);
+      if (loading || !data) return;
+      setSeasons(data);
+    } catch (error) {
+      errorHandling("シーズンデータ");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const formatPlayerData = (data: PlayerInfo[]) => {
     return data.map(
@@ -123,6 +140,7 @@ const PlayerIndex: React.FC = () => {
       const { data, loading } = await deletePlayer(playerId, username);
       if (loading || !data) return;
       fetchPlayerData();
+      fetchSeasonData();
     } catch (error) {
       errorHandling( "プレイヤーの削除");
     }
@@ -130,11 +148,13 @@ const PlayerIndex: React.FC = () => {
 
   useEffect(() => {
     fetchTeamData();
+    fetchSeasonData();
   }, []);
 
   useEffect(() => {
     if (teams.length > 0) {
       fetchPlayerData();
+      fetchSeasonData();
     }
   }, [teams]);
 
@@ -144,7 +164,7 @@ const PlayerIndex: React.FC = () => {
         <LoadingSpinner />
       ) : (
         <div>
-          {isModalOpen && (
+          {isEditModalOpen && (
             <Modal onClose={handleCloseModal}>
               {selectedPlayer && (
                 <Edit
@@ -155,14 +175,23 @@ const PlayerIndex: React.FC = () => {
               )}
             </Modal>
           )}
+          {isNewModalOpen && (
+            <Modal onClose={() => setNewModalOpen(false)}>
+              <PlayerCreate
+                seasonData={seasons}
+                teamData={teams}
+                onClose={() => setNewModalOpen(false)}
+              />
+            </Modal>
+          )}
           <div className="flex justify-between p-4">
             <h1 className="text-3sm">プレイヤー</h1>
-            <Link
-              to="create"
+            <button 
               className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded"
+              onClick={() => setNewModalOpen(true)}
             >
               新しいプレイヤー
-            </Link>
+            </button>
           </div>
           <div className="bg-blue-100 p-4 border" />
           <Table data={players} columns={tableHeader} />

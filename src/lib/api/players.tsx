@@ -3,16 +3,16 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import handleApiError from "./handleApiError";
 import { PlayerInfo } from "../../types/player";
 
-interface PostPlayer {
+export interface PostPlayer {
   name: string;
   player_number: number;
   code: string;
-  position: string;
-  team: string;
+  postion: string;
   height: number | undefined;
   weight: number | undefined;
-  season_id: string;
   user_id: string;
+  team_id: string;
+  season_id: string;
 }
 
 interface ApiResponse<T> {
@@ -39,7 +39,13 @@ export const postPlayer = async (data: PostPlayer): Promise<ApiResponse<PostPlay
       data,
       { headers: { 'Content-Type': 'application/json' }}
     );
-    return { data: response.data, loading: false };
+
+    console.log("response data", response.data);
+    
+    return {
+      data: response.data,
+      loading: false
+    };
   } catch (error) {
     handleApiError("データの投稿中にエラーが発生しました", error as AxiosError);
     return { loading: false };
