@@ -11,7 +11,7 @@ import { typeOfTeam } from "../../types/team";
 
 
 const MatchCreate: React.FC = () => {
-  const { setTeamPlayer } = useMatch();
+  const { setTeamPlayer, match } = useMatch();
   const { teams } = useTeam();
   const { getSeasonNames, seasons } = useSeason();
   const { getTeamPlayers, players } = usePlayer();
@@ -26,13 +26,22 @@ const MatchCreate: React.FC = () => {
   );
 
   useEffect(() => {
-    const homePlayers = getTeamPlayers(players, homeTeamUUID);
-    const awayPlayers = getTeamPlayers(players, awayTeamUUID);
     const teamNameHome = getTeamName(homeTeamUUID);
-    const teamNameAway = getTeamName(awayTeamUUID);
+    const homePlayers = getTeamPlayers(players, homeTeamUUID);
     setTeamPlayer(typeOfTeam.home, teamNameHome, homePlayers);
+  }, [homeTeamUUID]);
+
+  useEffect(() => {
+    const teamNameAway = getTeamName(awayTeamUUID);
+    const awayPlayers = getTeamPlayers(players, awayTeamUUID);
     setTeamPlayer(typeOfTeam.away, teamNameAway, awayPlayers);
-  }, [homeTeamUUID, awayTeamUUID, players]);
+  }, [awayTeamUUID]);
+
+  useEffect(() => {
+    console.log("match");
+    console.log(match);
+  }, [match]);
+    
 
   const seasonNames = getSeasonNames(seasons);
 

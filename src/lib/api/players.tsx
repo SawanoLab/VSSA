@@ -39,9 +39,6 @@ export const postPlayer = async (data: PostPlayer): Promise<ApiResponse<PostPlay
       data,
       { headers: { 'Content-Type': 'application/json' }}
     );
-
-    console.log("response data", response.data);
-    
     return {
       data: response.data,
       loading: false

@@ -84,7 +84,7 @@ function RouteConfig() {
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+  <>
     <ProvideAuth>
       <SeasonProvider>
         <TeamProvider>
@@ -94,7 +94,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </TeamProvider>
       </SeasonProvider>
     </ProvideAuth>
-  </React.StrictMode>
+  </>
 );
 
 reportWebVitals();

@@ -1,5 +1,3 @@
-// OnCourtSelectTable.tsx
-
 import React from "react";
 
 import OnCourtSelect from "./OnCourtSelect";

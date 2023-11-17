@@ -14,7 +14,6 @@ const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({ type }) =
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
-    // 前回の選手をコートから外す
     if (selectedPlayer !== "") {
       togglePlayerOnCourt(type, selectedPlayer);
       togglePlayerLibero(type, selectedPlayer);

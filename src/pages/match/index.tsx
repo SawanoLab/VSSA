@@ -29,9 +29,6 @@ const MatchIndex: React.FC = () => {
     { header: "アウェイ", accessor: "away_team" },
   ];
 
-  const tableClickHandler = () => {
-    console.log("click");
-  }
 
   return (
     <div>
@@ -45,7 +42,7 @@ const MatchIndex: React.FC = () => {
       <Table
       data={tableData}
       columns={header}
-      onRowClick={tableClickHandler}
+      onRowClick={(row) => console.log(row)}
       />
     </div>
   );

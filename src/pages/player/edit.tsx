@@ -81,7 +81,6 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
         fieldValue
       );
       if (loading || !data) return;
-      console.log(data);
     } catch (error) {
       console.error("プレイヤーの更新中にエラーが発生しました:", error);
     } finally {

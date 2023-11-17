@@ -85,12 +85,9 @@ const Create: React.FC<CreateProps> = ({ seasonData, teamData, onClose }) => {
   };
 
   const feachPostPlayer = async (fieldValue: PlayerInfo) => {
-    console.log("fieldValue", fieldValue);
-
     try {
       const { data, loading } = await postPlayer(fieldValue);
       if (loading || !data) return;
-      console.log(data);
     } catch (error) {
       console.error("プレイヤーの作成中にエラーが発生しました:", error);
     } finally {

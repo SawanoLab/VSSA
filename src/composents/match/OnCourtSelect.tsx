@@ -12,14 +12,11 @@ interface OnCourtSelectProps {
 
 const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, isSetter }) => {
   const { togglePlayerOnCourt, getPlayers } = useMatch();
-  const homePlayers = getPlayers(type);
   const [selectedPlayer, setSelectedPlayer] = useState<string>('');
+  const players = getPlayers(type);
+
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
-    // 前回の選手をコートから外す
-    if (selectedPlayer !== "") {
-      togglePlayerOnCourt(type, selectedPlayer);
-    }
     setSelectedPlayer(selectedValue);
     if (selectedValue !== "") {
       togglePlayerOnCourt(type, selectedValue);
@@ -32,7 +29,7 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, isSet
         <img src={uniformImage} alt="uniform" style={{ width: "70px", height: "70px" }} />
         <PlayerInfoDisplay
           selectedPlayer={selectedPlayer}
-          players={homePlayers.map((player) => player.PlayerInfo)}
+          players={players.map((player) => player.PlayerInfo)}
           isSetter={isSetter}
         />
         <select
@@ -41,7 +38,7 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, isSet
           className="mt-2 text-sm"
         >
           <option value="">選手を選択</option>
-          {homePlayers.map((player) => (
+          {players.map((player) => (
             <option
               key={player.PlayerInfo.uuid}
               value={player.PlayerInfo.uuid}
@@ -51,7 +48,6 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, isSet
             </option>
           ))}
         </select>
-
       </div>
     </td>
   );

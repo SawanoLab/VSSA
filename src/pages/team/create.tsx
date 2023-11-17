@@ -32,8 +32,7 @@ const TeamCreate: React.FC = () => {
         user_id: username,
       };
       try {
-        const response = await postTeam(data);
-        console.log("response", response);
+        await postTeam(data);
       } catch (error) {
         console.error(error);
       }
