@@ -1,6 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-
-import handleApiError from "./handleApiError";
+// import handleApiError from "./handleApiError";
 import { PlayerInfo } from "../../types/player";
 
 export interface PostPlayer {
@@ -22,57 +20,58 @@ interface ApiResponse<T> {
 
 export const getPlayers = async (user_id: string): Promise<ApiResponse<PlayerInfo[]>> => {
   try {
-    const response: AxiosResponse<PlayerInfo[]> = await axios.get(
-      `http://localhost:10444/players/?user_id=${user_id}`
-    );
-    return { data: response.data, loading: false };
+    const response = await fetch(`http://localhost:10444/players/?user_id=${user_id}`);
+    const data = await response.json();
+    return { data, loading: false };
   } catch (error) {
-    handleApiError("データの取得中にエラーが発生しました", error as AxiosError);
+    console.log(error);
     return { loading: false };
   }
 }
 
 export const postPlayer = async (data: PostPlayer): Promise<ApiResponse<PostPlayer>> => {
   try {
-    const response: AxiosResponse<PostPlayer> = await axios.post(
-      `http://localhost:10444/players/`,
-      data,
-      { headers: { 'Content-Type': 'application/json' }}
-    );
-    return {
-      data: response.data,
-      loading: false
-    };
+    const response = await fetch(`http://localhost:10444/players/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const responseData = await response.json();
+    return { data: responseData, loading: false };
   } catch (error) {
-    handleApiError("データの投稿中にエラーが発生しました", error as AxiosError);
+    console.log(error);
     return { loading: false };
   }
 }
-
 
 export const deletePlayer = async (playerId: string, userID: string): Promise<ApiResponse<PlayerInfo>> => {
   try {
-    const response: AxiosResponse<PlayerInfo> = await axios.delete(
-      `http://localhost:10444/players/?player_id=${playerId}&&user_id=${userID}`
-    );
-    return { data: response.data, loading: false };
+    const response = await fetch(`http://localhost:10444/players/?player_id=${playerId}&&user_id=${userID}`, {
+      method: 'DELETE',
+    });
+    const data = await response.json();
+    return { data, loading: false };
   } catch (error) {
-    handleApiError("データの削除中にエラーが発生しました", error as AxiosError);
+    console.log(error);
     return { loading: false };
   }
 }
 
-
 export const putPlayer = async (playerID: string, userID: string, data: PlayerInfo): Promise<ApiResponse<PlayerInfo>> => {
   try {
-    const response: AxiosResponse<PlayerInfo> = await axios.put(
-      `http://localhost:10444/players/?player_id=${playerID}&user_id=${userID}`,
-      data,
-      { headers: { 'Content-Type': 'application/json' }}
-    );
-    return { data: response.data, loading: false };
+    const response = await fetch(`http://localhost:10444/players/?player_id=${playerID}&user_id=${userID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    const responseData = await response.json();
+    return { data: responseData, loading: false };
   } catch (error) {
-    handleApiError("データの更新中にエラーが発生しました", error as AxiosError);
+    console.log(error);
     return { loading: false };
   }
 }

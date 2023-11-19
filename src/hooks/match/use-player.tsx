@@ -1,6 +1,8 @@
 import React  from "react";
 
+import { getPlayers } from "../../lib/api/players";
 import { PlayerInfo } from "../../types/player";
+import { useAuth } from "../use-auth";
 
 export interface PlayerContextType {
   players: PlayerInfo[];
@@ -8,6 +10,8 @@ export interface PlayerContextType {
   setPlayers: (players: PlayerInfo[]) => void;
   setPlayersData: (players: PlayerInfo[]) => void;
   getTeamPlayers: (players: PlayerInfo[], team_id: string) => PlayerInfo[];
+  fetchPlayers: () => void;
+  playerLoading: boolean;
 }
 
 const initialContextState: PlayerContextType = {
@@ -15,7 +19,9 @@ const initialContextState: PlayerContextType = {
   addPlayer: () => [],
   setPlayers: () => [],
   setPlayersData: () => [],
-  getTeamPlayers: () => []
+  getTeamPlayers: () => [],
+  fetchPlayers: () => [],
+  playerLoading: true,
 };
 
 export const PlayerContext =
@@ -24,6 +30,8 @@ React.createContext<PlayerContextType>(initialContextState);
 export const usePlayer = () => React.useContext(PlayerContext);
 
 export default function PlayerProvider({ children }: { children: React.ReactNode }) {
+  const { username } = useAuth();
+  const [playerLoading, setLoading] = React.useState(true);
   const [players, setPlayers] = React.useState<PlayerInfo[]>([]);
 
   const addPlayer = (player: PlayerInfo) => {
@@ -38,13 +46,31 @@ export default function PlayerProvider({ children }: { children: React.ReactNode
     return players.filter((player) => player.team_id === team_id);
   }
 
+  const formatPlayerData = (data: PlayerInfo[]) => {
+    return data.map(({uuid, name, player_number, code, postion, weight = 0, height = 0, user_id, team_id, season_id}: PlayerInfo) => ({uuid, name, player_number, code, postion, weight, height, user_id, team_id, season_id})
+  )};
+
+  const fetchPlayers = async () => {
+    setLoading(true);
+    try {
+      const { data, loading } = await getPlayers(username);
+      if (loading || !data) return;
+      setPlayersData(formatPlayerData(data));
+    } catch (error) {
+      console.error("データの取得中にエラーが発生しました:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <PlayerContext.Provider value={{
       players,
       addPlayer,
       setPlayers,
       setPlayersData,
-      getTeamPlayers
+      getTeamPlayers,
+      fetchPlayers,
+      playerLoading,
     }}>
       {children}
     </PlayerContext.Provider>

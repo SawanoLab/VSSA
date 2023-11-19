@@ -108,30 +108,7 @@ const PlayerIndex: React.FC = () => {
   }
 
   const formatPlayerData = (data: PlayerInfo[]) => {
-    return data.map(
-      ({
-        uuid,
-        name,
-        player_number,
-        code,
-        postion,
-        weight = 0,
-        height = 0,
-        user_id,
-        team_id,
-        season_id,
-      }: PlayerInfo) => ({
-        uuid,
-        name,
-        player_number,
-        code,
-        postion,
-        weight,
-        height,
-        user_id,
-        team_id,
-        season_id,
-      })
+    return data.map(({uuid, name, player_number, code, postion, weight = 0, height = 0, user_id, team_id, season_id}: PlayerInfo) => ({uuid, name, player_number, code, postion, weight, height, user_id, team_id, season_id})
     );
   };
 

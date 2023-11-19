@@ -4,47 +4,25 @@ import { Link } from "react-router-dom";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Table from "../../composents/table";
 import { useTeam } from "../../hooks/match/use-team";
-import { useAuth } from "../../hooks/use-auth";
-import { getTeams } from "../../lib/api/teams";
-import { TeamsData } from "../../types/team";
+
 
 const TeamIndex: React.FC = () => {
-  const [loading, setLoading] = React.useState(true);
-  const { username } = useAuth();
-  const { teams, setTeamsData } = useTeam();
+  const [ loading, setLoading] = React.useState(true);
+  const { teams, fetchTeams, teamLoading } = useTeam();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data, loading } = await getTeams(username);
-        if (loading || !data) {
-          return;
-        }
-        const items = data.map((item: TeamsData) => {
-          return {
-            uuid: item.uuid,
-            name: item.name,
-            code: item.code,
-            director: item.director,
-            doctor: item.doctor,
-            coach: item.coach,
-            trainer: item.trainer,
-            season_id: item.season_id,
-            user_id: item.user_id,
-          };
-        });
-        setTeamsData(items);
-      } catch (error) {
-        console.error("データの取得中にエラーが発生しました:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    fetchTeams();
   }, []);
 
-  const header = [{ header: "名称", accessor: "name" }];
+  useEffect(() => {
+    if (!teamLoading) {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [teamLoading]);
 
+  const header = [{ header: "名称", accessor: "name" }];
   return (
     <div>
       {loading ? <LoadingSpinner /> : null}
