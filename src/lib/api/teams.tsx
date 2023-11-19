@@ -24,7 +24,7 @@ export const getTeams = async (
 ): Promise<ApiResponse<TeamsData[]>> => {
   try {
     const response: AxiosResponse<TeamsData[]> = await axios.get(
-      `http://localhost:10444/teams/?user_id=${user_id}`
+      `${process.env.ENTORYPOINT_URL}/teams/?user_id=${user_id}`
     );
     return { data: response.data, loading: false };
   } catch (error) {
@@ -39,7 +39,7 @@ export const getTeams = async (
 export const postTeam = async (data: PostTeam): Promise<PostTeam> => {
   try {
     const response: AxiosResponse<PostTeam> = await axios.post(
-      `http://localhost:10444/teams/`,
+      `${process.env.ENTORYPOINT_URL}/teams/`,
       data,
       { headers: { "Content-Type": "application/json" } }
     );

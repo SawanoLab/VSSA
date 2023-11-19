@@ -20,7 +20,8 @@ interface ApiResponse<T> {
 
 export const getPlayers = async (user_id: string): Promise<ApiResponse<PlayerInfo[]>> => {
   try {
-    const response = await fetch(`http://localhost:10444/players/?user_id=${user_id}`);
+    
+    const response = await fetch(`${process.env.ENTORYPOINT_URL}/players/?user_id=${user_id}`);
     const data = await response.json();
     return { data, loading: false };
   } catch (error) {
@@ -31,7 +32,7 @@ export const getPlayers = async (user_id: string): Promise<ApiResponse<PlayerInf
 
 export const postPlayer = async (data: PostPlayer): Promise<ApiResponse<PostPlayer>> => {
   try {
-    const response = await fetch(`http://localhost:10444/players/`, {
+    const response = await fetch(`${process.env.ENTORYPOINT_URL}/players/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ export const postPlayer = async (data: PostPlayer): Promise<ApiResponse<PostPlay
 
 export const deletePlayer = async (playerId: string, userID: string): Promise<ApiResponse<PlayerInfo>> => {
   try {
-    const response = await fetch(`http://localhost:10444/players/?player_id=${playerId}&&user_id=${userID}`, {
+    const response = await fetch(`${process.env.ENTORYPOINT_URL}/players/?player_id=${playerId}&&user_id=${userID}`, {
       method: 'DELETE',
     });
     const data = await response.json();
@@ -61,7 +62,7 @@ export const deletePlayer = async (playerId: string, userID: string): Promise<Ap
 
 export const putPlayer = async (playerID: string, userID: string, data: PlayerInfo): Promise<ApiResponse<PlayerInfo>> => {
   try {
-    const response = await fetch(`http://localhost:10444/players/?player_id=${playerID}&user_id=${userID}`, {
+    const response = await fetch(`${process.env.ENTORYPOINT_URL}/players/?player_id=${playerID}&user_id=${userID}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

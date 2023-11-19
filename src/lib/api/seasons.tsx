@@ -20,7 +20,7 @@ interface ApiResponse<T> {
 export const getSeasons = async (user_id: string): Promise<ApiResponse<SeasonData[]>> => {
   try {
     const response: AxiosResponse<SeasonData[]> = await axios.get(
-      `http://localhost:10444/seasons/?user_id=${user_id}`
+      `${process.env.ENTORYPOINT_URL}/seasons/?user_id=${user_id}`
     );
     return { data: response.data, loading: false };
   } catch (error) {
@@ -32,7 +32,7 @@ export const getSeasons = async (user_id: string): Promise<ApiResponse<SeasonDat
 export const postSeason = async (data: PostSeason): Promise<PostSeason> => {
   try {
     const response: AxiosResponse<PostSeason> = await axios.post(
-      `http://localhost:10444/seasons/`,
+      `${process.env.ENTORYPOINT_URL}/seasons/`,
       data,
       { headers: { 'Content-Type': 'application/json' }}
     );
