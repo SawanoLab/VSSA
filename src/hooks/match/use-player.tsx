@@ -1,6 +1,6 @@
 import React  from "react";
 
-import { getPlayers } from "../../lib/api/players";
+import { playerClient } from "../../lib/api/main";
 import { PlayerInfo } from "../../types/player";
 import { useAuth } from "../use-auth";
 
@@ -53,8 +53,8 @@ export default function PlayerProvider({ children }: { children: React.ReactNode
   const fetchPlayers = async () => {
     setLoading(true);
     try {
-      const { data, loading } = await getPlayers(username);
-      if (loading || !data) return;
+      const response = await playerClient.getPlayersPlayersGet(username);
+      const data = response.data;
       setPlayersData(formatPlayerData(data));
     } catch (error) {
       console.error("データの取得中にエラーが発生しました:", error);

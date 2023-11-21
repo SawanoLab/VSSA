@@ -143,19 +143,7 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
 
   const getPlayersByCourtStatus = (teamType: 'home' | 'away', onCourt: boolean) =>
     Object.values(match[`${teamType}_team`].players).filter(player => player.onCourt === onCourt);
-  // const getPlayersByCourtStatus = (
-  //   teamType: "home" | "away",
-  //   onCourt: boolean
-  // ) => {
-  //   const team = match[`${teamType}_team`];
-  //   if (team && team.players) {
-  //     return Object.values(team.players).filter(
-  //       (player) => player.onCourt === onCourt
-  //     );
-  //   } else {
-  //     return [];
-  //   }
-  // };
+
   const getOnCourtPlayers = (teamType: "home" | "away") =>
     getPlayersByCourtStatus(teamType, true);
   const getOffCourtPlayers = (teamType: "home" | "away") =>

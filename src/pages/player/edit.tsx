@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { InputForm, SelectForm } from "../../composents/InputForm";
 import { useAuth } from "../../hooks/use-auth";
-import { putPlayer } from "../../lib/api/players";
+import { playerClient } from "../../lib/api/main";
 import { PositonNameEnum } from "../../types/player";
 import { PlayerInfo } from "../../types/player";
 import { TeamName } from "../../types/team";
@@ -75,12 +75,11 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
 
   const feachPutPlayer = async (playerData: PlayerInfo) => {
     try {
-      const { data, loading } = await putPlayer(
+      await playerClient.updatePlayerPlayersPut(
         playerData.uuid,
         username,
         fieldValue
       );
-      if (loading || !data) return;
     } catch (error) {
       console.error("プレイヤーの更新中にエラーが発生しました:", error);
     } finally {

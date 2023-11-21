@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { InputForm, SelectForm } from "../../composents/InputForm";
 import { useAuth } from "../../hooks/use-auth";
-import { postPlayer } from "../../lib/api/players";
+import { playerClient } from "../../lib/api/main";
 import { PlayerInfo, PositonNameEnum } from "../../types/player";
 import { SeasonData } from "../../types/season";
 import { TeamName } from "../../types/team";
@@ -86,8 +86,7 @@ const Create: React.FC<CreateProps> = ({ seasonData, teamData, onClose }) => {
 
   const feachPostPlayer = async (fieldValue: PlayerInfo) => {
     try {
-      const { data, loading } = await postPlayer(fieldValue);
-      if (loading || !data) return;
+      await playerClient.createPlayerPlayersPost(fieldValue);
     } catch (error) {
       console.error("プレイヤーの作成中にエラーが発生しました:", error);
     } finally {

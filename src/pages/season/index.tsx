@@ -6,7 +6,7 @@ import Modal from "../../composents/Modal";
 import Table from "../../composents/table";
 import { useSeason } from "../../hooks/match/use-season";
 import { useAuth } from "../../hooks/use-auth";
-import { getSeasons } from "../../lib/api/seasons";
+import { seasonClient } from "../../lib/api/main";
 
 const SeasonIndex: React.FC = () => {
   const { username } = useAuth();
@@ -31,11 +31,9 @@ const SeasonIndex: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
-        const { data, loading } = await getSeasons(username);
-        if (loading || !data) {
-          return;
-        }
+        const { data } = await seasonClient.getSeasonsSeasonsGet(username)
         setSeasonsData(data);
       } catch (error) {
         console.error("データの取得中にエラーが発生しました:", error);

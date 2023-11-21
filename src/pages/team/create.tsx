@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { useSeason } from "../../hooks/match/use-season";
 import { useAuth } from "../../hooks/use-auth";
-import { postTeam } from "../../lib/api/teams";
+import { teamClient } from "../../lib/api/main";
 
 const TeamCreate: React.FC = () => {
   const { username } = useAuth();
@@ -32,7 +32,7 @@ const TeamCreate: React.FC = () => {
         user_id: username,
       };
       try {
-        await postTeam(data);
+        await teamClient.createTeamTeamsPost(data);
       } catch (error) {
         console.error(error);
       }

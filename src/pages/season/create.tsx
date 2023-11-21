@@ -2,7 +2,7 @@ import React from "react";
 
 import { InputForm } from "../../composents/InputForm";
 import { useAuth } from "../../hooks/use-auth";
-import { postSeason } from "../../lib/api/seasons";
+import { seasonClient } from "../../lib/api/main";
 
 interface SeasonCreateProps {
   onClose: () => void;
@@ -36,7 +36,11 @@ const SeasonCreate: React.FC<SeasonCreateProps> = ({
         end_day: endDay,
         user_id: username,
       };
-      postSeason(data);
+      try {
+        await seasonClient.createSeasonSeasonsPost(data);
+      } catch (error) {
+        console.error(error);
+      }
       onClose();
     }
   };

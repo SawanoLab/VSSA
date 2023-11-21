@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getTeams } from "../../lib/api/teams";
+import { teamClient } from "../../lib/api/main";
 import { TeamsData } from "../../types/team";
 import { useAuth } from "../use-auth";
 
@@ -67,10 +67,8 @@ export default function TeamProvider({ children }: { children: React.ReactNode }
   const fetchTeams = async () => {
     setLoading(true);
     try {
-      const { data, loading } = await getTeams(username);
-      if (loading || !data) {
-        return;
-      }
+      const response = await teamClient.getTeamsTeamsGet(username);
+      const data = response.data;
       const items = data.map((item: TeamsData) => {
         return {
           uuid: item.uuid,

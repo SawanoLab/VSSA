@@ -39,7 +39,7 @@ const MatchCreate: React.FC = () => {
 
   useEffect(() => {
     console.log("match");
-    console.log(match);
+    console.log(JSON.stringify(match, null, 2));
   }, [match]);
     
 

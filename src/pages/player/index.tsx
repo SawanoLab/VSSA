@@ -7,15 +7,12 @@ import Modal from "../../composents/Modal";
 import Table from "../../composents/table";
 import { usePlayer } from "../../hooks/match/use-player";
 import { useAuth } from "../../hooks/use-auth";
-import { getPlayers, deletePlayer } from "../../lib/api/players";
-import { getSeasons } from "../../lib/api/seasons";
-import { getTeams } from "../../lib/api/teams";
+import { playerClient, teamClient, seasonClient } from "../../lib/api/main";
 import { PlayerInfo } from "../../types/player";
 import { SeasonData } from "../../types/season";
 import { TeamName } from "../../types/team";
 import { TeamsData } from "../../types/team";
 import errorHandling from "../../utility/ErrorHandling";
-
 
 const PlayerIndex: React.FC = () => {
   const { username } = useAuth();
@@ -26,7 +23,6 @@ const PlayerIndex: React.FC = () => {
   const [selectedPlayer, setSelectedPlayer] = useState<PlayerInfo | null>(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isNewModalOpen, setNewModalOpen] = useState(false);
-
 
   const tableHeader = [
     { header: "名前", accessor: "name" },
@@ -66,13 +62,14 @@ const PlayerIndex: React.FC = () => {
   const handleCloseModal = () => {
     setSelectedPlayer(null);
     setEditModalOpen(false);
-    fetchPlayerData();
+    fetchPlayer();
   };
 
   const fetchTeamData = async () => {
+    setLoading(true);
     try {
-      const { data, loading } = await getTeams(username);
-      if (loading || !data) return;
+      const response = await teamClient.getTeamsTeamsGet(username);
+      const data = response.data;
       const formattedData = data.map((item: TeamsData) => ({
         uuid: item.uuid,
         name: item.name,
@@ -80,46 +77,74 @@ const PlayerIndex: React.FC = () => {
       setTeams(formattedData);
     } catch (error) {
       errorHandling("チームデータ");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const fetchPlayerData = async () => {
+  const fetchPlayer = async () => {
+    setLoading(true);
     try {
-      const { data, loading } = await getPlayers(username);
-      if (loading || !data) return;
-      setPlayersData(formatPlayerData(data));
+      const response = await playerClient.getPlayersPlayersGet(username);
+      const data = response.data;
+      if (data) {
+        setPlayersData(formatPlayerData(data));
+      }
     } catch (error) {
       errorHandling("プレイヤーデータ");
     } finally {
+      // リクエストが完了したら loading を false に設定
       setLoading(false);
     }
   };
 
   const fetchSeasonData = async () => {
     try {
-      const { data, loading } = await getSeasons(username);
-      if (loading || !data) return;
+      const response = await seasonClient.getSeasonsSeasonsGet(username);
+      const data = response.data;
       setSeasons(data);
     } catch (error) {
       errorHandling("シーズンデータ");
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const formatPlayerData = (data: PlayerInfo[]) => {
-    return data.map(({uuid, name, player_number, code, postion, weight = 0, height = 0, user_id, team_id, season_id}: PlayerInfo) => ({uuid, name, player_number, code, postion, weight, height, user_id, team_id, season_id})
+    return data.map(
+      ({
+        uuid,
+        name,
+        player_number,
+        code,
+        postion,
+        weight = 0,
+        height = 0,
+        user_id,
+        team_id,
+        season_id,
+      }: PlayerInfo) => ({
+        uuid,
+        name,
+        player_number,
+        code,
+        postion,
+        weight,
+        height,
+        user_id,
+        team_id,
+        season_id,
+      })
     );
   };
 
   const handleDeleteClick = async (playerId: string) => {
     try {
-      const { data, loading } = await deletePlayer(playerId, username);
-      if (loading || !data) return;
-      fetchPlayerData();
+      await playerClient.deletePlayerPlayersDelete(username, playerId);
+      fetchPlayer();
       fetchSeasonData();
     } catch (error) {
-      errorHandling( "プレイヤーの削除");
+      errorHandling("プレイヤーの削除");
     }
   };
 
@@ -130,8 +155,9 @@ const PlayerIndex: React.FC = () => {
 
   useEffect(() => {
     if (teams.length > 0) {
-      fetchPlayerData();
+      fetchPlayer();
       fetchSeasonData();
+      fetchPlayer();
     }
   }, [teams]);
 
@@ -163,7 +189,7 @@ const PlayerIndex: React.FC = () => {
           )}
           <div className="flex justify-between p-4">
             <h1 className="text-3sm">プレイヤー</h1>
-            <button 
+            <button
               className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded"
               onClick={() => setNewModalOpen(true)}
             >

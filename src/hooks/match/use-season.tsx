@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getSeasons } from "../../lib/api/seasons";
+import { seasonClient } from "../../lib/api/main";
 import { SeasonData } from "../../types/season";
 import { useAuth } from "../use-auth";
 
@@ -69,8 +69,8 @@ export default function SeasonProvider({ children }: { children: React.ReactNode
   const fetchSeasons = async () => {
     setLoading(true);
     try {
-      const { data, loading } = await getSeasons(username);
-      if (loading || !data) return;
+      const response = await seasonClient.getSeasonsSeasonsGet(username);
+      const data = response.data;
       setSeasonsData(data);
     } catch (error) {
       console.error("データの取得中にエラーが発生しました:", error);
