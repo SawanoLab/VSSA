@@ -4,14 +4,6 @@ services:
   openapi-generator:
     image: openapitools/openapi-generator-cli
     volumes:
-      - ./frontend:/frontend
-    working_dir: /frontend
-    command:
-      - generate
-      - -g
-      - typescript-axios
-      - -i
-      - <http://backend/openapi.json>
-      - -o
-      - /frontend/src/api-client
-      - --additional-properties=supportsES6=true,modelPropertyNaming=original
+      - .:/src
+    # command: ls /src -a 
+    command: generate -i ./src/openapi.json -g typescript-axios -o /src/src/api-client --skip-validate-spec
