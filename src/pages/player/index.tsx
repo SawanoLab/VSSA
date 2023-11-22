@@ -4,7 +4,7 @@ import PlayerCreate from "./create";
 import Edit from "./edit";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
-import Table from "../../composents/table";
+import Table from "../../composents/Table";
 import { usePlayer } from "../../hooks/match/use-player";
 import { useAuth } from "../../hooks/use-auth";
 import { playerClient, teamClient, seasonClient } from "../../lib/api/main";

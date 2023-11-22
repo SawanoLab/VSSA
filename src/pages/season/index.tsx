@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import SeasonCreate from "./create";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
-import Table from "../../composents/table";
+import Table from "../../composents/Table";
 import { useSeason } from "../../hooks/match/use-season";
 import { useAuth } from "../../hooks/use-auth";
 import { seasonClient } from "../../lib/api/main";
@@ -12,16 +12,15 @@ const SeasonIndex: React.FC = () => {
   const { username } = useAuth();
   const [loading, setLoading] = useState(true);
   const { seasons, setSeasonsData } = useSeason();
-  const [ isCreateModalOpen, setCreateModalOpen ] = useState(false);
-
+  const [isCreateModalOpen, setCreateModalOpen] = useState(false);
 
   const handleCreateClick = () => {
     setCreateModalOpen(true);
-  }
+  };
 
   const handleCloseClick = () => {
     setCreateModalOpen(false);
-  }
+  };
   const header = [
     { header: "開始日", accessor: "start_day" },
     { header: "終了日", accessor: "end_day" },
@@ -33,7 +32,7 @@ const SeasonIndex: React.FC = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const { data } = await seasonClient.getSeasonsSeasonsGet(username)
+        const { data } = await seasonClient.getSeasonsSeasonsGet(username);
         setSeasonsData(data);
       } catch (error) {
         console.error("データの取得中にエラーが発生しました:", error);
@@ -42,7 +41,7 @@ const SeasonIndex: React.FC = () => {
       }
     };
     fetchData();
-  }, []); 
+  }, []);
 
   return (
     <div>
@@ -52,9 +51,7 @@ const SeasonIndex: React.FC = () => {
         <div>
           {isCreateModalOpen && (
             <Modal onClose={handleCloseClick}>
-              <SeasonCreate
-                onClose={handleCloseClick}
-              />
+              <SeasonCreate onClose={handleCloseClick} />
             </Modal>
           )}
           <div className="flex justify-between p-4">

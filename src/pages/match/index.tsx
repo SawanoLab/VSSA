@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import LoadingSpinner from "../../composents/LoadingSpinner";
-import Table from "../../composents/table";
+import Table from "../../composents/Table";
 import { usePlayer } from "../../hooks/match/use-player";
 import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
-
 
 const MatchIndex: React.FC = () => {
   const { fetchTeams, teamLoading } = useTeam();
@@ -20,8 +19,7 @@ const MatchIndex: React.FC = () => {
     fetchPlayers();
     fetchSeasons();
   }, []);
-  
-  
+
   useEffect(() => {
     if (teamLoading || playerLoading || seasonLoading) {
       setLoading(true);

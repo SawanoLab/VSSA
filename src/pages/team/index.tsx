@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import LoadingSpinner from "../../composents/LoadingSpinner";
-import Table from "../../composents/table";
+import Table from "../../composents/Table";
 import { useTeam } from "../../hooks/match/use-team";
 
-
 const TeamIndex: React.FC = () => {
-  const [ loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(true);
   const { teams, fetchTeams, teamLoading } = useTeam();
 
   useEffect(() => {

@@ -4,7 +4,7 @@ import { FaPersonBooth } from "react-icons/fa";
 import { FaCalendar } from "react-icons/fa";
 import { FaChessKing } from "react-icons/fa";
 
-import Items from "../composents/items";
+import Items from "./Items";
 
 export default function Navgetion() {
   const links = [
