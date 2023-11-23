@@ -35,8 +35,8 @@ const TeamPlayerSelector: React.FC = () => {
   return (
     <div className="flex flex-col justify-between">
       <div className="flex m-1 relative">
-        {renderOnCourtSelectTable(typeOfTeam.home, courtHomeZoneName, setterPositionHome, setterPositionAway)}
-        {renderOnCourtSelectTable(typeOfTeam.away, courtAwayZoneName, setterPositionHome, setterPositionAway)}
+        {renderOnCourtSelectTable(typeOfTeam.home, courtHomeZoneName, setterPositionHome)}
+        {renderOnCourtSelectTable(typeOfTeam.away, courtAwayZoneName, setterPositionAway)}
         <img
           src="/volleyball-court.png"
           alt="court"

@@ -19,6 +19,11 @@ type MatchContextType = {
     teamType: "home" | "away",
     setterPosition: SetterPositionName
   ) => void;
+  setPlayerZoneCode: (
+    teamType: "home" | "away",
+    playerUUID: string,
+    zoneCode: string
+  ) => void;
   getSetterPosition: (teamType: "home" | "away") => SetterPositionName;
   togglePlayerOnCourt: (teamType: "home" | "away", playerUUID: string) => void;
   togglePlayerLibero: (teamType: "home" | "away", playerUUID: string) => void;
@@ -44,6 +49,7 @@ type MatchProviderProps = {
 };
 
 const initialTeam = {
+  uuid: "",
   team_name: "",
   players: {} as Players,
   setter_position: SetterPositionName.Z1,
@@ -70,7 +76,7 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
           acc[player.uuid] = {
             PlayerInfo: player,
             onCourt: false,
-            zone_code: null,
+            zone_code: "",
             setter: false,
             libero: false,
           };
@@ -138,6 +144,26 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     }));
   };
 
+  const setPlayerZoneCode = (
+    teamType: "home" | "away",
+    playerUUID: string,
+    zoneCode: string
+  ) => {
+    setMatch((prevMatch) => ({
+      ...prevMatch,
+      [`${teamType}_team`]: {
+        ...prevMatch[`${teamType}_team`],
+        players: {
+          ...prevMatch[`${teamType}_team`].players,
+          [playerUUID]: {
+            ...prevMatch[`${teamType}_team`].players[playerUUID],
+            zone_code: zoneCode,
+          },
+        },
+      },
+    }));
+  }
+
   const getSetterPosition = (teamType: "home" | "away") =>
     match[`${teamType}_team`].setter_position;
 
@@ -175,6 +201,7 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     getPlayers,
     setTeamPlayer,
     setSetterPosition,
+    setPlayerZoneCode,
     getSetterPosition,
     togglePlayerOnCourt,
     togglePlayerLibero,

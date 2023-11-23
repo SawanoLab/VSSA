@@ -64,6 +64,25 @@ export interface Match {
 /**
  * 
  * @export
+ * @interface MatchPostRequest
+ */
+export interface MatchPostRequest {
+    /**
+     * 
+     * @type {Match}
+     * @memberof MatchPostRequest
+     */
+    'Match': Match;
+    /**
+     * 
+     * @type {{ [key: string]: PlayerMatchInfo; }}
+     * @memberof MatchPostRequest
+     */
+    'PlayerMatchInfo': { [key: string]: PlayerMatchInfo; };
+}
+/**
+ * 
+ * @export
  * @interface MatchRequest
  */
 export interface MatchRequest {
@@ -79,25 +98,6 @@ export interface MatchRequest {
      * @memberof MatchRequest
      */
     'away_team': TeamRequest;
-}
-/**
- * 
- * @export
- * @interface NatchPostRequest
- */
-export interface NatchPostRequest {
-    /**
-     * 
-     * @type {Match}
-     * @memberof NatchPostRequest
-     */
-    'Match': Match;
-    /**
-     * 
-     * @type {{ [key: string]: PlayerMatchInfo; }}
-     * @memberof NatchPostRequest
-     */
-    'PlayerMatchInfo': { [key: string]: PlayerMatchInfo; };
 }
 /**
  * 
@@ -673,13 +673,13 @@ export const MatchesApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Create Match
-         * @param {NatchPostRequest} natchPostRequest 
+         * @param {MatchPostRequest} matchPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createMatchMatchesPost: async (natchPostRequest: NatchPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'natchPostRequest' is not null or undefined
-            assertParamExists('createMatchMatchesPost', 'natchPostRequest', natchPostRequest)
+        createMatchMatchesPost: async (matchPostRequest: MatchPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'matchPostRequest' is not null or undefined
+            assertParamExists('createMatchMatchesPost', 'matchPostRequest', matchPostRequest)
             const localVarPath = `/matches/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -699,7 +699,7 @@ export const MatchesApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(natchPostRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(matchPostRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -756,12 +756,12 @@ export const MatchesApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create Match
-         * @param {NatchPostRequest} natchPostRequest 
+         * @param {MatchPostRequest} matchPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createMatchMatchesPost(natchPostRequest: NatchPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NatchPostRequest>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createMatchMatchesPost(natchPostRequest, options);
+        async createMatchMatchesPost(matchPostRequest: MatchPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MatchPostRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createMatchMatchesPost(matchPostRequest, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['MatchesApi.createMatchMatchesPost']?.[index]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
@@ -792,12 +792,12 @@ export const MatchesApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Create Match
-         * @param {NatchPostRequest} natchPostRequest 
+         * @param {MatchPostRequest} matchPostRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createMatchMatchesPost(natchPostRequest: NatchPostRequest, options?: any): AxiosPromise<NatchPostRequest> {
-            return localVarFp.createMatchMatchesPost(natchPostRequest, options).then((request) => request(axios, basePath));
+        createMatchMatchesPost(matchPostRequest: MatchPostRequest, options?: any): AxiosPromise<MatchPostRequest> {
+            return localVarFp.createMatchMatchesPost(matchPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -822,13 +822,13 @@ export class MatchesApi extends BaseAPI {
     /**
      * 
      * @summary Create Match
-     * @param {NatchPostRequest} natchPostRequest 
+     * @param {MatchPostRequest} matchPostRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MatchesApi
      */
-    public createMatchMatchesPost(natchPostRequest: NatchPostRequest, options?: RawAxiosRequestConfig) {
-        return MatchesApiFp(this.configuration).createMatchMatchesPost(natchPostRequest, options).then((request) => request(this.axios, this.basePath));
+    public createMatchMatchesPost(matchPostRequest: MatchPostRequest, options?: RawAxiosRequestConfig) {
+        return MatchesApiFp(this.configuration).createMatchMatchesPost(matchPostRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

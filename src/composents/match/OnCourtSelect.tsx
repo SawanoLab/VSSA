@@ -2,22 +2,26 @@ import React, { ChangeEvent, useState } from "react";
 
 import PlayerInfoDisplay from "./PlayerInfoDisplay";
 import { useMatch } from "../../hooks/match/matchProvider";
+import { SetterPositionName } from "../../types/player";
 
 
 interface OnCourtSelectProps {
   type: "home" | "away";
   uniformImage: string;
+  courtZoneName?: SetterPositionName;
   isSetter: boolean;
 }
 
-const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, isSetter }) => {
-  const { togglePlayerOnCourt, getPlayers } = useMatch();
-  const [selectedPlayer, setSelectedPlayer] = useState<string>('');
+const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, courtZoneName, isSetter }) => {
+  const { togglePlayerOnCourt, getPlayers, setPlayerZoneCode } = useMatch();
+  const [ selectedPlayer, setSelectedPlayer ] = useState<string>('');
   const players = getPlayers(type);
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
+    console.log("selectedValue", selectedValue);
     setSelectedPlayer(selectedValue);
+    courtZoneName && setPlayerZoneCode(type, selectedValue, courtZoneName);
     if (selectedValue !== "") {
       togglePlayerOnCourt(type, selectedValue);
     }

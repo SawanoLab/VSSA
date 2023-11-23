@@ -8,8 +8,7 @@ import { typeOfTeam } from "../../types/team";
 export const renderOnCourtSelectTable = (
   type: typeOfTeam,
   courtZoneName: SetterPositionName[][],
-  setterPositionHome: SetterPositionName,
-  setterPositionAway: SetterPositionName
+  setterPositionHome: SetterPositionName
 ) => (
   <table
     className={`table-auto absolute top-20 ${
@@ -22,14 +21,10 @@ export const renderOnCourtSelectTable = (
           {Array.from({ length: 2 }).map((_, col) => (
             <OnCourtSelect
               type={type}
-              uniformImage={
-                type === typeOfTeam.home ? "/uniform.png" : "/away_uniform.png"
-              }
+              uniformImage={ type === typeOfTeam.home ? "/uniform.png" : "/away_uniform.png" }
+              courtZoneName={courtZoneName[row][col]}
               key={`${row}-${col}`}
-              isSetter={
-                courtZoneName[row][col] ===
-                (type === typeOfTeam.home ? setterPositionHome : setterPositionAway)
-              }
+              isSetter={ courtZoneName[row][col] === setterPositionHome }
             />
           ))}
         </tr>

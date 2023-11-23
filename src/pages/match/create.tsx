@@ -1,17 +1,21 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
 
+import { Match, MatchPostRequest } from "../../api-client";
 import TeamSelectorTable from "../../composents/match/TeamPlayerSelector";
 import { useMatch } from "../../hooks/match/matchProvider";
 import { usePlayer } from "../../hooks/match/use-player";
 import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
+import { useAuth } from "../../hooks/use-auth";
+import { matchClient } from "../../lib/api/main";
+import { Player } from "../../types/player";
 import { typeOfTeam } from "../../types/team";
 
 
 
 const MatchCreate: React.FC = () => {
-  const { setTeamPlayer, match } = useMatch();
+  const { username } = useAuth();
+  const { setTeamPlayer, getPlayers } = useMatch();
   const { teams } = useTeam();
   const { getSeasonNames, seasons } = useSeason();
   const { getTeamPlayers, players } = usePlayer();
@@ -37,11 +41,40 @@ const MatchCreate: React.FC = () => {
     setTeamPlayer(typeOfTeam.away, teamNameAway, awayPlayers);
   }, [awayTeamUUID]);
 
-  useEffect(() => {
-    console.log("match");
-    console.log(JSON.stringify(match, null, 2));
-  }, [match]);
-    
+  const handleCreate = () => {
+    const homePlayerData = Object(getPlayers(typeOfTeam.home)).map((player: Player) => ({
+      player_id: player.PlayerInfo.uuid,
+      on_court: player.onCourt,
+      zone_code: player.zone_code,
+      libero: player.libero
+    }));
+
+    const awayPlayerData = Object(getPlayers(typeOfTeam.away)).map((player: Player) => ({
+      player_id: player.PlayerInfo.uuid,
+      on_court: player.onCourt,
+      zone_code: player.zone_code,
+      libero: player.libero
+    }));
+
+    const matchData: Match = {
+      home_team_id: homeTeamUUID,
+      away_team_id: awayTeamUUID,
+      user_id: username
+    };
+
+    const matchPostRequest: MatchPostRequest = {
+      Match: matchData,
+      // PlayerMatchInfo: {
+        PlayerMatchInfo: {
+          ...homePlayerData,
+          ...awayPlayerData
+        }
+      // }
+    };
+    matchClient.createMatchMatchesPost(matchPostRequest).catch((err) => {
+      console.log("err", err);
+    });
+  };
 
   const seasonNames = getSeasonNames(seasons);
 
@@ -94,18 +127,17 @@ const MatchCreate: React.FC = () => {
         <div className="flex flex-row m-1">
           <TeamSelectorTable />
         </div>
-        <Link
-          to="/season"
+        <button
+          onClick={handleCreate}
           className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded"
         >
           作成
-        </Link>
-        <Link
-          to="/player"
+        </button>
+        <button
           className="bg-gray-200 hover:text-gray-600 text-gray-500 py-1 px-4 rounded"
         >
           キャンセル
-        </Link>
+        </button>
       </div>
     </div>
   );
