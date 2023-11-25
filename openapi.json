@@ -379,10 +379,30 @@
           {
             "required": true,
             "schema": {
-              "title": "Match Id",
+              "title": "User Id",
               "type": "string"
             },
-            "name": "match_id",
+            "name": "user_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "type": "integer",
+              "default": 100
+            },
+            "name": "limit",
             "in": "query"
           }
         ],
@@ -392,7 +412,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/MatchRequest"
+                  "title": "Response Get Matches Matches  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchRequest"
+                  }
                 }
               }
             }
@@ -476,18 +500,15 @@
         "properties": {
           "home_team_id": {
             "title": "Home Team Id",
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           },
           "away_team_id": {
             "title": "Away Team Id",
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           },
           "user_id": {
             "title": "User Id",
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           }
         }
       },
@@ -652,16 +673,13 @@
           "name",
           "player_number",
           "code",
-          "postion",
-          "weight",
-          "height"
+          "postion"
         ],
         "type": "object",
         "properties": {
           "uuid": {
             "title": "Uuid",
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           },
           "name": {
             "title": "Name",
@@ -693,15 +711,13 @@
         "title": "PlayerMatchInfo",
         "required": [
           "player_id",
-          "on_court",
-          "libero"
+          "on_court"
         ],
         "type": "object",
         "properties": {
           "player_id": {
             "title": "Player Id",
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
           },
           "on_court": {
             "title": "On Court",
@@ -977,8 +993,7 @@
         "title": "TeamPlayers",
         "required": [
           "PlayerInfo",
-          "onCourt",
-          "libero"
+          "onCourt"
         ],
         "type": "object",
         "properties": {
