@@ -64,12 +64,10 @@ const MatchCreate: React.FC = () => {
 
     const matchPostRequest: MatchPostRequest = {
       Match: matchData,
-      // PlayerMatchInfo: {
         PlayerMatchInfo: {
           ...homePlayerData,
           ...awayPlayerData
         }
-      // }
     };
     matchClient.createMatchMatchesPost(matchPostRequest).catch((err) => {
       console.log("err", err);
@@ -80,7 +78,7 @@ const MatchCreate: React.FC = () => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="m-2 bg-blue-50 p-5 rounded-lg">
+      <div className="m-2 p-5 border bg-gray-100 border-gray-300 rounded-lg">
         <h1 className="text-2xl text-gray-500">新規の試合を作成</h1>
         <div className="flex flex-row m-1">
           <select className="text-sm text-gray-500 border border-spacing-5 p-1 w-80">

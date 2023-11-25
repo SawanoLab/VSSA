@@ -196,7 +196,7 @@ const PlayerIndex: React.FC = () => {
               新しいプレイヤー
             </button>
           </div>
-          <div className="bg-blue-100 p-4 border" />
+          <div className="bg-gray-200 p-4 border" />
           <Table data={players} columns={tableHeader} />
         </div>
       )}

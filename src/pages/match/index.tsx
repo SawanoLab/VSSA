@@ -68,7 +68,7 @@ const MatchIndex: React.FC = () => {
               新しい試合
             </Link>
           </div>
-          <div className=" bg-blue-100 p-4 border" />
+          <div className=" bg-gray-200 p-4 border" />
           <Table
             data={tableData}
             columns={header}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useMatch } from "../../hooks/match/matchProvider";
 import { SetterPositionName } from "../../types/player";
@@ -14,6 +14,15 @@ const SetPositionSelect: React.FC<SetPositionSelectProps> = (
 ) => {
   const { setSetterPosition } = useMatch();
   const [selectedBox, setSelectedBox] = useState<[number, number] | null>(null);
+  useEffect(() => {
+    if(type === typeOfTeam.home){
+      setSelectedBox([1,1])
+    } else {
+      setSelectedBox([1, 0])
+    }
+    console.log("selectedBox ", selectedBox)
+  }, []);
+
   const handleBoxClick = (rowIndex: number, colIndex: number) => {
     const isSelectedBox = selectedBox?.[0] === rowIndex && selectedBox?.[1] === colIndex;
     setSelectedBox(isSelectedBox ? null : [rowIndex, colIndex]);
@@ -30,8 +39,8 @@ const SetPositionSelect: React.FC<SetPositionSelectProps> = (
               {row.map((col, colIndex) => (
                 <td key={colIndex} className="p-1">
                   <div
-                    className={`w-40 h-10 border flex items-center justify-center cursor-pointer
-                      ${selectedBox?.[0] === rowIndex && selectedBox?.[1] === colIndex ? "bg-blue-300" : ""}`}
+                    className={`w-40 h-10 border flex items-center justify-center cursor-pointer 
+                      ${selectedBox?.[0] === rowIndex && selectedBox?.[1] === colIndex ? "bg-blue-300" : "bg-white"}`}
                     onClick={() => handleBoxClick(rowIndex, colIndex)}
                   >
                     {col}

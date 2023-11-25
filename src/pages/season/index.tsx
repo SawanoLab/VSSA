@@ -63,7 +63,7 @@ const SeasonIndex: React.FC = () => {
               作成
             </button>
           </div>
-          <div className=" bg-blue-100 p-4 border" />
+          <div className=" bg-gray-200 p-4 border" />
           <Table data={seasons} columns={header} />
         </div>
       )}

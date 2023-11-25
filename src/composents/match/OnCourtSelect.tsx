@@ -30,7 +30,7 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, court
   return (
     <td style={{ width: "150px", height: "90px" }}>
       <div className="h-full flex flex-col justify-center items-center relative">
-        <img src={uniformImage} alt="uniform" style={{ width: "70px", height: "70px" }} />
+        <img src={uniformImage} alt="uniform" style={{ width: "70px", height: "80px" }} />
         <PlayerInfoDisplay
           selectedPlayer={selectedPlayer}
           players={players.map((player) => player.PlayerInfo)}

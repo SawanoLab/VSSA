@@ -14,7 +14,7 @@ export default function Layout(props: LayoutProps) {
       "
       >
         <div
-          className="col-span-1 row-span-1 bg-blue-100
+          className="col-span-1 row-span-1 bg-white border-r border-gray-300
         "
         >
           <Navgetion />

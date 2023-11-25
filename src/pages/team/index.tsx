@@ -37,7 +37,7 @@ const TeamIndex: React.FC = () => {
           チームの追加
         </Link>
       </div>
-      <div className=" bg-blue-100 p-4 border" />
+      <div className=" bg-gray-200 h-0.5 p-4 border" />
       <Table data={teams} columns={header} />
     </div>
   );
