@@ -8,6 +8,7 @@ import MatchProvider from "./hooks/match/matchProvider";
 import PlayerProvider from "./hooks/match/use-player";
 import SeasonProvider from "./hooks/match/use-season";
 import TeamProvider from "./hooks/match/use-team";
+import MatchValidationProvider from "./hooks/match/use-validation";
 import { ProvideAuth } from "./hooks/use-auth";
 import HomeIndex from "./pages/home";
 import Layout from "./pages/Layout";
@@ -47,9 +48,11 @@ function RouteConfig() {
             path="match/create"
             element={
               <PrivateRoute>
-                <MatchProvider>
-                  <MatchCreate />
-                </MatchProvider>
+                <MatchValidationProvider>
+                  <MatchProvider>
+                    <MatchCreate />
+                  </MatchProvider>
+                </MatchValidationProvider>
               </PrivateRoute>
             }
           />

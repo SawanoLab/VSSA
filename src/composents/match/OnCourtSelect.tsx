@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
+import { UseFormRegister, FieldErrors, FieldValues } from "react-hook-form";
 
 import PlayerInfoDisplay from "./PlayerInfoDisplay";
 import { useMatch } from "../../hooks/match/matchProvider";
@@ -10,16 +11,26 @@ interface OnCourtSelectProps {
   uniformImage: string;
   courtZoneName?: SetterPositionName;
   isSetter: boolean;
+  register: UseFormRegister<FieldValues>,
+  errors: FieldErrors<FieldValues>
 }
 
-const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, courtZoneName, isSetter }) => {
+const OnCourtSelect: React.FC<OnCourtSelectProps> = ({
+  type,
+  uniformImage,
+  courtZoneName,
+  isSetter,
+  register,
+  errors
+ }) => {
   const { togglePlayerOnCourt, getPlayers, setPlayerZoneCode } = useMatch();
   const [ selectedPlayer, setSelectedPlayer ] = useState<string>('');
   const players = getPlayers(type);
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
+    if (selectedPlayer !== "")
+      togglePlayerOnCourt(type, selectedPlayer);
     const selectedValue = e.target.value;
-    console.log("selectedValue", selectedValue);
     setSelectedPlayer(selectedValue);
     courtZoneName && setPlayerZoneCode(type, selectedValue, courtZoneName);
     if (selectedValue !== "") {
@@ -37,6 +48,7 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, court
           isSetter={isSetter}
         />
         <select
+          {...register(`${type}-${selectedPlayer}`, { required: true })}
           onChange={handleSelect}
           value={selectedPlayer}
           className="mt-2 text-sm"
@@ -52,6 +64,9 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({ type, uniformImage, court
             </option>
           ))}
         </select>
+        {errors[`${type}-${selectedPlayer}`] && (
+          <p className="text-xs text-red-500">選手を選択してください。</p>
+        )}
       </div>
     </td>
   );

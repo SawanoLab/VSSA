@@ -1,4 +1,5 @@
 import React from "react";
+import { UseFormRegister, FieldErrors, FieldValues } from "react-hook-form";
 
 import LiberoPlayerSelect from "./LiberoPlayerSelection";
 import PlayerTable from "./PlayerTable";
@@ -6,9 +7,19 @@ import { renderOnCourtSelectTable } from "./renderOnCourtSelectTable";
 import SetPositionSelect from "./SetPositionSelect";
 import { useMatch } from "../../hooks/match/matchProvider";
 import { SetterPositionName } from "../../types/player";
-import { typeOfTeam } from "../../types/team";
+import { typeOfTeam } from "../../types/team"
 
-const TeamPlayerSelector: React.FC = () => {
+
+interface TeamSelectorTableProps {
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
+}
+
+const TeamPlayerSelector: React.FC<TeamSelectorTableProps> = ({
+  register,
+  errors
+
+}) => {
   const { getOffCourtPlayers, getSetterPosition } = useMatch();
   const setterPositionHome = getSetterPosition(typeOfTeam.home);
   const setterPositionAway = getSetterPosition(typeOfTeam.away);
@@ -35,8 +46,20 @@ const TeamPlayerSelector: React.FC = () => {
   return (
     <div className="flex flex-col justify-between">
       <div className="flex m-1 relative">
-        {renderOnCourtSelectTable(typeOfTeam.home, courtHomeZoneName, setterPositionHome)}
-        {renderOnCourtSelectTable(typeOfTeam.away, courtAwayZoneName, setterPositionAway)}
+        {renderOnCourtSelectTable(
+          typeOfTeam.home,
+          courtHomeZoneName,
+          setterPositionHome,
+          register,
+          errors
+        )}
+        {renderOnCourtSelectTable(
+          typeOfTeam.away,
+          courtAwayZoneName,
+          setterPositionAway,
+          register,
+          errors
+        )}
         <img
           src="/volleyball-court.png"
           alt="court"
