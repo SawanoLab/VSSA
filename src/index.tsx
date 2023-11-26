@@ -10,6 +10,7 @@ import SeasonProvider from "./hooks/match/use-season";
 import TeamProvider from "./hooks/match/use-team";
 import MatchValidationProvider from "./hooks/match/use-validation";
 import { ProvideAuth } from "./hooks/use-auth";
+import AnalysisCreate from "./pages/analysis/create";
 import HomeIndex from "./pages/home";
 import Layout from "./pages/Layout";
 import MatchIndex from "./pages/match";
@@ -77,6 +78,14 @@ function RouteConfig() {
             element={
               <PrivateRoute>
                 <TeamCreate />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="analysis/:matchId"
+            element={
+              <PrivateRoute>
+                <AnalysisCreate />
               </PrivateRoute>
             }
           />

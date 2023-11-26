@@ -1,46 +1,31 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-// import { Match } from "../../api-client";
 import { MatchRequest as Match } from "../../api-client/api";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Table from "../../composents/Table";
-import { usePlayer } from "../../hooks/match/use-player";
-import { useSeason } from "../../hooks/match/use-season";
-import { useTeam } from "../../hooks/match/use-team";
 import { useAuth } from "../../hooks/use-auth";
 import { matchClient } from "../../lib/api/main";
 
 
 const MatchIndex: React.FC = () => {
   const { username } = useAuth();
-  const { fetchTeams, teamLoading } = useTeam();
-  const { fetchPlayers, playerLoading } = usePlayer();
-  const { fetchSeasons, seasonLoading } = useSeason();
   const [loading, setLoading] = useState(true);
   const [matchs, setMatchs] = useState<Match[]>([]);
 
   const fetchMatchs = async () => {
+    setLoading(true);
     const response = await matchClient.getMatchesMatchesGet(username);
+    setLoading(false);
     setMatchs(response.data);
   }
   useEffect(() => {
     fetchMatchs();
-    fetchTeams();
-    fetchPlayers();
-    fetchSeasons();
   }, []);
 
-  useEffect(() => {
-    if (teamLoading || playerLoading || seasonLoading) {
-      setLoading(true);
-    } else {
-      setLoading(false);
-    }
-  }, [teamLoading, playerLoading, seasonLoading]);
-
   const tableData = matchs.map((match) => ({
+    id: match.uuid,
     season_name: match.season_name,
     home_team: match.home_team.team_name,
     away_team: match.away_team.team_name,
@@ -51,6 +36,14 @@ const MatchIndex: React.FC = () => {
     { header: "ホーム", accessor: "home_team" },
     { header: "アウェイ", accessor: "away_team" },
   ];
+  /* eslint-disable */
+  const navigate = useNavigate();
+
+  const handleRowClick = (row: any) => {
+    console.log(row);
+    navigate(`/analysis/${row.id}`);
+
+  }
 
   return (
     <div>
@@ -71,7 +64,7 @@ const MatchIndex: React.FC = () => {
           <Table
             data={tableData}
             columns={header}
-            onRowClick={(row) => console.log(row)}
+            onRowClick={handleRowClick}
           />
         </div>
       )}
