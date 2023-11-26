@@ -74,7 +74,6 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
   };
 
   const feachPutPlayer = async (playerData: PlayerInfo) => {
-    console.log("fieldValue", fieldValue);
     try {
       await playerClient.updatePlayerPlayersPut(
         username,

@@ -19,8 +19,9 @@ const MatchCreate: React.FC = () => {
   const { teams } = useTeam();
   const { getSeasonNames, seasons } = useSeason();
   const { getTeamPlayers, players } = usePlayer();
-  const [homeTeamUUID, setHomeTeamUUID] = useState<string>("");
-  const [awayTeamUUID, setAwayTeamUUID] = useState<string>("");
+  const [ homeTeamUUID, setHomeTeamUUID ] = useState<string>("");
+  const [ awayTeamUUID, setAwayTeamUUID ] = useState<string>("");
+  const [ seasonUUID, setSeasonUUID ] = useState<string>("");
 
   const getTeamName = useCallback(
     (teamId: string) => {
@@ -59,16 +60,18 @@ const MatchCreate: React.FC = () => {
     const matchData: Match = {
       home_team_id: homeTeamUUID,
       away_team_id: awayTeamUUID,
-      user_id: username
+      user_id: username,
+      season_id: seasonUUID
     };
 
     const matchPostRequest: MatchPostRequest = {
       Match: matchData,
-        PlayerMatchInfo: {
-          ...homePlayerData,
-          ...awayPlayerData
-        }
+      PlayerMatchInfo: {
+        ...homePlayerData,
+        ...awayPlayerData
+      }
     };
+
     matchClient.createMatchMatchesPost(matchPostRequest).catch((err) => {
       console.log("err", err);
     });
@@ -81,7 +84,10 @@ const MatchCreate: React.FC = () => {
       <div className="m-2 p-5 border bg-gray-100 border-gray-300 rounded-lg">
         <h1 className="text-2xl text-gray-500">新規の試合を作成</h1>
         <div className="flex flex-row m-1">
-          <select className="text-sm text-gray-500 border border-spacing-5 p-1 w-80">
+          <select
+          className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
+          onChange={(e) => setSeasonUUID(e.target.value)}
+          >
             <option value="">シーズンを選択</option>
             {seasonNames.map((seasonName) => (
               <option key={seasonName.uuid} value={seasonName.uuid}>

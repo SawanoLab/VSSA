@@ -2,19 +2,31 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
+// import { Match } from "../../api-client";
+import { MatchRequest as Match } from "../../api-client/api";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Table from "../../composents/Table";
 import { usePlayer } from "../../hooks/match/use-player";
 import { useSeason } from "../../hooks/match/use-season";
 import { useTeam } from "../../hooks/match/use-team";
+import { useAuth } from "../../hooks/use-auth";
+import { matchClient } from "../../lib/api/main";
+
 
 const MatchIndex: React.FC = () => {
+  const { username } = useAuth();
   const { fetchTeams, teamLoading } = useTeam();
   const { fetchPlayers, playerLoading } = usePlayer();
   const { fetchSeasons, seasonLoading } = useSeason();
   const [loading, setLoading] = useState(true);
+  const [matchs, setMatchs] = useState<Match[]>([]);
 
+  const fetchMatchs = async () => {
+    const response = await matchClient.getMatchesMatchesGet(username);
+    setMatchs(response.data);
+  }
   useEffect(() => {
+    fetchMatchs();
     fetchTeams();
     fetchPlayers();
     fetchSeasons();
@@ -28,28 +40,15 @@ const MatchIndex: React.FC = () => {
     }
   }, [teamLoading, playerLoading, seasonLoading]);
 
-  const tableData = [
-    {
-      start_day: "2021/01/01",
-      created_at: "2021/01/01",
-      home_team: "Italy",
-      result: "1-0",
-      away_team: "Spain",
-    },
-    {
-      start_day: "2021/01/01",
-      created_at: "2021/01/01",
-      home_team: "Italy",
-      result: "1-0",
-      away_team: "Spain",
-    },
-  ];
+  const tableData = matchs.map((match) => ({
+    season_name: match.season_name,
+    home_team: match.home_team.team_name,
+    away_team: match.away_team.team_name,
+  }));
 
   const header = [
-    { header: "開催日", accessor: "start_day" },
-    { header: "登録日", accessor: "created_at" },
+    { header: "シーズン", accessor: "season_name" },
     { header: "ホーム", accessor: "home_team" },
-    { header: "スコア", accessor: "result" },
     { header: "アウェイ", accessor: "away_team" },
   ];
 

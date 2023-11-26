@@ -60,6 +60,12 @@ export interface Match {
      * @memberof Match
      */
     'user_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Match
+     */
+    'season_id': string;
 }
 /**
  * 
@@ -98,6 +104,12 @@ export interface MatchRequest {
      * @memberof MatchRequest
      */
     'away_team': TeamRequest;
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchRequest
+     */
+    'season_name': string;
 }
 /**
  * 
