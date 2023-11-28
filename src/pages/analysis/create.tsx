@@ -6,12 +6,15 @@ import LoadingSpinner from "../../composents/LoadingSpinner";
 import Table from "../../composents/Table";
 import { useAuth } from "../../hooks/use-auth";
 import { matchClient } from "../../lib/api/main";
+import ShowYouTubeVideo from "../../utility/ShowYouTubeVideo";
+
 
 const AnalysisCreate: React.FC = () => {
   const { username } = useAuth();
   const { matchId } = useParams();
   const [loading, setLoading] = React.useState(true);
   const [match, setMatch] = React.useState<MatchRequest>();
+  const [YouTubeUrl, setYouTubeUrl] = React.useState("");
 
   useEffect(() => {
     console.log("match", match);
@@ -69,15 +72,15 @@ const AnalysisCreate: React.FC = () => {
       ) : (
         <div className="flex">
           <div>
-            <iframe
-              width="600"
-              height="450"
-              src="https://www.youtube.com/embed/U_eqhmnowtw"
-              title="Cucine Lube Civitanova vs. Allianz Milano - Full Match | SuperLega Playoffs 2022/23"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+            {ShowYouTubeVideo(YouTubeUrl || "https://youtu.be/f-GCt8bQcM0")}
+            <form className="flex">
+              <input
+                type="text"
+                placeholder="YouTubeのURLを入力"
+                onChange={(e) => setYouTubeUrl(e.target.value)}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+              />
+            </form>
             <p className="text-xl text-gray-500">
               {match?.home_team.team_name} vs {match?.away_team.team_name}
             </p>
