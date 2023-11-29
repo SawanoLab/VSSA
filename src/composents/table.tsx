@@ -10,8 +10,8 @@ interface Column {
 }
 
 interface TableProps {
-  data: any[];
-  columns: Column[];
+  data?: any[];
+  columns?: Column[];
   onRowClick?: (item: any) => void;
 }
 
@@ -26,7 +26,7 @@ const Table: React.FC<TableProps> = ({ data, columns, onRowClick }) => {
     <table className="min-w-full">
       <thead>
         <tr>
-          {columns.map((column, index) => (
+          {columns?.map((column, index) => (
             <th
               key={index}
               className={`px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider ${
@@ -39,13 +39,13 @@ const Table: React.FC<TableProps> = ({ data, columns, onRowClick }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((item, index) => (
+        {data?.map((item, index) => (
           <tr
             key={index}
             className="hover:bg-gray-100"
             onClick={() => handleRowClick(item)}
           >
-            {columns.map((column, colIndex) => (
+            {columns?.map((column, colIndex) => (
               <td
                 key={colIndex}
                 className={`px-6 py-4 text-sm leading-5 text-gray-500 border-b ${
