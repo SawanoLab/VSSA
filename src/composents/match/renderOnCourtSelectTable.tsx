@@ -8,7 +8,7 @@ import { typeOfTeam } from "../../types/team";
 
 export const renderOnCourtSelectTable = (
   type: typeOfTeam,
-  courtZoneName: SetterPositionName[][],
+  courtZoneName: string[][],
   setterPositionHome: SetterPositionName,
   register: UseFormRegister<FieldValues>,
   errors: FieldErrors<FieldValues>

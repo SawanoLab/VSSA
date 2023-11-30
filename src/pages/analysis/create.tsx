@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { MatchRequest, TeamPlayers } from "../../api-client/api";
-import { CourtPlayerDisplayComponet } from "../../composents/analysis/CourtPlayerDisplayComponet";
 import { MatchUtilityComponent } from "../../composents/analysis/MatchUtilityComponent";
+import { PlayCard } from "../../composents/analysis/PlayCard";
+import { PlayerTableComponent } from "../../composents/analysis/PlayerTableComponent";
 import YouTubeVideoComponent from "../../composents/analysis/YouTubeVideoComponent";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import { useAuth } from "../../hooks/use-auth";
@@ -18,6 +19,12 @@ const AnalysisCreate: React.FC = () => {
   const { matchId } = useParams();
   const [loading, setLoading] = React.useState(true);
   const [match, setMatch] = React.useState<MatchRequest>();
+  const [homeOnCourtPlayer, setHomeOnCourtPlayer] = React.useState<
+    TeamPlayers[]
+  >([]);
+  const [awayOnCourtPlayer, setAwayOnCourtPlayer] = React.useState<
+    TeamPlayers[]
+  >([]);
 
   const fetchAnalysis = async (matchId: string) => {
     const response = await matchClient.getMatchMatchesMatchIdGet(
@@ -27,49 +34,93 @@ const AnalysisCreate: React.FC = () => {
     return response.data;
   };
 
-  useEffect(() => {
-    setLoading(true);
+  const fetchData = async () => {
     if (!matchId) {
       return;
     }
-    const fetchData = async () => {
-      try {
-        const response = await fetchAnalysis(matchId);
-        setMatch(response);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-      setLoading(false);
-    };
+    try {
+      const response = await fetchAnalysis(matchId);
+      setMatch(response);
+      setHomeOnCourtPlayer(
+        Object.values(response.home_team.players).filter(
+          (player) => player.onCourt === true
+        )
+      );
+      setAwayOnCourtPlayer(
+        Object.values(response.away_team.players).filter(
+          (player) => player.onCourt === true
+        )
+      );
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    setLoading(true);
     fetchData();
   }, [matchId]);
 
-  const getOnCourtPlayers = (teamPlayers: Record<string, TeamPlayers>) => {
-    console.log("teamPlayers", teamPlayers);
-    return Object.values(teamPlayers).filter(
-      (player) => player.onCourt === true
-    );
+  const homeTeamLotationClick = () => {
+    const updatedHomePlayers = homeOnCourtPlayer.map((player) => {
+      let newZone;
+      switch (player.zone_code) {
+        case "Z1":
+          newZone = "Z2";
+          break;
+        case "Z2":
+          newZone = "Z3";
+          break;
+        case "Z3":
+          newZone = "Z6";
+          break;
+        case "Z6":
+          newZone = "Z5";
+          break;
+        case "Z5":
+          newZone = "Z4";
+          break;
+        case "Z4":
+          newZone = "Z1";
+          break;
+        default:
+          newZone = player.zone_code;
+      }
+      return { ...player, zone_code: newZone };
+    });
+    setHomeOnCourtPlayer(updatedHomePlayers);
   };
 
-  const getPlayer = (team: "home" | "away", zone: string) => {
-    let playerInfo;
-    if (team === "home") {
-      playerInfo = homeTeamOnCourt.find((player) => player.zone_code === zone);
-    } else {
-      playerInfo = awayTeamOnCourt.find((player) => player.zone_code === zone);
-    }
-    if (!playerInfo) {
-      return { name: "不明", player_number: "?" };
-    }
-    return playerInfo.PlayerInfo;
+  const awayTeamLotationClick = () => {
+    const updatedAwayPlayers = awayOnCourtPlayer.map((player) => {
+      let newZone;
+      switch (player.zone_code) {
+        case "Z1":
+          newZone = "Z2";
+          break;
+        case "Z2":
+          newZone = "Z3";
+          break;
+        case "Z3":
+          newZone = "Z6";
+          break;
+        case "Z6":
+          newZone = "Z5";
+          break;
+        case "Z5":
+          newZone = "Z4";
+          break;
+        case "Z4":
+          newZone = "Z1";
+          break;
+        default:
+          newZone = player.zone_code;
+      }
+      return { ...player, zone_code: newZone };
+    });
+    setAwayOnCourtPlayer(updatedAwayPlayers);
   };
-
-  const homeTeamOnCourt = match
-    ? getOnCourtPlayers(match.home_team.players)
-    : [];
-  const awayTeamOnCourt = match
-    ? getOnCourtPlayers(match.away_team.players)
-    : [];
 
   return (
     <div>
@@ -82,15 +133,55 @@ const AnalysisCreate: React.FC = () => {
             <MatchUtilityComponent match={match} />
           </div>
           <div>
-            <CourtPlayerDisplayComponet
-              home_team_zone_name={home_team_zone_name_column}
-              away_team_zone_name={away_team_zone_name_column}
-              getPlayer={getPlayer}
-            />
+            <button
+              style={{ width: "300px", height: "50px" }}
+              className="
+              bg-gray-200
+              text-gray-700
+              hover:bg-gray-300
+              font-bold py-2 px-4 rounded"
+              onClick={() => homeTeamLotationClick()}
+            >
+              次のローテーション
+            </button>
+            <table className={`table-auto absolute top-11`}>
+              <tbody>
+                <PlayerTableComponent
+                  type="home"
+                  team_zone_name={home_team_zone_name_column}
+                  team_on_court={homeOnCourtPlayer}
+                />
+                <PlayerTableComponent
+                  type="away"
+                  team_zone_name={away_team_zone_name_column}
+                  team_on_court={awayOnCourtPlayer}
+                />
+              </tbody>
+            </table>
             <img
               src="/volleyball-court2.png"
               alt="court"
-              style={{ width: "300px" }}
+              style={{ width: "300px", height: "450px" }}
+            />
+            <button
+              style={{ width: "300px", height: "50px" }}
+              className="
+              bg-gray-200
+              text-gray-700
+              hover:bg-gray-300
+              font-bold py-2 px-4 rounded"
+              onClick={() => {
+                awayTeamLotationClick();
+              }}
+            >
+              次のローテーション
+            </button>
+          </div>
+          <div>
+            <PlayCard
+              match={match}
+              homeOnCourtPlayer={homeOnCourtPlayer}
+              awayOnCourtPlayer={awayOnCourtPlayer}
             />
           </div>
         </div>

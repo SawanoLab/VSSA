@@ -8,6 +8,7 @@ import SetPositionSelect from "./SetPositionSelect";
 import { useMatch } from "../../hooks/match/matchProvider";
 import { SetterPositionName } from "../../types/player";
 import { typeOfTeam } from "../../types/team"
+import { home_team_zone_name_row, away_team_zone_name_row } from "../../types/team_zone_name_column";
 
 
 interface TeamSelectorTableProps {
@@ -48,14 +49,14 @@ const TeamPlayerSelector: React.FC<TeamSelectorTableProps> = ({
       <div className="flex m-1 relative">
         {renderOnCourtSelectTable(
           typeOfTeam.home,
-          courtHomeZoneName,
+          home_team_zone_name_row,
           setterPositionHome,
           register,
           errors
         )}
         {renderOnCourtSelectTable(
           typeOfTeam.away,
-          courtAwayZoneName,
+          away_team_zone_name_row,
           setterPositionAway,
           register,
           errors

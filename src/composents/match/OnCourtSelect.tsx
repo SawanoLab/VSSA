@@ -3,13 +3,12 @@ import { UseFormRegister, FieldErrors, FieldValues } from "react-hook-form";
 
 import PlayerInfoDisplay from "./PlayerInfoDisplay";
 import { useMatch } from "../../hooks/match/matchProvider";
-import { SetterPositionName } from "../../types/player";
 
 
 interface OnCourtSelectProps {
   type: "home" | "away";
   uniformImage: string;
-  courtZoneName?: SetterPositionName;
+  courtZoneName?: string;
   isSetter: boolean;
   register: UseFormRegister<FieldValues>,
   errors: FieldErrors<FieldValues>
