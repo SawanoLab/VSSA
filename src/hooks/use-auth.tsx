@@ -50,19 +50,28 @@ const useProvideAuth = (): UseAuth => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    setIsLoading(true);
-    Auth.currentAuthenticatedUser()
-      .then((user) => {
-        setUsername(user.username);
+    const initializeAuth = async () => {
+      setIsLoading(true);
+      const savedUsername = localStorage.getItem('username');
+      if (savedUsername) {
+        setUsername(savedUsername);
         setIsAuthenticated(true);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setUsername("");
-        setIsAuthenticated(false);
-        setIsLoading(false);
-      });
+      } else {
+        try {
+          const user = await Auth.currentAuthenticatedUser();
+          setUsername(user.username);
+          setIsAuthenticated(true);
+        } catch (error) {
+          setUsername("");
+          setIsAuthenticated(false);
+        }
+      }
+      setIsLoading(false);
+    };
+
+    initializeAuth();
   }, []);
+  
 
   const signUp = async (username: string, password: string) => {
     try {
@@ -97,6 +106,8 @@ const useProvideAuth = (): UseAuth => {
       const result = await Auth.signIn(username, password);
       setUsername(result.username);
       setIsAuthenticated(true);
+      localStorage.setItem('username', result.username);
+  
       return { success: true, message: "" };
     } catch (error) {
       return {
@@ -105,12 +116,17 @@ const useProvideAuth = (): UseAuth => {
       };
     }
   };
+  
 
   const signOut = async () => {
     try {
       await Auth.signOut();
       setUsername("");
       setIsAuthenticated(false);
+
+      // ローカルストレージからユーザー名を削除
+      localStorage.removeItem('username');
+
       return { success: true, message: "" };
     } catch (error) {
       return {

@@ -1,10 +1,17 @@
 import React from "react";
 
 import { AnalysisStart } from "./AnalysisStart";
-import ServeEndZone from "./ServeCard/ServeEndZone";
+import AttackEndZoneSelect from "./AttackCard/AttackEndZoneSelect";
+import AttackEvalution from "./AttackCard/AttackEvalution";
+import AttackPlayer from "./AttackCard/AttackPlayer";
+import AttackSkillType from "./AttackCard/AttackSkillType";
+import ReceptionEvaluation from "./ReceptionCard/ReceptionEvaluation";
+import ReceptionPlayer from "./ReceptionCard/ReceptionPlayer";
+import ReceptionZoneSelect from "./ReceptionCard/ReceptionZoneSelect";
 import { ServeEvaluation } from "./ServeCard/ServeEvaluation";
 import ServeStartZone from "./ServeCard/ServeStartZone";
 import { ServeTeamSelect } from "./ServeCard/ServeTeamSelect";
+import ServeZoneSelect from "./ServeCard/ServeZoneSelect";
 import { MatchRequest, TeamPlayers } from "../../api-client/api";
 
 interface PlayCardProps {
@@ -20,15 +27,38 @@ export const PlayCard: React.FC<PlayCardProps> = ({
 }) => {
   return (
     <div>
-      <AnalysisStart match={match} />
+      <AnalysisStart
+        match={match}
+      />
       <ServeTeamSelect
         match={match}
         homeOnCourtPlayer={homeOnCourtPlayer}
         awayOnCourtPlayer={awayOnCourtPlayer}
       />
-      <ServeStartZone type="home" />
+      <ServeStartZone
+        type="home"
+      />
       <ServeEvaluation />
-      <ServeEndZone type="away" />
+      <ServeZoneSelect
+        type="home"
+      />
+      <ReceptionPlayer
+        type="home"
+        onCourtPlayer={awayOnCourtPlayer}
+      />
+      <ReceptionZoneSelect
+        type="home"
+      />
+      <ReceptionEvaluation />
+      <AttackPlayer
+        type="home"
+        onCourtPlayer={homeOnCourtPlayer}
+      />
+      <AttackEvalution />
+      <AttackSkillType />
+      <AttackEndZoneSelect
+        type="home"
+      />
     </div>
   );
 };
