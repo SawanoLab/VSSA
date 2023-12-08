@@ -9,6 +9,7 @@ interface PlayerSelectProps {
   onCourtPlayer?: TeamPlayers[];
   title: string;
   subTitle: string;
+  onClick?: () => void;
 }
 
 const PlayerSelect: React.FC<PlayerSelectProps> = ({
@@ -16,12 +17,13 @@ const PlayerSelect: React.FC<PlayerSelectProps> = ({
   onCourtPlayer,
   title,
   subTitle,
+  onClick,
 }) => {
   const findPlayer = (zoneCode: string) =>
     onCourtPlayer?.find((p) => p.zone_code === zoneCode);
 
   return (
-    <PlayCardLayout title={title} subTitle={subTitle}>
+    <PlayCardLayout title={title} subTitle={subTitle} type={type}>
       <div className="relative w-max h-50">
         {type === "home" ? (
           <img
@@ -46,6 +48,7 @@ const PlayerSelect: React.FC<PlayerSelectProps> = ({
               <div key={`row-${x}`} className="flex justify-center">
                 {Array.from(Array(3).keys()).map((y) => (
                   <div
+                    onClick={onClick}
                     key={`button-${x}-${y}`}
                     className="m-1"
                     style={{

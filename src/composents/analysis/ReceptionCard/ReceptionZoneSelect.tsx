@@ -1,17 +1,25 @@
 import React from "react";
 
+import { useCard } from "../../../hooks/card/use-cardController";
 import ZoneSelect from "../ZoneSelect";
 
 interface ReceptionZoneSelectProps {
-  type: "home" | "away";
+  nextStep: string;
 }
 
-const ReceptionZoneSelect: React.FC<ReceptionZoneSelectProps> = ({ type }) => {
+const ReceptionZoneSelect: React.FC<ReceptionZoneSelectProps> = ({
+  nextStep
+}) => {
+  const { currentTeam, setCurrentStep } = useCard();
+  const onClick = () => setCurrentStep(nextStep);
+
   return (
     <ZoneSelect
-      type={type}
-      title="サーブゾーン"
-      subTitle="サーブゾーンを選択してください"
+      type={currentTeam}
+      draw_type={currentTeam}
+      title="レセプションゾーン"
+      subTitle="レセプションゾーンを選択してください"
+      onClick={onClick}
     />
   );
 };

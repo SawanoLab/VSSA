@@ -4,31 +4,36 @@ import PlayCardLayout from "./PlayCardLayout";
 
 interface ZoneSelectProps {
   type: "home" | "away";
+  draw_type: "home" | "away";
   title: string;
   subTitle: string;
+  onClick?: () => void;
 }
 
 const ZoneSelect: React.FC<ZoneSelectProps> = ({
   type,
+  draw_type,
   title,
   subTitle,
+  onClick,
 }) => {
   const serve_zone = ["1", "9", "6", "7", "5"];
   return (
     <PlayCardLayout
+    type={type}
     title={title}
     subTitle={subTitle}
     >
       <div className="relative w-max h-50">
-        {type === "home" ? (
+        {draw_type === "home" ? (
           <img
-            src="/volleyball-court3.jpg"
+            src="/volleyball-court4.jpg"
             alt="court"
             style={{ width: "280px" }}
           />
-        ) : (
+          ) : (
           <img
-            src="/volleyball-court4.jpg"
+            src="/volleyball-court3.jpg"
             alt="court"
             style={{ width: "280px" }}
           />
@@ -36,7 +41,7 @@ const ZoneSelect: React.FC<ZoneSelectProps> = ({
         <div
           className="absolute left-0 w-full
         flex flex-row justify-center items-center"
-          style={{ top: type === "home" ? 30 : 75 }}
+          style={{ top: draw_type === "home" ? 75 : 30 }}
         >
           <div>
             {Array.from(Array(3).keys()).map((i) => (
@@ -46,8 +51,9 @@ const ZoneSelect: React.FC<ZoneSelectProps> = ({
                     className="border border-white p-4"
                     key={`button-${i}-${y}`}
                     style={{ width: "70px", height: "70px" }}
+                    onClick={onClick}
                   >
-                    {type === "home" ? serve_zone[i] : serve_zone[4 - i]}
+                    {draw_type === "home"?serve_zone[4 - i]:serve_zone[i]}
                   </button>
                 ))}
               </div>

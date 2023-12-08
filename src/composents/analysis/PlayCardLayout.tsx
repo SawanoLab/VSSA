@@ -4,12 +4,14 @@ interface PlayCardLayoutProps {
   children: React.ReactNode;
   title: string;
   subTitle: string;
+  type: "home" | "away";
 }
  
 const PlayCardLayout: FunctionComponent<PlayCardLayoutProps> = ({
   children,
   title,
-  subTitle
+  subTitle,
+  type,
 }) => {
   return (
     <div
@@ -17,7 +19,7 @@ const PlayCardLayout: FunctionComponent<PlayCardLayoutProps> = ({
       style={{ width: "300px", height: "550px" }}
     >
       <div
-        className="bg-blue-400"
+        className={`bg-${type=='home' ? "blue" : "red"}-400`}
         style={{ width: "300px", height: "80px" }}
       >
         <p

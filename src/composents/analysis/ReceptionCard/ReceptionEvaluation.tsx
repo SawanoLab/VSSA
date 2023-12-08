@@ -1,18 +1,25 @@
 import React from "react";
 
+import { useCard } from "../../../hooks/card/use-cardController";
 import Table from "../../Table";
 import PlayCardLayout from "../PlayCardLayout";
 
-interface ServeEvaluationProps {}
-export const ServeEvaluation: React.FC<ServeEvaluationProps> = () => {
+interface ServeEvaluationProps {
+  nextStep: string;
+}
+export const ServeEvaluation: React.FC<ServeEvaluationProps> = ({
+  nextStep,
+}) => {
+  const { currentTeam, setCurrentStep } = useCard();
+  const onClick = () => setCurrentStep(nextStep);
   const header = [{ header: "説明", accessor: "description" }];
   const tableData = [
-    { description: "エンド" },
+    { description: "アタック" },
     { description: "セット" },
   ];
   return (
-    <PlayCardLayout title="レセプション" subTitle="評価">
-      <Table columns={header} data={tableData} />
+    <PlayCardLayout title="レセプション" subTitle="評価" type={currentTeam}>
+      <Table columns={header} data={tableData} onRowClick={onClick} />
     </PlayCardLayout>
   );
 };

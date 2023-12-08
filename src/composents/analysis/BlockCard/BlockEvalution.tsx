@@ -4,24 +4,28 @@ import { useCard } from "../../../hooks/card/use-cardController";
 import Table from "../../Table";
 import PlayCardLayout from "../PlayCardLayout";
 
-interface AttackEvalutionProps {
+interface BlockEvalutionProps {
   nextStep: string;
 }
-export const AttackEvalution: React.FC<AttackEvalutionProps> = ({
-  nextStep
+export const BlockEvalution: React.FC<BlockEvalutionProps> = ({
+  nextStep,
 }) => {
   const { currentTeam, setCurrentStep } = useCard();
   const onClick = () => setCurrentStep(nextStep);
+  
   const header = [{ header: "説明", accessor: "description" }];
   const tableData = [
-    { description: "ハードスパイク" },
-    { description: "ソフトスパイク" },
-    { description: "ティップ" },
+    { description: "Possible cover" },
+    { description: "Net Violation" },
   ];
   return (
-    <PlayCardLayout title="アタック" subTitle="スキルタイプ" type={currentTeam}>
-      <Table columns={header} data={tableData} onRowClick={onClick} />
+    <PlayCardLayout title="ブロック" subTitle="評価" type={currentTeam}>
+      <Table
+      columns={header}
+      data={tableData}
+      onRowClick={onClick}
+      />
     </PlayCardLayout>
   );
 };
-export default AttackEvalution;
+export default BlockEvalution;

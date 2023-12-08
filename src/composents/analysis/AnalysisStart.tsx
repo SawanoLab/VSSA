@@ -2,14 +2,21 @@ import React from "react";
 
 import PlayCardLayout from "./PlayCardLayout";
 import { MatchRequest } from "../../api-client/api";
+import { useCard } from "../../hooks/card/use-cardController";
 
 interface AnalysisStartProps {
   match?: MatchRequest;
+  nextStep: string;
 }
-export const AnalysisStart: React.FC<AnalysisStartProps> = ({ match }) => {
+export const AnalysisStart: React.FC<AnalysisStartProps> = ({
+  match,
+  nextStep
+}) => {
+  const { currentTeam, setCurrentStep } = useCard();
+  const onClick = () => setCurrentStep(nextStep);
+
   return (
-    <PlayCardLayout title="試合" subTitle="開始">
-      {/* チーム名 */}
+    <PlayCardLayout title="試合" subTitle="開始" type={currentTeam}>
       <div className="flex flex-row justify-center items-center">
         <p>
           {match?.home_team.team_name}
@@ -19,8 +26,6 @@ export const AnalysisStart: React.FC<AnalysisStartProps> = ({ match }) => {
           {match?.away_team.team_name}
         </p>
       </div>
-
-      {/* 得点ボタン */}
       <div className="flex flex-row justify-center items-center">
         <button
           style={{ width: "100px", height: "50px" }}
@@ -42,16 +47,15 @@ export const AnalysisStart: React.FC<AnalysisStartProps> = ({ match }) => {
           {match?.away_team_score}
         </button>
       </div>
-
-      {/* セット開始ボタン 一番下に配置 */}
       <div className="flex flex-row justify-center items-center">
         <button
           className="
-        w-max
-        bg-gray-200
-        text-gray-700
-        hover:bg-gray-300
-        font-bold py-2 px-4 rounded"
+          w-max
+          bg-gray-200
+          text-gray-700
+          hover:bg-gray-300
+          font-bold py-2 px-4 rounded"
+          onClick={onClick}
         >
           次のラリーを開始
         </button>
@@ -59,4 +63,5 @@ export const AnalysisStart: React.FC<AnalysisStartProps> = ({ match }) => {
     </PlayCardLayout>
   );
 };
+
 export default AnalysisStart;

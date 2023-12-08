@@ -4,12 +4,12 @@ import { TeamPlayers } from "../../../api-client/api";
 import { useCard } from "../../../hooks/card/use-cardController";
 import PlayerSelect from "../PlayerSelect";
 
-interface ReceptionPlayerProps {
+interface BlockPlayerProps {
   onCourtPlayer?: TeamPlayers[];
   nextStep: string;
 }
 
-const ReceptionPlayer: React.FC<ReceptionPlayerProps> = ({
+const BlockPlayer: React.FC<BlockPlayerProps> = ({
   onCourtPlayer,
   nextStep
 }) => {
@@ -19,11 +19,11 @@ const ReceptionPlayer: React.FC<ReceptionPlayerProps> = ({
     <PlayerSelect
       type={currentTeam}
       onCourtPlayer={onCourtPlayer}
-      title="レセプション"
+      title="ブロック"
       subTitle="プレイヤーを選択してください"
       onClick={onClick}
     />
   );
 };
 
-export default ReceptionPlayer;
+export default BlockPlayer;
