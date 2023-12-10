@@ -1,7 +1,26 @@
 import React from "react";
 
-import { TeamDisplayComponet } from "./TeamDisplayComponet";
+import { TeamDisplayComponent } from "./TeamDisplayComponet";
 import { MatchRequest } from "../../api-client/api";
+import Table from "../Table";
+
+interface PlayHistoryComponentProps {
+}
+
+const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = () => {
+  const header = [
+    { header: "名前", accessor: "name" },
+    { header: "行動", accessor: "action" },
+    { header: "コース", accessor: "course" },
+  ];
+
+  return(
+    <div>
+      <Table data={[]} columns={header}/>
+    </div>
+  );
+}
+
 
 export interface MatchUtilityComponent {
   match?: MatchRequest;
@@ -13,7 +32,14 @@ export const MatchUtilityComponent: React.FC<MatchUtilityComponent> = ({
     <div>
       <MatchTeamComponet match={match} />
       <ScoreDisplayComponent match={match} />
-      <TeamDisplayComponet match={match} />
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <PlayHistoryComponent />
+        </div>
+        <div>
+          <TeamDisplayComponent match={match} />
+        </div>
+      </div>
     </div>
   );
 };

@@ -13,9 +13,15 @@ interface TableProps {
   data?: any[];
   columns?: Column[];
   onRowClick?: (item: any) => void;
+  fontSize?: string;
 }
 
-const Table: React.FC<TableProps> = ({ data, columns, onRowClick }) => {
+const Table: React.FC<TableProps> = ({
+  data,
+  columns,
+  onRowClick,
+  fontSize,
+}) => {
   const handleRowClick = (item: any) => {
     if (onRowClick) {
       onRowClick(item);
@@ -29,9 +35,7 @@ const Table: React.FC<TableProps> = ({ data, columns, onRowClick }) => {
           {columns?.map((column, index) => (
             <th
               key={index}
-              className={`px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider ${
-                column.className || ""
-              }`}
+              className={`px-4 py-3 text-left ${fontSize?fontSize:"text-xs"} font-medium text-gray-500 tracking-wider ${column.className || ""}`}
             >
               {column.header}
             </th>

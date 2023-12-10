@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { MatchRequest, TeamPlayers } from "../../api-client/api";
+import { AttackerCard } from "../../composents/analysis/AttackerCard";
 import { MatchUtilityComponent } from "../../composents/analysis/MatchUtilityComponent";
-import { PlayCard } from "../../composents/analysis/PlayCard";
+// import { PlayCard } from "../../composents/analysis/PlayCard";
 import { PlayerTableComponent } from "../../composents/analysis/PlayerTableComponent";
 import YouTubeVideoComponent from "../../composents/analysis/YouTubeVideoComponent";
 import LoadingSpinner from "../../composents/LoadingSpinner";
@@ -178,7 +179,7 @@ const AnalysisCreate: React.FC = () => {
             </button>
           </div>
           <div>
-            <PlayCard
+            <AttackerCard
               match={match}
               homeOnCourtPlayer={homeOnCourtPlayer}
               awayOnCourtPlayer={awayOnCourtPlayer}

@@ -17,14 +17,18 @@ export const TeamTableComponent: React.FC<TeamTableComponentProps> = ({
   const data = teamData
     ? Object.values(teamData).map((item) => ({
         name: item.PlayerInfo.name,
-        position: item.PlayerInfo.postion,
+        postion: item.PlayerInfo.postion,
       }))
     : [];
 
   return (
     <div className="text-ml text-gray-500">
       <h2>{teamName}</h2>
-      <Table data={data} columns={header} />
+      <Table
+      data={data}
+      columns={header}
+      fontSize="text-xs"
+      />
     </div>
   );
 };
