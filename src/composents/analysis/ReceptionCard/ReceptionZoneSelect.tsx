@@ -1,14 +1,14 @@
 import React from "react";
 
 import { useCard } from "../../../hooks/card/use-cardController";
-import ZoneSelect from "../ZoneSelect";
+import ZoneSelect from "../ZoneSelect/ZoneSelect";
 
 interface ReceptionZoneSelectProps {
   nextStep: string;
 }
 
 const ReceptionZoneSelect: React.FC<ReceptionZoneSelectProps> = ({
-  nextStep
+  nextStep,
 }) => {
   const { currentTeam, setCurrentStep } = useCard();
   const onClick = () => setCurrentStep(nextStep);

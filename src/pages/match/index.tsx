@@ -40,9 +40,7 @@ const MatchIndex: React.FC = () => {
   const navigate = useNavigate();
 
   const handleRowClick = (row: any) => {
-    console.log(row);
     navigate(`/analysis/${row.id}`);
-
   }
 
   return (

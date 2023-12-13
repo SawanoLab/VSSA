@@ -2,25 +2,33 @@ import React from "react";
 
 import { TeamDisplayComponent } from "./TeamDisplayComponet";
 import { MatchRequest } from "../../api-client/api";
+import { useAttackHistory } from "../../hooks/analysis/attack/use-attackHistory";
 import Table from "../Table";
 
-interface PlayHistoryComponentProps {
-}
+interface PlayHistoryComponentProps {}
 
 const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = () => {
+  const { history } = useAttackHistory();
+
   const header = [
     { header: "名前", accessor: "name" },
     { header: "行動", accessor: "action" },
     { header: "コース", accessor: "course" },
   ];
+  const data = history.map((item) => {
+    return {
+      name: item.player_id,
+      action: `${item.attack_ball_type} → ${item.attack_evaluation}`,
+      course: `${item.attack_start_zone} → ${item.attack_end_zone}`,
+    };
+  });
 
-  return(
+  return (
     <div>
-      <Table data={[]} columns={header}/>
+      <Table data={data} columns={header} />
     </div>
   );
-}
-
+};
 
 export interface MatchUtilityComponent {
   match?: MatchRequest;
@@ -30,8 +38,10 @@ export const MatchUtilityComponent: React.FC<MatchUtilityComponent> = ({
 }) => {
   return (
     <div>
-      <MatchTeamComponet match={match} />
-      <ScoreDisplayComponent match={match} />
+      <div className="flex justify-between">
+        <MatchTeamComponet match={match} />
+        <ScoreDisplayComponent match={match} />
+      </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
           <PlayHistoryComponent />
@@ -50,10 +60,10 @@ const MatchTeamComponet: React.FC<MatchUtilityComponent> = ({ match }) => {
     </p>
   );
 };
-const ScoreDisplayComponent: React.FC<MatchUtilityComponent> = ({ match }) => {
+const ScoreDisplayComponent: React.FC<MatchUtilityComponent> = () => {
   return (
     <p className="text-ml text-gray-500">
-      スコア: {match?.home_team_score} - {match?.away_team_score}
+      スコア: {0} - {0}
     </p>
   );
 };

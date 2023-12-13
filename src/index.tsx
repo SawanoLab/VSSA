@@ -4,6 +4,7 @@ import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import PrivateRoute from "./composents/PrivateRoute";
+import AttackHistoryContext from "./hooks/analysis/attack/use-attackHistory";
 import CardProvider from "./hooks/card/use-cardController";
 import MatchProvider from "./hooks/match/matchProvider";
 import PlayerProvider from "./hooks/match/use-player";
@@ -86,9 +87,11 @@ function RouteConfig() {
             path="analysis/:matchId"
             element={
               <PrivateRoute>
-                <CardProvider>
-                  <AnalysisCreate />
-                </CardProvider>
+                <AttackHistoryContext>
+                  <CardProvider>
+                    <AnalysisCreate />
+                  </CardProvider>
+                </AttackHistoryContext>
               </PrivateRoute>
             }
           />

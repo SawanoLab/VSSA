@@ -1,18 +1,16 @@
-import React from 'react';
+import React from "react";
 
 import { useCard } from "../../../hooks/card/use-cardController";
-import ZoneSelect from "../ZoneSelect";
+import ZoneSelect from "../ZoneSelect/ZoneSelect";
 
 interface ServeEndZoneProps {
   nextStep: string;
 }
- 
-const ServeEndZone: React.FC<ServeEndZoneProps> = (
-  { nextStep }
-) => {
+
+const ServeEndZone: React.FC<ServeEndZoneProps> = ({ nextStep }) => {
   const { currentTeam, setCurrentStep } = useCard();
   const onClick = () => setCurrentStep(nextStep);
-  return ( 
+  return (
     <ZoneSelect
       type={currentTeam}
       draw_type={currentTeam}
@@ -20,7 +18,7 @@ const ServeEndZone: React.FC<ServeEndZoneProps> = (
       subTitle="サーブゾーンを選択してください"
       onClick={onClick}
     />
-   );
-}
- 
+  );
+};
+
 export default ServeEndZone;

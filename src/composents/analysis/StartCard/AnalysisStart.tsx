@@ -1,8 +1,8 @@
 import React from "react";
 
-import PlayCardLayout from "./PlayCardLayout";
-import { MatchRequest } from "../../api-client/api";
-import { useCard } from "../../hooks/card/use-cardController";
+import PlayCardLayout from "../PlayCardLayout";
+import { MatchRequest } from "../../../api-client/api";
+import { useCard } from "../../../hooks/card/use-cardController";
 
 interface AnalysisStartProps {
   match?: MatchRequest;
@@ -20,9 +20,9 @@ export const AnalysisStart: React.FC<AnalysisStartProps> = ({
       <div className="flex flex-row justify-center items-center">
         <p>
           {match?.home_team.team_name}
-          <span className="border p-1 m-3">{match?.home_team_score}</span>
+          <span className="border p-1 m-3">0</span>
           vs
-          <span className="border p-1 m-3">{match?.away_team_score}</span>
+          <span className="border p-1 m-3">0</span>
           {match?.away_team.team_name}
         </p>
       </div>
@@ -34,7 +34,7 @@ export const AnalysisStart: React.FC<AnalysisStartProps> = ({
           border border-gray-400
           text-gray-700"
         >
-          {match?.home_team_score}
+          0
         </button>
         <button
           style={{ width: "100px", height: "50px" }}
@@ -44,7 +44,7 @@ export const AnalysisStart: React.FC<AnalysisStartProps> = ({
           text-gray-700
           "
         >
-          {match?.away_team_score}
+          0
         </button>
       </div>
       <div className="flex flex-row justify-center items-center">

@@ -4,10 +4,10 @@ import { useParams } from "react-router-dom";
 import { MatchRequest, TeamPlayers } from "../../api-client/api";
 import { AttackerCard } from "../../composents/analysis/AttackerCard";
 import { MatchUtilityComponent } from "../../composents/analysis/MatchUtilityComponent";
-// import { PlayCard } from "../../composents/analysis/PlayCard";
 import { PlayerTableComponent } from "../../composents/analysis/PlayerTableComponent";
-import YouTubeVideoComponent from "../../composents/analysis/YouTubeVideoComponent";
+import YouTubeVideoComponent from "../../composents/analysis/Video/YouTubeVideoComponent";
 import LoadingSpinner from "../../composents/LoadingSpinner";
+import { useAttackHistory } from "../../hooks/analysis/attack/use-attackHistory";
 import { useAuth } from "../../hooks/use-auth";
 import { matchClient } from "../../lib/api/main";
 import {
@@ -18,6 +18,7 @@ import {
 const AnalysisCreate: React.FC = () => {
   const { username } = useAuth();
   const { matchId } = useParams();
+  const { setMatchId } = useAttackHistory();
   const [loading, setLoading] = React.useState(true);
   const [match, setMatch] = React.useState<MatchRequest>();
   const [homeOnCourtPlayer, setHomeOnCourtPlayer] = React.useState<
@@ -26,6 +27,7 @@ const AnalysisCreate: React.FC = () => {
   const [awayOnCourtPlayer, setAwayOnCourtPlayer] = React.useState<
     TeamPlayers[]
   >([]);
+
 
   const fetchAnalysis = async (matchId: string) => {
     const response = await matchClient.getMatchMatchesMatchIdGet(
@@ -61,6 +63,7 @@ const AnalysisCreate: React.FC = () => {
   useEffect(() => {
     setLoading(true);
     fetchData();
+    setMatchId(matchId? matchId : "");
   }, [matchId]);
 
   const homeTeamLotationClick = () => {

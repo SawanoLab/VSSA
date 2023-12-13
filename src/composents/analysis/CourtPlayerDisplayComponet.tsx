@@ -11,7 +11,12 @@ interface CourtPlayerDisplayComponetProps {
 }
 export const CourtPlayerDisplayComponet: React.FC<
   CourtPlayerDisplayComponetProps
-> = ({ home_team_zone_name, away_team_zone_name, homeTeamOnCourt, awayTeamOnCourt }) => {
+> = ({
+  home_team_zone_name,
+  away_team_zone_name,
+  homeTeamOnCourt,
+  awayTeamOnCourt,
+}) => {
   return (
     <table className={`table-auto absolute top-11`}>
       <tbody>

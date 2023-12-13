@@ -1,35 +1,36 @@
 import React from "react";
 
-import { AttackSkill } from '../../../api-client/api';
+import { AttackBallType } from '../../../api-client/api';
 import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
 import { useCard } from "../../../hooks/card/use-cardController";
 import Table from "../../Table";
 import PlayCardLayout from "../PlayCardLayout";
 
-interface AttackEvalutionProps {
+
+interface AttackBallProps {
   nextStep: string;
 }
-export const AttackEvalution: React.FC<AttackEvalutionProps> = ({
-  nextStep
+export const AttackBall: React.FC<AttackBallProps> = ({
+  nextStep,
 }) => {
-  const { setAttackSkill } = useAttackHistory();
+  const { setAttackBallType } = useAttackHistory();
   const { currentTeam, setCurrentStep } = useCard();
   /* eslint-disable */
   const onClick = (row: any) => {
     setCurrentStep(nextStep);
-    setAttackSkill(row.description);
+    setAttackBallType(row.description);
   }
-
   const header = [{ header: "説明", accessor: "description" }];
   const tableData = [
-    { description: AttackSkill.HeadSpike },
-    { description: AttackSkill.SoftSpike },
-    { description: AttackSkill.Dink }
+    { description: AttackBallType.High },
+    { description: AttackBallType.Medium },
+    { description: AttackBallType.Quick },
+    { description: AttackBallType.Other },
   ];
   return (
-    <PlayCardLayout title="アタック" subTitle="スキルタイプ" type={currentTeam}>
+    <PlayCardLayout title="アタック" subTitle="評価" type={currentTeam}>
       <Table columns={header} data={tableData} onRowClick={onClick} />
     </PlayCardLayout>
   );
 };
-export default AttackEvalution;
+export default AttackBall;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import ZoneSelect from "../ZoneSelect";
+import ZoneSelect from "../ZoneSelect/ZoneSelect";
 
 interface BlockZoneSelectProps {
   type: "home" | "away";

@@ -1,7 +1,7 @@
 import React from "react";
 
-import PlayCardLayout from "./PlayCardLayout";
-import Table from "../Table";
+import PlayCardLayout from "../PlayCardLayout";
+import Table from "../../Table";
 
 interface BlockEvalutionProps {
   type: "home" | "away";

@@ -3,11 +3,9 @@ import React from "react";
 import Table from "../Table";
 
 type TeamTableComponentProps = {
-  teamName?: string;
   teamData?: Record<string, { PlayerInfo: { name: string; postion: string } }>;
 };
 export const TeamTableComponent: React.FC<TeamTableComponentProps> = ({
-  teamName,
   teamData,
 }) => {
   const header = [
@@ -23,12 +21,7 @@ export const TeamTableComponent: React.FC<TeamTableComponentProps> = ({
 
   return (
     <div className="text-ml text-gray-500">
-      <h2>{teamName}</h2>
-      <Table
-      data={data}
-      columns={header}
-      fontSize="text-xs"
-      />
+      <Table data={data} columns={header} fontSize="text-xs" />
     </div>
   );
 };

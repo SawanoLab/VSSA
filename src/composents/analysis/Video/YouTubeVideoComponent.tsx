@@ -1,13 +1,13 @@
 import React from "react";
 
-import ShowYouTubeVideo from "../../utility/ShowYouTubeVideo";
-
+import ShowYouTubeVideo from "../../../utility/ShowYouTubeVideo";
 
 const YouTubeVideoComponent: React.FC = () => {
-  const [YouTubeUrl, setYouTubeUrl] = React.useState("https://youtu.be/f-GCt8bQcM0");
+  const [YouTubeUrl, setYouTubeUrl] = React.useState(
+    "https://youtu.be/f-GCt8bQcM0"
+  );
 
   console.log("YouTubeUrl", YouTubeUrl);
-  
 
   return (
     <>
@@ -23,7 +23,5 @@ const YouTubeVideoComponent: React.FC = () => {
     </>
   );
 };
-
-
 
 export default YouTubeVideoComponent;

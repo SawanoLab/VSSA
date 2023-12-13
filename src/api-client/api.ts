@@ -24,6 +24,235 @@ import type { RequestArgs } from './base';
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
 /**
+ * An enumeration.
+ * @export
+ * @enum {string}
+ */
+
+export const AttackBallType = {
+    High: 'high',
+    Medium: 'medium',
+    Quick: 'quick',
+    Other: 'other'
+} as const;
+
+export type AttackBallType = typeof AttackBallType[keyof typeof AttackBallType];
+
+
+/**
+ * 
+ * @export
+ * @interface AttackBase
+ */
+export interface AttackBase {
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackBase
+     */
+    'home_team_score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackBase
+     */
+    'away_team_score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackBase
+     */
+    'home_team_set_score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackBase
+     */
+    'away_team_set_score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackBase
+     */
+    'attack_start_zone': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackBase
+     */
+    'attack_end_zone': number;
+    /**
+     * 
+     * @type {AttackBallType}
+     * @memberof AttackBase
+     */
+    'attack_ball_type': AttackBallType;
+    /**
+     * 
+     * @type {AttackSkill}
+     * @memberof AttackBase
+     */
+    'attack_skill': AttackSkill;
+    /**
+     * 
+     * @type {AttackEvaluationType}
+     * @memberof AttackBase
+     */
+    'attack_evaluation': AttackEvaluationType;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackBase
+     */
+    'user_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackBase
+     */
+    'match_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackBase
+     */
+    'team_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackBase
+     */
+    'player_id': string;
+}
+
+
+/**
+ * An enumeration.
+ * @export
+ * @enum {string}
+ */
+
+export const AttackEvaluationType = {
+    Kill: 'kill',
+    OverPass: 'overPass',
+    PossibleCover: 'possibleCover',
+    Blocked: 'blocked',
+    InPlay: 'inPlay',
+    Error: 'error'
+} as const;
+
+export type AttackEvaluationType = typeof AttackEvaluationType[keyof typeof AttackEvaluationType];
+
+
+/**
+ * 
+ * @export
+ * @interface AttackGet
+ */
+export interface AttackGet {
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackGet
+     */
+    'home_team_score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackGet
+     */
+    'away_team_score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackGet
+     */
+    'home_team_set_score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackGet
+     */
+    'away_team_set_score': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackGet
+     */
+    'attack_start_zone': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof AttackGet
+     */
+    'attack_end_zone': number;
+    /**
+     * 
+     * @type {AttackBallType}
+     * @memberof AttackGet
+     */
+    'attack_ball_type': AttackBallType;
+    /**
+     * 
+     * @type {AttackSkill}
+     * @memberof AttackGet
+     */
+    'attack_skill': AttackSkill;
+    /**
+     * 
+     * @type {AttackEvaluationType}
+     * @memberof AttackGet
+     */
+    'attack_evaluation': AttackEvaluationType;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackGet
+     */
+    'user_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackGet
+     */
+    'match_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackGet
+     */
+    'team_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackGet
+     */
+    'player_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AttackGet
+     */
+    'uuid': string;
+}
+
+
+/**
+ * An enumeration.
+ * @export
+ * @enum {string}
+ */
+
+export const AttackSkill = {
+    HeadSpike: 'headSpike',
+    SoftSpike: 'softSpike',
+    Dink: 'dink'
+} as const;
+
+export type AttackSkill = typeof AttackSkill[keyof typeof AttackSkill];
+
+
+/**
  * 
  * @export
  * @interface HTTPValidationError
@@ -116,18 +345,6 @@ export interface MatchRequest {
      * @memberof MatchRequest
      */
     'season_name': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof MatchRequest
-     */
-    'home_team_score': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof MatchRequest
-     */
-    'away_team_score': number;
 }
 /**
  * 
@@ -336,73 +553,6 @@ export interface PlayerMatchInfo {
      * @memberof PlayerMatchInfo
      */
     'libero'?: boolean;
-}
-/**
- * 
- * @export
- * @interface PlayerUpdate
- */
-export interface PlayerUpdate {
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerUpdate
-     */
-    'name': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlayerUpdate
-     */
-    'player_number': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerUpdate
-     */
-    'code': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerUpdate
-     */
-    'postion': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlayerUpdate
-     */
-    'weight': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlayerUpdate
-     */
-    'height': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerUpdate
-     */
-    'user_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerUpdate
-     */
-    'team_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerUpdate
-     */
-    'season_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerUpdate
-     */
-    'uuid': string;
 }
 /**
  * 
@@ -654,6 +804,12 @@ export interface TeamRequest {
      * @type {string}
      * @memberof TeamRequest
      */
+    'uuid': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamRequest
+     */
     'team_name': string;
     /**
      * 
@@ -693,6 +849,277 @@ export interface ValidationError {
      */
     'type': string;
 }
+
+/**
+ * AttacksApi - axios parameter creator
+ * @export
+ */
+export const AttacksApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create Attack
+         * @param {AttackBase} attackBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAttackAttacksPost: async (attackBase: AttackBase, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'attackBase' is not null or undefined
+            assertParamExists('createAttackAttacksPost', 'attackBase', attackBase)
+            const localVarPath = `/attacks/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(attackBase, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Delete Attack
+         * @param {string} attackId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAttackAttacksAttackIdDelete: async (attackId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'attackId' is not null or undefined
+            assertParamExists('deleteAttackAttacksAttackIdDelete', 'attackId', attackId)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('deleteAttackAttacksAttackIdDelete', 'userId', userId)
+            const localVarPath = `/attacks/{attack_id}`
+                .replace(`{${"attack_id"}}`, encodeURIComponent(String(attackId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['user_id'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get Attacks
+         * @param {string} userId 
+         * @param {string} matchId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAttacksAttacksGet: async (userId: string, matchId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('getAttacksAttacksGet', 'userId', userId)
+            // verify required parameter 'matchId' is not null or undefined
+            assertParamExists('getAttacksAttacksGet', 'matchId', matchId)
+            const localVarPath = `/attacks/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['user_id'] = userId;
+            }
+
+            if (matchId !== undefined) {
+                localVarQueryParameter['match_id'] = matchId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AttacksApi - functional programming interface
+ * @export
+ */
+export const AttacksApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AttacksApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create Attack
+         * @param {AttackBase} attackBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createAttackAttacksPost(attackBase: AttackBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttackBase>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAttackAttacksPost(attackBase, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['AttacksApi.createAttackAttacksPost']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Delete Attack
+         * @param {string} attackId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteAttackAttacksAttackIdDelete(attackId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttackBase>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAttackAttacksAttackIdDelete(attackId, userId, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['AttacksApi.deleteAttackAttacksAttackIdDelete']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get Attacks
+         * @param {string} userId 
+         * @param {string} matchId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAttacksAttacksGet(userId: string, matchId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AttackGet>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAttacksAttacksGet(userId, matchId, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['AttacksApi.getAttacksAttacksGet']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AttacksApi - factory interface
+ * @export
+ */
+export const AttacksApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AttacksApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create Attack
+         * @param {AttackBase} attackBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAttackAttacksPost(attackBase: AttackBase, options?: any): AxiosPromise<AttackBase> {
+            return localVarFp.createAttackAttacksPost(attackBase, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Delete Attack
+         * @param {string} attackId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteAttackAttacksAttackIdDelete(attackId: string, userId: string, options?: any): AxiosPromise<AttackBase> {
+            return localVarFp.deleteAttackAttacksAttackIdDelete(attackId, userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get Attacks
+         * @param {string} userId 
+         * @param {string} matchId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAttacksAttacksGet(userId: string, matchId: string, options?: any): AxiosPromise<Array<AttackGet>> {
+            return localVarFp.getAttacksAttacksGet(userId, matchId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AttacksApi - object-oriented interface
+ * @export
+ * @class AttacksApi
+ * @extends {BaseAPI}
+ */
+export class AttacksApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create Attack
+     * @param {AttackBase} attackBase 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AttacksApi
+     */
+    public createAttackAttacksPost(attackBase: AttackBase, options?: RawAxiosRequestConfig) {
+        return AttacksApiFp(this.configuration).createAttackAttacksPost(attackBase, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete Attack
+     * @param {string} attackId 
+     * @param {string} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AttacksApi
+     */
+    public deleteAttackAttacksAttackIdDelete(attackId: string, userId: string, options?: RawAxiosRequestConfig) {
+        return AttacksApiFp(this.configuration).deleteAttackAttacksAttackIdDelete(attackId, userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get Attacks
+     * @param {string} userId 
+     * @param {string} matchId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AttacksApi
+     */
+    public getAttacksAttacksGet(userId: string, matchId: string, options?: RawAxiosRequestConfig) {
+        return AttacksApiFp(this.configuration).getAttacksAttacksGet(userId, matchId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
 
 /**
  * MatchesApi - axios parameter creator
@@ -1099,17 +1526,17 @@ export const PlayersApiAxiosParamCreator = function (configuration?: Configurati
          * @summary Update Player
          * @param {string} userId 
          * @param {string} playerId 
-         * @param {PlayerUpdate} playerUpdate 
+         * @param {PlayerBase} playerBase 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePlayerPlayersPut: async (userId: string, playerId: string, playerUpdate: PlayerUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updatePlayerPlayersPut: async (userId: string, playerId: string, playerBase: PlayerBase, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('updatePlayerPlayersPut', 'userId', userId)
             // verify required parameter 'playerId' is not null or undefined
             assertParamExists('updatePlayerPlayersPut', 'playerId', playerId)
-            // verify required parameter 'playerUpdate' is not null or undefined
-            assertParamExists('updatePlayerPlayersPut', 'playerUpdate', playerUpdate)
+            // verify required parameter 'playerBase' is not null or undefined
+            assertParamExists('updatePlayerPlayersPut', 'playerBase', playerBase)
             const localVarPath = `/players/`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1137,7 +1564,7 @@ export const PlayersApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(playerUpdate, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(playerBase, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1199,12 +1626,12 @@ export const PlayersApiFp = function(configuration?: Configuration) {
          * @summary Update Player
          * @param {string} userId 
          * @param {string} playerId 
-         * @param {PlayerUpdate} playerUpdate 
+         * @param {PlayerBase} playerBase 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updatePlayerPlayersPut(userId: string, playerId: string, playerUpdate: PlayerUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerBase>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePlayerPlayersPut(userId, playerId, playerUpdate, options);
+        async updatePlayerPlayersPut(userId: string, playerId: string, playerBase: PlayerBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerBase>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updatePlayerPlayersPut(userId, playerId, playerBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['PlayersApi.updatePlayerPlayersPut']?.[index]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
@@ -1255,12 +1682,12 @@ export const PlayersApiFactory = function (configuration?: Configuration, basePa
          * @summary Update Player
          * @param {string} userId 
          * @param {string} playerId 
-         * @param {PlayerUpdate} playerUpdate 
+         * @param {PlayerBase} playerBase 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePlayerPlayersPut(userId: string, playerId: string, playerUpdate: PlayerUpdate, options?: any): AxiosPromise<PlayerBase> {
-            return localVarFp.updatePlayerPlayersPut(userId, playerId, playerUpdate, options).then((request) => request(axios, basePath));
+        updatePlayerPlayersPut(userId: string, playerId: string, playerBase: PlayerBase, options?: any): AxiosPromise<PlayerBase> {
+            return localVarFp.updatePlayerPlayersPut(userId, playerId, playerBase, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1314,13 +1741,13 @@ export class PlayersApi extends BaseAPI {
      * @summary Update Player
      * @param {string} userId 
      * @param {string} playerId 
-     * @param {PlayerUpdate} playerUpdate 
+     * @param {PlayerBase} playerBase 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PlayersApi
      */
-    public updatePlayerPlayersPut(userId: string, playerId: string, playerUpdate: PlayerUpdate, options?: RawAxiosRequestConfig) {
-        return PlayersApiFp(this.configuration).updatePlayerPlayersPut(userId, playerId, playerUpdate, options).then((request) => request(this.axios, this.basePath));
+    public updatePlayerPlayersPut(userId: string, playerId: string, playerBase: PlayerBase, options?: RawAxiosRequestConfig) {
+        return PlayersApiFp(this.configuration).updatePlayerPlayersPut(userId, playerId, playerBase, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

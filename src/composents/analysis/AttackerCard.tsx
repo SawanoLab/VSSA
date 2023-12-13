@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 
+import AttackBall from "./AttackCard/AttackBall";
 import AttackEndZoneSelect from "./AttackCard/AttackEndZoneSelect";
-import AttackEvalution from "./AttackCard/AttackEvalution";
 import AttackPlayer from "./AttackCard/AttackPlayer";
 import AttackResult from "./AttackCard/AttackResult";
 import AttackSkillType from "./AttackCard/AttackSkillType";
+import AttackStartZoneSelect from "./AttackCard/AttackStartZoneSelect";
 import { ServeTeamSelect } from "./ServeCard/ServeTeamSelect";
 import { MatchRequest, TeamPlayers } from "../../api-client/api";
 import { useCard } from "../../hooks/card/use-cardController";
@@ -20,18 +21,41 @@ export const AttackerCard: React.FC<AttackerCardProps> = ({
   homeOnCourtPlayer,
   awayOnCourtPlayer,
 }) => {
-  const { currentStep, setCurrentStep } = useCard();
+  const { currentStep, setCurrentStep, currentTeam } = useCard();
+
   useEffect(() => {
     setCurrentStep("SelectTeam");
   }, []);
+
   const renderStepComponent = () => {
     switch (currentStep) {
       case "SelectTeam":
-        return <ServeTeamSelect match={match} homeOnCourtPlayer={homeOnCourtPlayer} awayOnCourtPlayer={awayOnCourtPlayer} nextStep='AttackPlayer' />
-      case "AttackPlayer":
-        return (<AttackPlayer onCourtPlayer={homeOnCourtPlayer} nextStep="AttackEvaluation" />);
+        return (
+          <ServeTeamSelect
+            match={match}
+            homeOnCourtPlayer={homeOnCourtPlayer}
+            awayOnCourtPlayer={awayOnCourtPlayer}
+            nextStep="AttackPlayer"
+          />
+        );
+        case "AttackPlayer":
+          if (currentTeam === "home")
+          return (
+        <AttackPlayer
+        onCourtPlayer={homeOnCourtPlayer}
+        nextStep="AttackStartZoneSelect"
+        />
+        );
+        return (
+          <AttackPlayer
+          onCourtPlayer={awayOnCourtPlayer}
+          nextStep="AttackStartZoneSelect"
+          />
+          );
+      case "AttackStartZoneSelect":
+        return <AttackStartZoneSelect nextStep="AttackEvaluation" />;
       case "AttackEvaluation":
-        return <AttackEvalution nextStep="AttackSkillType" />;
+        return <AttackBall nextStep="AttackSkillType" />;
       case "AttackSkillType":
         return <AttackSkillType nextStep="AttackResult" />;
       case "AttackResult":
@@ -42,7 +66,11 @@ export const AttackerCard: React.FC<AttackerCardProps> = ({
         return null;
     }
   };
-  return <div>{renderStepComponent()}</div>;
+  return (
+    <div>
+      {renderStepComponent()}
+    </div>
+  );
 };
 
 export default AttackerCard;

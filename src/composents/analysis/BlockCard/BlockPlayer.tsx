@@ -2,7 +2,7 @@ import React from "react";
 
 import { TeamPlayers } from "../../../api-client/api";
 import { useCard } from "../../../hooks/card/use-cardController";
-import PlayerSelect from "../PlayerSelect";
+import PlayerSelect from "../PlayerSelect/PlayerSelect";
 
 interface BlockPlayerProps {
   onCourtPlayer?: TeamPlayers[];
@@ -11,7 +11,7 @@ interface BlockPlayerProps {
 
 const BlockPlayer: React.FC<BlockPlayerProps> = ({
   onCourtPlayer,
-  nextStep
+  nextStep,
 }) => {
   const { currentTeam, setCurrentStep } = useCard();
   const onClick = () => setCurrentStep(nextStep);

@@ -250,7 +250,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PlayerUpdate"
+                "$ref": "#/components/schemas/PlayerBase"
               }
             }
           },
@@ -523,10 +523,343 @@
           }
         }
       }
+    },
+    "/attacks/": {
+      "get": {
+        "tags": [
+          "attacks"
+        ],
+        "summary": "Get Attacks",
+        "operationId": "get_attacks_attacks__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User Id",
+              "type": "string"
+            },
+            "name": "user_id",
+            "in": "query"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            },
+            "name": "match_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Attacks Attacks  Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttackGet"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "attacks"
+        ],
+        "summary": "Create Attack",
+        "operationId": "create_attack_attacks__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttackBase"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttackBase"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/attacks/{attack_id}": {
+      "delete": {
+        "tags": [
+          "attacks"
+        ],
+        "summary": "Delete Attack",
+        "operationId": "delete_attack_attacks__attack_id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Attack Id",
+              "type": "string"
+            },
+            "name": "attack_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "User Id",
+              "type": "string"
+            },
+            "name": "user_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttackBase"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "AttackBallType": {
+        "title": "AttackBallType",
+        "enum": [
+          "high",
+          "medium",
+          "quick",
+          "other"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "AttackBase": {
+        "title": "AttackBase",
+        "required": [
+          "home_team_score",
+          "away_team_score",
+          "home_team_set_score",
+          "away_team_set_score",
+          "attack_start_zone",
+          "attack_end_zone",
+          "attack_ball_type",
+          "attack_skill",
+          "attack_evaluation",
+          "user_id",
+          "match_id",
+          "team_id",
+          "player_id"
+        ],
+        "type": "object",
+        "properties": {
+          "home_team_score": {
+            "title": "Home Team Score",
+            "type": "integer"
+          },
+          "away_team_score": {
+            "title": "Away Team Score",
+            "type": "integer"
+          },
+          "home_team_set_score": {
+            "title": "Home Team Set Score",
+            "type": "integer"
+          },
+          "away_team_set_score": {
+            "title": "Away Team Set Score",
+            "type": "integer"
+          },
+          "attack_start_zone": {
+            "title": "Attack Start Zone",
+            "type": "integer"
+          },
+          "attack_end_zone": {
+            "title": "Attack End Zone",
+            "type": "integer"
+          },
+          "attack_ball_type": {
+            "$ref": "#/components/schemas/AttackBallType"
+          },
+          "attack_skill": {
+            "$ref": "#/components/schemas/AttackSkill"
+          },
+          "attack_evaluation": {
+            "$ref": "#/components/schemas/AttackEvaluationType"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "match_id": {
+            "title": "Match Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "team_id": {
+            "title": "Team Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "player_id": {
+            "title": "Player Id",
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "AttackEvaluationType": {
+        "title": "AttackEvaluationType",
+        "enum": [
+          "kill",
+          "overPass",
+          "possibleCover",
+          "blocked",
+          "inPlay",
+          "error"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "AttackGet": {
+        "title": "AttackGet",
+        "required": [
+          "home_team_score",
+          "away_team_score",
+          "home_team_set_score",
+          "away_team_set_score",
+          "attack_start_zone",
+          "attack_end_zone",
+          "attack_ball_type",
+          "attack_skill",
+          "attack_evaluation",
+          "user_id",
+          "match_id",
+          "team_id",
+          "player_id",
+          "uuid"
+        ],
+        "type": "object",
+        "properties": {
+          "home_team_score": {
+            "title": "Home Team Score",
+            "type": "integer"
+          },
+          "away_team_score": {
+            "title": "Away Team Score",
+            "type": "integer"
+          },
+          "home_team_set_score": {
+            "title": "Home Team Set Score",
+            "type": "integer"
+          },
+          "away_team_set_score": {
+            "title": "Away Team Set Score",
+            "type": "integer"
+          },
+          "attack_start_zone": {
+            "title": "Attack Start Zone",
+            "type": "integer"
+          },
+          "attack_end_zone": {
+            "title": "Attack End Zone",
+            "type": "integer"
+          },
+          "attack_ball_type": {
+            "$ref": "#/components/schemas/AttackBallType"
+          },
+          "attack_skill": {
+            "$ref": "#/components/schemas/AttackSkill"
+          },
+          "attack_evaluation": {
+            "$ref": "#/components/schemas/AttackEvaluationType"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "match_id": {
+            "title": "Match Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "team_id": {
+            "title": "Team Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "player_id": {
+            "title": "Player Id",
+            "type": "string",
+            "format": "uuid"
+          },
+          "uuid": {
+            "title": "Uuid",
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "AttackSkill": {
+        "title": "AttackSkill",
+        "enum": [
+          "headSpike",
+          "softSpike",
+          "dink"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
       "HTTPValidationError": {
         "title": "HTTPValidationError",
         "type": "object",
@@ -552,19 +885,23 @@
         "properties": {
           "home_team_id": {
             "title": "Home Team Id",
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "away_team_id": {
             "title": "Away Team Id",
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "user_id": {
             "title": "User Id",
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "season_id": {
             "title": "Season Id",
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           }
         }
       },
@@ -594,15 +931,14 @@
           "uuid",
           "home_team",
           "away_team",
-          "season_name",
-          "home_team_score",
-          "away_team_score"
+          "season_name"
         ],
         "type": "object",
         "properties": {
           "uuid": {
             "title": "Uuid",
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "home_team": {
             "$ref": "#/components/schemas/TeamRequest"
@@ -613,14 +949,6 @@
           "season_name": {
             "title": "Season Name",
             "type": "string"
-          },
-          "home_team_score": {
-            "title": "Home Team Score",
-            "type": "integer"
-          },
-          "away_team_score": {
-            "title": "Away Team Score",
-            "type": "integer"
           }
         }
       },
@@ -755,7 +1083,8 @@
         "properties": {
           "uuid": {
             "title": "Uuid",
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "name": {
             "title": "Name",
@@ -793,7 +1122,8 @@
         "properties": {
           "player_id": {
             "title": "Player Id",
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "on_court": {
             "title": "On Court",
@@ -806,68 +1136,6 @@
           "libero": {
             "title": "Libero",
             "type": "boolean"
-          }
-        }
-      },
-      "PlayerUpdate": {
-        "title": "PlayerUpdate",
-        "required": [
-          "name",
-          "player_number",
-          "code",
-          "postion",
-          "weight",
-          "height",
-          "user_id",
-          "team_id",
-          "season_id",
-          "uuid"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "player_number": {
-            "title": "Player Number",
-            "type": "integer"
-          },
-          "code": {
-            "title": "Code",
-            "type": "string"
-          },
-          "postion": {
-            "title": "Postion",
-            "type": "string"
-          },
-          "weight": {
-            "title": "Weight",
-            "type": "integer"
-          },
-          "height": {
-            "title": "Height",
-            "type": "integer"
-          },
-          "user_id": {
-            "title": "User Id",
-            "type": "string",
-            "format": "uuid"
-          },
-          "team_id": {
-            "title": "Team Id",
-            "type": "string",
-            "format": "uuid"
-          },
-          "season_id": {
-            "title": "Season Id",
-            "type": "string",
-            "format": "uuid"
-          },
-          "uuid": {
-            "title": "Uuid",
-            "type": "string",
-            "format": "uuid"
           }
         }
       },
@@ -1093,12 +1361,18 @@
       "TeamRequest": {
         "title": "TeamRequest",
         "required": [
+          "uuid",
           "team_name",
           "players",
           "setter_postion"
         ],
         "type": "object",
         "properties": {
+          "uuid": {
+            "title": "Uuid",
+            "type": "string",
+            "format": "uuid"
+          },
           "team_name": {
             "title": "Team Name",
             "type": "string"

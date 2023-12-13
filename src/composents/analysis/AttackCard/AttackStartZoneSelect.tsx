@@ -8,14 +8,14 @@ interface ReceptionZoneSelectProps {
   nextStep: string;
 }
 
-const AttackEndZoneSelect: React.FC<ReceptionZoneSelectProps> = ({
+const AttackStartZoneSelect: React.FC<ReceptionZoneSelectProps> = ({
   nextStep,
 }) => {
-  const { setAttackEndZone } = useAttackHistory();
+  const { setAttackStartZone } = useAttackHistory();
   const { currentTeam, setCurrentStep } = useCard();
   const onClick = (Zone_id: number) => {
     setCurrentStep(nextStep);
-    setAttackEndZone(Zone_id);
+    setAttackStartZone(Zone_id);
   }
   return (
     <ZoneSelect
@@ -28,4 +28,4 @@ const AttackEndZoneSelect: React.FC<ReceptionZoneSelectProps> = ({
   );
 };
 
-export default AttackEndZoneSelect;
+export default AttackStartZoneSelect;

@@ -1,13 +1,13 @@
 import React from "react";
 
-import PlayCardLayout from "./PlayCardLayout";
+import PlayCardLayout from "../PlayCardLayout";
 
 interface ZoneSelectProps {
   type: "home" | "away";
   draw_type: "home" | "away";
   title: string;
   subTitle: string;
-  onClick?: () => void;
+  onClick?: (Zone_id: number) => void;
 }
 
 const ZoneSelect: React.FC<ZoneSelectProps> = ({
@@ -17,13 +17,24 @@ const ZoneSelect: React.FC<ZoneSelectProps> = ({
   subTitle,
   onClick,
 }) => {
-  const serve_zone = ["1", "9", "6", "7", "5"];
+  const home_serve_zone = [["4", "3", "2"], ["7", "8", "9"], ["5", "6", "1"]];
+  const away_serve_zone = [["1", "6", "5"], ["9", "8", "7"], ["2", "3", "4"]];
+
+  const handleZoneClick = (x: number, y: number) => {
+    if (type === "home") {
+      const zoneCode = home_serve_zone[x][y];
+      if (onClick) {
+        onClick(Number(zoneCode));
+      }
+    }else {
+      const zoneCode = away_serve_zone[x][y];
+      if (onClick) {
+        onClick(Number(zoneCode));
+      }
+    }
+  }
   return (
-    <PlayCardLayout
-    type={type}
-    title={title}
-    subTitle={subTitle}
-    >
+    <PlayCardLayout type={type} title={title} subTitle={subTitle}>
       <div className="relative w-max h-50">
         {draw_type === "home" ? (
           <img
@@ -31,7 +42,7 @@ const ZoneSelect: React.FC<ZoneSelectProps> = ({
             alt="court"
             style={{ width: "280px" }}
           />
-          ) : (
+        ) : (
           <img
             src="/volleyball-court3.jpg"
             alt="court"
@@ -51,9 +62,11 @@ const ZoneSelect: React.FC<ZoneSelectProps> = ({
                     className="border border-white p-4"
                     key={`button-${i}-${y}`}
                     style={{ width: "70px", height: "70px" }}
-                    onClick={onClick}
+                    onClick={() => handleZoneClick(i, y)}
                   >
-                    {draw_type === "home"?serve_zone[4 - i]:serve_zone[i]}
+                    {draw_type === "home"
+                      ? home_serve_zone[i][y]
+                      : away_serve_zone[i][y]}
                   </button>
                 ))}
               </div>
