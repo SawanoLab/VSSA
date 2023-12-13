@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import React from "react";
 
 interface Column {
@@ -14,6 +13,7 @@ interface TableProps {
   columns?: Column[];
   onRowClick?: (item: any) => void;
   fontSize?: string;
+  tableHeight?: string;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -21,6 +21,7 @@ const Table: React.FC<TableProps> = ({
   columns,
   onRowClick,
   fontSize,
+  tableHeight = "700px",
 }) => {
   const handleRowClick = (item: any) => {
     if (onRowClick) {
@@ -29,42 +30,44 @@ const Table: React.FC<TableProps> = ({
   };
 
   return (
-    <table className="min-w-full">
-      <thead>
-        <tr>
-          {columns?.map((column, index) => (
-            <th
-              key={index}
-              className={`px-4 py-3 text-left ${fontSize?fontSize:"text-xs"} font-medium text-gray-500 tracking-wider ${column.className || ""}`}
-            >
-              {column.header}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {data?.map((item, index) => (
-          <tr
-            key={index}
-            className="hover:bg-gray-100"
-            onClick={() => handleRowClick(item)}
-          >
-            {columns?.map((column, colIndex) => (
-              <td
-                key={colIndex}
-                className={`px-6 py-4 text-sm leading-5 text-gray-500 border-b ${
-                  column.className || ""
-                }`}
+    <div style={{ height: tableHeight, overflowY: 'auto' }}>
+      <table className="min-w-full">
+        <thead>
+          <tr>
+            {columns?.map((column, index) => (
+              <th
+                key={index}
+                className={`px-4 py-3 text-left ${fontSize?fontSize:"text-xs"} font-medium text-gray-500 tracking-wider ${column.className || ""}`}
               >
-                {column.cellRenderer
-                  ? column.cellRenderer(item)
-                  : item[column.accessor]}
-              </td>
+                {column.header}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {data?.map((item, index) => (
+            <tr
+              key={index}
+              className="hover:bg-gray-100"
+              onClick={() => handleRowClick(item)}
+            >
+              {columns?.map((column, colIndex) => (
+                <td
+                  key={colIndex}
+                  className={`px-6 py-4 text-sm leading-5 text-gray-500 border-b ${
+                    column.className || ""
+                  }`}
+                >
+                  {column.cellRenderer
+                    ? column.cellRenderer(item)
+                    : item[column.accessor]}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

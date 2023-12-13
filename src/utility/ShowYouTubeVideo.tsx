@@ -14,7 +14,7 @@ const ShowYouTubeVideo = (url: string) => {
   return (
     <iframe
       width="600"
-      height="450"
+      height="300"
       src={embedUrl}
 
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

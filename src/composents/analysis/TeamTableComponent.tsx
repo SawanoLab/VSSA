@@ -21,7 +21,7 @@ export const TeamTableComponent: React.FC<TeamTableComponentProps> = ({
 
   return (
     <div className="text-ml text-gray-500">
-      <Table data={data} columns={header} fontSize="text-xs" />
+      <Table data={data} columns={header} fontSize="text-xs" tableHeight="240px" />
     </div>
   );
 };
