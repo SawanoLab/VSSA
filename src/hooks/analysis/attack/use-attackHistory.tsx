@@ -1,13 +1,13 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 
-import { AttackBallType, AttackBase, AttackEvaluationType, AttackSkill } from '../../../api-client/api';
+import { AttackBallType, AttackBase, AttackEvaluationType, AttackGet, AttackSkill } from '../../../api-client/api';
 import { attackClient } from '../../../lib/api/main';
 import { useAuth } from "../../use-auth";
 
 
 
 export interface AttackHistoryContextType {
-  history: AttackBase[];
+  history: AttackGet[];
   serveTeamSelect: string | null;
   attackEvalution: AttackEvaluationType | null;
   attackPlayer: string | null;
@@ -20,11 +20,11 @@ export interface AttackHistoryContextType {
   setAttackEvalution: React.Dispatch<React.SetStateAction<AttackEvaluationType|null>>;
   setAttackBallType: React.Dispatch<React.SetStateAction<AttackBallType|null>>;
   setAttackEndZone: React.Dispatch<React.SetStateAction<number>>;
-  addAttackData: (newData: AttackBase) => void;
   setAttackSkill: React.Dispatch<React.SetStateAction<AttackSkill|null>>;
   setMatchId: React.Dispatch<React.SetStateAction<string>>;
   setTeamId: React.Dispatch<React.SetStateAction<string>>;
   setPlayerId: React.Dispatch<React.SetStateAction<string>>;
+  deleteAttackData: (attackId: string) => void;
 }
 
 const initialContextState: AttackHistoryContextType = {
@@ -41,11 +41,11 @@ const initialContextState: AttackHistoryContextType = {
   setAttackStartZone: () => {},
   setAttackBallType: () => {},
   setAttackEndZone: () => {},
-  addAttackData: () => {},
   setAttackSkill: () => {},
   setMatchId: () => {},
   setTeamId: () => {},
   setPlayerId: () => {},
+  deleteAttackData: () => {}
 };
 
 export const AttackHistoryContext = createContext<AttackHistoryContextType>(initialContextState);
@@ -54,7 +54,7 @@ export const useAttackHistory = () => useContext(AttackHistoryContext);
 
 export default function AttackHistoryProvider({ children }: { children: React.ReactNode }) {
   const { username } = useAuth();
-  const [history, setHistory] = useState<AttackBase[]>([]);
+  const [history, setHistory] = useState<AttackGet[]>([]);
   const [homeTeamScore] = useState<number>(0);
   const [awayTeamScore] = useState<number>(0);
   const [homeTeamSetScore] = useState<number>(0);
@@ -70,18 +70,31 @@ export default function AttackHistoryProvider({ children }: { children: React.Re
   const [serveTeamSelect, setServeTeamSelect] = useState<string>("");
   const [attackPlayer, setAttackPlayer] = useState<string>("");
 
-  const addAttackData = (newData: AttackBase) => {
-    postAttackData(newData);
-    // getAttackData(matchId);
+  const addAttackData = (newData: AttackGet) => {
     setHistory(currentHistory => [...currentHistory, newData]);
   };
 
+  const dropAttackData = (attackId: string) => {
+    const newHistory = history.filter((item) => item.uuid !== attackId);
+    setHistory(newHistory);
+  }
+
   const postAttackData = async (newData: AttackBase) => {
     try {
-      console.log("newData", newData);
       const response = await attackClient.createAttackAttacksPost(newData);
       const data = response.data;
-      console.log(data);
+      addAttackData(data);
+    } catch (error) {
+      console.error("データの取得中にエラーが発生しました:", error);
+    }
+  }
+
+  const deleteAttackData = async (attackId: string) => {
+    try {
+      const response = await attackClient.deleteAttackAttacksAttackIdDelete(attackId, username);
+      const data = response.data;
+      dropAttackData(attackId);
+      console.log("deleteAttackData", data);
     } catch (error) {
       console.error("データの取得中にエラーが発生しました:", error);
     }
@@ -113,10 +126,9 @@ export default function AttackHistoryProvider({ children }: { children: React.Re
     if (!attackBallType) return;
     if (!attackEndZone) return;
     if (!attackSkill) return;
-    addAttackData(
-      {
-        home_team_score: homeTeamScore,
-        away_team_score: awayTeamScore,
+    const newData = {
+      home_team_score: homeTeamScore,
+      away_team_score: awayTeamScore,
         home_team_set_score: homeTeamSetScore,
         away_team_set_score: awayTeamSetScore,
         attack_start_zone: attackStartZone,
@@ -129,7 +141,7 @@ export default function AttackHistoryProvider({ children }: { children: React.Re
         team_id: teamId,
         player_id: playerId
       }
-    );
+    postAttackData(newData);
 
     setServeTeamSelect("");
     setAttackEvalution(null);
@@ -156,11 +168,11 @@ export default function AttackHistoryProvider({ children }: { children: React.Re
         setAttackStartZone,
         setAttackBallType,
         setAttackEndZone,
-        addAttackData,
         setAttackSkill,
         setPlayerId,
         setMatchId,
         setTeamId,
+        deleteAttackData
       }}
     >
       {children}

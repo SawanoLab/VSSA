@@ -994,7 +994,7 @@ export const AttacksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createAttackAttacksPost(attackBase: AttackBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttackBase>> {
+        async createAttackAttacksPost(attackBase: AttackBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttackGet>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createAttackAttacksPost(attackBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['AttacksApi.createAttackAttacksPost']?.[index]?.url;
@@ -1045,7 +1045,7 @@ export const AttacksApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createAttackAttacksPost(attackBase: AttackBase, options?: any): AxiosPromise<AttackBase> {
+        createAttackAttacksPost(attackBase: AttackBase, options?: any): AxiosPromise<AttackGet> {
             return localVarFp.createAttackAttacksPost(attackBase, options).then((request) => request(axios, basePath));
         },
         /**

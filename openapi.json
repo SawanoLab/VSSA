@@ -600,7 +600,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AttackBase"
+                  "$ref": "#/components/schemas/AttackGet"
                 }
               }
             }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { TeamDisplayComponent } from "./TeamDisplayComponet";
 import { MatchRequest } from "../../api-client/api";
@@ -10,7 +10,7 @@ interface PlayHistoryComponentProps {
 }
 
 const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = ({ match }) => {
-  const { history } = useAttackHistory();
+  const { history, deleteAttackData } = useAttackHistory();
 
   const header = [
     { header: "名前", accessor: "name" },
@@ -18,27 +18,29 @@ const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = ({ match }) =>
     { header: "得点", accessor: "score" },
     { header: "コース", accessor: "course" },
   ];
-  useEffect(() => {
-    console.log(history);
-    console.log(match);
-  }, [history, match]);
+
   const data = history.map((item) => {
     const team = item.team_id === match?.home_team.uuid ? "home" : "away";
-    const playerName =
-      team === "home"
-        ? match?.home_team.players[item.player_id]?.PlayerInfo.name
-        : match?.away_team.players[item.player_id]?.PlayerInfo.name;
+    const playerName = team === "home"
+          ? match?.home_team.players[item.player_id]?.PlayerInfo.name
+          : match?.away_team.players[item.player_id]?.PlayerInfo.name;
+
     return {
       name: <div className={team === "home" ? "text-blue-500" : "text-red-500"}>{playerName}</div>,
       action: `${item.attack_ball_type}→${item.attack_skill}→${item.attack_evaluation}`,
       score: `${item.away_team_score}-${item.home_team_score}`,
       course: `${item.attack_start_zone}→${item.attack_end_zone}`,
+      id: item.uuid
     };
   });
 
+
+  const handleDelete = (attackId: string) => {
+    deleteAttackData(attackId);
+  }
   return (
     <div style={{ width: "550px" }}>
-      <Table data={data} columns={header} tableHeight="300px" />
+      <Table data={data} columns={header} tableHeight="300px" hover={true} deleteButton={handleDelete} />
     </div>
   );
 };
