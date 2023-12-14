@@ -19,7 +19,7 @@ export const ServeTeamSelect: React.FC<ServeTeamSelectProps> = ({
   awayOnCourtPlayer,
   nextStep
 }) => {
-  const { setServeTeamSelect, setTeamId } = useAttackHistory();
+  const { setAttackTeamSelect, setTeamId } = useAttackHistory();
   const { setCurrentStep, setCurrentTeam, currentTeam } = useCard();
 
 
@@ -28,7 +28,7 @@ export const ServeTeamSelect: React.FC<ServeTeamSelectProps> = ({
     setTeamId(netTeamId || "");
     setCurrentTeam(netTeam);
     setCurrentStep(nextStep);
-    setServeTeamSelect(netTeam);
+    setAttackTeamSelect(netTeam);
   }
 
   const getServePlayer = (team: "home" | "away") => {

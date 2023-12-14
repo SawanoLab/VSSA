@@ -6,28 +6,32 @@ import { useCard } from "../../../hooks/card/use-cardController";
 import PlayerCardLayout from "../PlayCardLayout";
 
 
-interface AttackerTeamSelectProps {
+interface AttackTeamSelectProps {
   match?: MatchRequest;
   homeOnCourtPlayer?: TeamPlayers[];
   awayOnCourtPlayer?: TeamPlayers[];
   nextStep: string;
 }
 
-export const AttackerTeamSelect: React.FC<AttackerTeamSelectProps> = ({
+export const AttackTeamSelect: React.FC<AttackTeamSelectProps> = ({
   match,
   homeOnCourtPlayer,
   awayOnCourtPlayer,
   nextStep
 }) => {
-  const { setAttackTeamSelect } = useAttackHistory();
+  const { setAttackTeamSelect, setTeamId } = useAttackHistory();
   const { setCurrentStep, setCurrentTeam, currentTeam } = useCard();
+
+
   const handleHomeTeamClick = (netTeam: "home" | "away") => {
+    const netTeamId = netTeam === "home" ? match?.home_team.uuid : match?.away_team.uuid;
+    setTeamId(netTeamId || "");
     setCurrentTeam(netTeam);
     setCurrentStep(nextStep);
     setAttackTeamSelect(netTeam);
   }
 
-  const getServePlayer = (team: "home" | "away") => {
+  const getAttackPlayer = (team: "home" | "away") => {
     if (team === "home") {
       return homeOnCourtPlayer
         ? Object.values(homeOnCourtPlayer).find(
@@ -44,7 +48,7 @@ export const AttackerTeamSelect: React.FC<AttackerTeamSelectProps> = ({
   };
 
   return (
-    <PlayerCardLayout title="アタック" subTitle="チーム選択" type={currentTeam}>
+    <PlayerCardLayout title="サーブ" subTitle="チーム選択" type={currentTeam}>
       <button
         style={{ width: "100%", height: "100px" }}
         className="
@@ -56,7 +60,7 @@ export const AttackerTeamSelect: React.FC<AttackerTeamSelectProps> = ({
       >
         {match?.home_team.team_name}
         <br />
-        {getServePlayer("home")?.PlayerInfo.name}
+        {getAttackPlayer("home")?.PlayerInfo.name}
       </button>
       <button
         style={{ width: "100%", height: "100px" }}
@@ -69,7 +73,7 @@ export const AttackerTeamSelect: React.FC<AttackerTeamSelectProps> = ({
       >
         {match?.away_team.team_name}
         <br />
-        {getServePlayer("away")?.PlayerInfo.name}
+        {getAttackPlayer("away")?.PlayerInfo.name}
       </button>
     </PlayerCardLayout>
   );
