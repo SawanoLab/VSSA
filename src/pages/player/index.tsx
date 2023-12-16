@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import PlayerCreate from "./create";
-import Edit from "./edit";
+import PlayerEdit from "./edit";
+import { PlayerGet } from "../../api-client/api";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
 import Table from "../../composents/Table";
 import { usePlayer } from "../../hooks/match/use-player";
 import { useAuth } from "../../hooks/use-auth";
 import { playerClient, teamClient, seasonClient } from "../../lib/api/main";
-import { PlayerInfo } from "../../types/player";
 import { SeasonData } from "../../types/season";
 import { TeamName } from "../../types/team";
 import { TeamsData } from "../../types/team";
@@ -21,7 +21,8 @@ const PlayerIndex: React.FC = () => {
   const [teams, setTeams] = useState<TeamName[]>([]);
   const [seasons, setSeasons] = useState<SeasonData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPlayer, setSelectedPlayer] = useState<PlayerInfo | null>(null);
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerGet | 
+    undefined>(undefined);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isNewModalOpen, setNewModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,13 +32,7 @@ const PlayerIndex: React.FC = () => {
     { header: "ポジション", accessor: "postion" },
   ];
 
-  const handleCloseModal = () => {
-    setSelectedPlayer(null);
-    setEditModalOpen(false);
-    fetchPlayer();
-  };
-
-  const fetchTeamData = async () => {
+  const getTeams = async () => {
     setLoading(true);
     try {
       const response = await teamClient.getTeamsTeamsGet(username);
@@ -70,6 +65,7 @@ const PlayerIndex: React.FC = () => {
   };
   
   const fetchSeasonData = async () => {
+    setLoading(true);
     try {
       const response = await seasonClient.getSeasonsSeasonsGet(username);
       const data = response.data;
@@ -81,19 +77,27 @@ const PlayerIndex: React.FC = () => {
     }
   };
   
-  const handleDeleteClick = async (playerId: string) => {
+  const deletePlayer = async (playerId: string) => {
     try {
       await playerClient.deletePlayerPlayersDelete(username, playerId);
-      fetchPlayer();
-      fetchSeasonData();
     } catch (error) {
-      console.log(error);
-      
       setErrorMessage("プレイヤーの削除");
     }
+  }
+
+  const handleDeleteClick = async (playerId: string) => {
+    await deletePlayer(playerId);
+    fetchPlayer();
   };
 
-  const formatPlayerData = (data: PlayerInfo[]) => {
+  const handleEditClick = (playerId: string) => {
+    const player = players.find((player) => player.uuid === playerId);
+    setSelectedPlayer(player);
+    setEditModalOpen(true);
+    fetchPlayer();
+  }
+
+  const formatPlayerData = (data: PlayerGet[]) => {
     return data.map(
       ({
         uuid,
@@ -106,7 +110,7 @@ const PlayerIndex: React.FC = () => {
         user_id,
         team_id,
         season_id,
-      }: PlayerInfo) => ({
+      }: PlayerGet) => ({
         uuid,
         name,
         player_number,
@@ -123,7 +127,7 @@ const PlayerIndex: React.FC = () => {
 
 
   useEffect(() => {
-    fetchTeamData();
+    getTeams();
     fetchSeasonData();
   }, []);
 
@@ -156,16 +160,17 @@ const PlayerIndex: React.FC = () => {
             columns={tableHeader}
             hover={true}
             deleteButton={handleDeleteClick}
+            editButton={handleEditClick}
             />
         </div>
       )}
       {isEditModalOpen && (
-        <Modal onClose={handleCloseModal}>
+        <Modal onClose={() => setEditModalOpen(false)}>
           {selectedPlayer && (
-            <Edit
+            <PlayerEdit
               playerData={selectedPlayer}
               teamData={teams}
-              onClose={handleCloseModal}
+              onClose={() => setEditModalOpen(false)}
             />
           )}
         </Modal>

@@ -1,20 +1,9 @@
-export interface PlayerInfo {
-  uuid: string;
-  name: string;
-  player_number: number;
-  code: string;
-  postion: string;
-  weight: number;
-  height: number;
-  user_id: string;
-  team_id: string;
-  season_id: string;
-}
+import { PlayerGet } from "../api-client/api";
 
 export type OnCourt = boolean;
 
 export interface Player {
-  PlayerInfo: PlayerInfo;
+  PlayerInfo: PlayerGet;
   onCourt: OnCourt;
   zone_code: string | null;
   setter: boolean;

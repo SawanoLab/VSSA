@@ -17,6 +17,7 @@ interface TableProps {
   tableHeight?: string;
   hover?: boolean;
   deleteButton?: (id: string) => void;
+  editButton?: (id: string) => void;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -27,6 +28,7 @@ const Table: React.FC<TableProps> = ({
   tableHeight = '700px',
   hover = false,
   deleteButton,
+  editButton,
 }) => {
   const [hoveredRowIndex, setHoveredRowIndex] = React.useState<number | null>(null);
 
@@ -86,7 +88,12 @@ const Table: React.FC<TableProps> = ({
               {hoveredRowIndex === index && (
                 <div className="absolute right-0 top-2 mt-2 mr-2 text-gray-500 animate-slide-in-blurred-right">
                   <button className="mr-2">
-                    <AiFillEdit />
+                    <AiFillEdit
+                      onClick={() => {
+                        editButton &&
+                        editButton(item.uuid);
+                      }}
+                    />
                   </button>
                   <button>
                     <AiFillDelete

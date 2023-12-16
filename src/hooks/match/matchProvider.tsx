@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
+import { PlayerGet } from "../../api-client/api";
 import {
-  PlayerInfo,
   Match,
   Players,
   Player,
@@ -13,7 +13,7 @@ type MatchContextType = {
   setTeamPlayer: (
     teamType: "home" | "away",
     teamName: string,
-    players: PlayerInfo[]
+    players: PlayerGet[]
   ) => void;
   setSetterPosition: (
     teamType: "home" | "away",
@@ -66,7 +66,7 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
   const setTeamPlayer = (
     teamType: "home" | "away",
     teamName: string,
-    players: PlayerInfo[]
+    players: PlayerGet[]
   ) => {
     setMatch((prevMatch) => ({
       ...prevMatch,
