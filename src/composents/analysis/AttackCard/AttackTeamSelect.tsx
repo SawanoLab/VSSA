@@ -15,8 +15,6 @@ interface AttackTeamSelectProps {
 
 export const AttackTeamSelect: React.FC<AttackTeamSelectProps> = ({
   match,
-  homeOnCourtPlayer,
-  awayOnCourtPlayer,
   nextStep
 }) => {
   const { setAttackTeamSelect, setTeamId } = useAttackHistory();
@@ -31,24 +29,8 @@ export const AttackTeamSelect: React.FC<AttackTeamSelectProps> = ({
     setAttackTeamSelect(netTeam);
   }
 
-  const getAttackPlayer = (team: "home" | "away") => {
-    if (team === "home") {
-      return homeOnCourtPlayer
-        ? Object.values(homeOnCourtPlayer).find(
-            (player) => player.zone_code === "Z5"
-          )
-        : null;
-    } else {
-      return awayOnCourtPlayer
-        ? Object.values(awayOnCourtPlayer).find(
-            (player) => player.zone_code === "Z5"
-          )
-        : null;
-    }
-  };
-
   return (
-    <PlayerCardLayout title="サーブ" subTitle="チーム選択" type={currentTeam}>
+    <PlayerCardLayout title="アタック" subTitle="チーム選択" type={currentTeam}>
       <button
         style={{ width: "100%", height: "100px" }}
         className="
@@ -59,8 +41,6 @@ export const AttackTeamSelect: React.FC<AttackTeamSelectProps> = ({
         onClick={() => handleHomeTeamClick("home")}
       >
         {match?.home_team.team_name}
-        <br />
-        {getAttackPlayer("home")?.PlayerInfo.name}
       </button>
       <button
         style={{ width: "100%", height: "100px" }}
@@ -72,8 +52,6 @@ export const AttackTeamSelect: React.FC<AttackTeamSelectProps> = ({
         onClick={() => handleHomeTeamClick("away")}
       >
         {match?.away_team.team_name}
-        <br />
-        {getAttackPlayer("away")?.PlayerInfo.name}
       </button>
     </PlayerCardLayout>
   );

@@ -1,9 +1,9 @@
 import React from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
+import { ShowMatchScore } from "./ShowMatchScore";
 import { MatchRequest } from "../../api-client/api";
 import { useAttackHistory } from "../../hooks/analysis/attack/use-attackHistory";
-
 
 export interface MatchTeamComponent {
   match?: MatchRequest;
@@ -71,30 +71,13 @@ export const MatchTeamComponent: React.FC<MatchTeamComponent> = ({ match }) => {
 
   return (
     <div className="m-5">
-      <table className="table-auto text-center w-full text-gray-500">
-        <tr>
-          <td></td>
-          <td className="p-2 border-r border-l border-gray-200">セット</td>
-          <td className="p-2 border-r border-l border-gray-200">得点</td>
-          <td></td>
-          <td className="p-2 border-r border-l border-gray-200">得点</td>
-          <td className="p-2 border-r border-l border-gray-200">セット</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td className="p-2">{match?.home_team.team_name}</td>
-          <td className="border-r border-l border-gray-200">
-            {homeTeamSetScore}
-          </td>
-          <td className="border-r border-l border-gray-200">{homeTeamScore}</td>
-          <td className="p-2">-</td>
-          <td className="border-r border-l border-gray-200">{awayTeamScore}</td>
-          <td className="border-r border-l border-gray-200">
-            {awayTeamSetScore}
-          </td>
-          <td className="p-2">{match?.away_team.team_name}</td>
-        </tr>
-      </table>
+      <ShowMatchScore
+        match={match}
+        homeTeamScore={homeTeamScore}
+        awayTeamScore={awayTeamScore}
+        homeTeamSetScore={homeTeamSetScore}
+        awayTeamSetScore={awayTeamSetScore}
+      />
       <p className="text-center text-gray-500 flex justify-between m-3">
         <div>
           スコア

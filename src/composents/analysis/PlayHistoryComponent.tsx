@@ -35,7 +35,7 @@ export const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = ({
       action: `${item.attack_ball_type}→${item.attack_skill}→${item.attack_evaluation}`,
       score: `${item.home_team_set_score}|${item.home_team_score}-${item.away_team_score}|${item.away_team_set_score}`,
       course: `${item.attack_start_zone}→${item.attack_end_zone}`,
-      id: item.uuid,
+      uuid: item.uuid,
     };
   });
 

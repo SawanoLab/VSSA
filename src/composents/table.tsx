@@ -91,9 +91,8 @@ const Table: React.FC<TableProps> = ({
                   <button>
                     <AiFillDelete
                       onClick={() => {
-                        console.log("item", item);
                         deleteButton &&
-                        deleteButton(item.id);
+                        deleteButton(item.uuid);
                       }}
                     />
                   </button>

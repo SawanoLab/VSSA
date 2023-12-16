@@ -20,9 +20,9 @@ const AttackStartZoneSelect: React.FC<ReceptionZoneSelectProps> = ({
   return (
     <ZoneSelect
       type={currentTeam}
-      draw_type={currentTeam}
+      draw_type={currentTeam === "home" ? "away" : "home"}
       title="アタック"
-      subTitle="エンドゾーンを選択してください"
+      subTitle="スタートゾーンを選択してください"
       onClick={onClick}
     />
   );

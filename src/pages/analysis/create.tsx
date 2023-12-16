@@ -37,7 +37,7 @@ const AnalysisCreate: React.FC = () => {
     return response.data;
   };
 
-  const fetchData = async () => {
+  const fetchAnalysisData = async () => {
     if (!matchId) {
       return;
     }
@@ -62,7 +62,7 @@ const AnalysisCreate: React.FC = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetchData();
+    fetchAnalysisData();
     setMatchId(matchId? matchId : "");
   }, [matchId]);
 

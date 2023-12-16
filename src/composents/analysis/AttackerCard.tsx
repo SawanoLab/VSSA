@@ -6,7 +6,7 @@ import AttackPlayer from "./AttackCard/AttackPlayer";
 import AttackResult from "./AttackCard/AttackResult";
 import AttackSkillType from "./AttackCard/AttackSkillType";
 import AttackStartZoneSelect from "./AttackCard/AttackStartZoneSelect";
-import { ServeTeamSelect } from "./ServeCard/ServeTeamSelect";
+import { AttackTeamSelect } from "./AttackCard/AttackTeamSelect";
 import { MatchRequest, TeamPlayers } from "../../api-client/api";
 import { useCard } from "../../hooks/card/use-cardController";
 
@@ -31,10 +31,8 @@ export const AttackerCard: React.FC<AttackerCardProps> = ({
     switch (currentStep) {
       case "SelectTeam":
         return (
-          <ServeTeamSelect
+          <AttackTeamSelect
             match={match}
-            homeOnCourtPlayer={homeOnCourtPlayer}
-            awayOnCourtPlayer={awayOnCourtPlayer}
             nextStep="AttackPlayer"
           />
         );

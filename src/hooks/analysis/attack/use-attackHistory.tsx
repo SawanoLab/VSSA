@@ -23,6 +23,7 @@ export interface AttackHistoryContextType {
   awayTeamScore: number;
   homeTeamSetScore: number;
   awayTeamSetScore: number;
+  getAttackData: (match_id: string) => void;
   setAttackTeamSelect: React.Dispatch<React.SetStateAction<string>>;
   setAttackPlayer: React.Dispatch<React.SetStateAction<string>>;
   setAttackStartZone: React.Dispatch<React.SetStateAction<number>>;
@@ -56,6 +57,7 @@ const initialContextState: AttackHistoryContextType = {
   awayTeamScore: 0,
   homeTeamSetScore: 0,
   awayTeamSetScore: 0,
+  getAttackData: () => {},
   setAttackTeamSelect: () => {},
   setAttackEvalution: () => {},
   setAttackPlayer: () => {},
@@ -105,6 +107,7 @@ export default function AttackHistoryProvider({
 
   useEffect(() => {
     getAttackData(matchId);
+
   }, [matchId]);
 
   useEffect(() => {
@@ -218,6 +221,7 @@ export default function AttackHistoryProvider({
       setAwayTeamScore(sortedData[0].away_team_score);
       setHomeTeamSetScore(sortedData[0].home_team_set_score);
       setAwayTeamSetScore(sortedData[0].away_team_set_score);
+      console.log("getAttackData", data);
     } catch (error) {
       console.error("データの取得中にエラーが発生しました:", error);
     }
@@ -237,6 +241,7 @@ export default function AttackHistoryProvider({
         awayTeamScore,
         homeTeamSetScore,
         awayTeamSetScore,
+        getAttackData,
         setAttackTeamSelect,
         setAttackPlayer,
         setAttackEvalution,

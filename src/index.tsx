@@ -18,6 +18,8 @@ import Layout from "./pages/Layout";
 import MatchIndex from "./pages/match";
 import MatchCreate from "./pages/match/create";
 import PlayerIndex from "./pages/player";
+import AttackReportIndex from "./pages/reports/attack/index";
+import AttackReportShow from "./pages/reports/attack/show";
 import SeasonIndex from "./pages/season";
 import { SignIn } from "./pages/SignIn";
 import TeamIndex from "./pages/team";
@@ -90,6 +92,28 @@ function RouteConfig() {
                 <AttackHistoryContext>
                   <CardProvider>
                     <AnalysisCreate />
+                  </CardProvider>
+                </AttackHistoryContext>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="analysis/reports/match"
+            element={
+              <PrivateRoute>
+                <CardProvider>
+                  <AttackReportIndex />
+                </CardProvider>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="analysis/reports/match/:matchId"
+            element={
+              <PrivateRoute>
+                <AttackHistoryContext>
+                  <CardProvider>
+                    <AttackReportShow />
                   </CardProvider>
                 </AttackHistoryContext>
               </PrivateRoute>
