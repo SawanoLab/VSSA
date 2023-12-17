@@ -1,7 +1,9 @@
+import { useMatch } from "hooks/match/useMatch";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ErrorMessage from "utility/ErrorMessage";
 
-import { MatchRequest, TeamPlayers } from "../../api-client/api";
+import { TeamPlayers } from "../../api-client/api";
 import { AttackerCard } from "../../composents/analysis/AttackerCard";
 import { MatchUtilityComponent } from "../../composents/analysis/MatchUtilityComponent";
 import { PlayerTableComponent } from "../../composents/analysis/PlayerTableComponent";
@@ -9,7 +11,6 @@ import YouTubeVideoComponent from "../../composents/analysis/Video/YouTubeVideoC
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 import { useAuth } from "../../hooks/use-auth";
-import { matchClient } from "../../lib/api/main";
 import {
   home_team_zone_name_column,
   away_team_zone_name_column,
@@ -18,9 +19,9 @@ import {
 const AnalysisCreate: React.FC = () => {
   const { username } = useAuth();
   const { matchId } = useParams();
+  const { match, matchLoading, matchError, setMatchError, fetchMatch } =
+    useMatch();
   const { setMatchId } = useAttackHistory();
-  const [loading, setLoading] = React.useState(true);
-  const [match, setMatch] = React.useState<MatchRequest>();
   const [homeOnCourtPlayer, setHomeOnCourtPlayer] = React.useState<
     TeamPlayers[]
   >([]);
@@ -28,106 +29,68 @@ const AnalysisCreate: React.FC = () => {
     TeamPlayers[]
   >([]);
 
-  const fetchAnalysis = async (matchId: string) => {
-    const response = await matchClient.getMatchMatchesMatchIdGet(
-      matchId,
-      username
-    );
-    return response.data;
-  };
-
-  const fetchAnalysisData = async () => {
-    if (!matchId) {
-      return;
-    }
-    try {
-      const response = await fetchAnalysis(matchId);
-      setMatch(response);
-      setHomeOnCourtPlayer(
-        Object.values(response.home_team.players).filter(
-          (player) => player.onCourt === true
-        )
-      );
-      setAwayOnCourtPlayer(
-        Object.values(response.away_team.players).filter(
-          (player) => player.onCourt === true
-        )
-      );
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
-    setLoading(true);
-    fetchAnalysisData();
-    setMatchId(matchId ? matchId : "");
-  }, [matchId]);
-
-  const homeTeamLotationClick = () => {
-    const updatedHomePlayers = homeOnCourtPlayer.map((player) => {
-      let newZone;
-      switch (player.zone_code) {
-        case "Z1":
-          newZone = "Z2";
-          break;
-        case "Z2":
-          newZone = "Z3";
-          break;
-        case "Z3":
-          newZone = "Z6";
-          break;
-        case "Z6":
-          newZone = "Z5";
-          break;
-        case "Z5":
-          newZone = "Z4";
-          break;
-        case "Z4":
-          newZone = "Z1";
-          break;
-        default:
-          newZone = player.zone_code;
+    const fetchAnalysisData = async () => {
+      if (matchId) {
+        try {
+          const matchData = await fetchMatch(matchId, username);
+          if (matchData) {
+            setHomeOnCourtPlayer(
+              Object.values(matchData.home_team.players).filter(
+                (player) => player.onCourt
+              )
+            );
+            setAwayOnCourtPlayer(
+              Object.values(matchData.away_team.players).filter(
+                (player) => player.onCourt
+              )
+            );
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
       }
-      return { ...player, zone_code: newZone };
-    });
-    setHomeOnCourtPlayer(updatedHomePlayers);
+    };
+
+    fetchAnalysisData();
+    setMatchId(matchId || "");
+  }, [matchId, username, setMatchId]);
+
+  const rotateTeamPlayers = (players: TeamPlayers[]) => {
+    const zoneCodes = ["Z1", "Z2", "Z3", "Z6", "Z5", "Z4"];
+    const getNextZone = (currentZone: string) => {
+      const currentIndex = zoneCodes.indexOf(currentZone);
+      return currentIndex >= 0
+        ? zoneCodes[(currentIndex + 1) % zoneCodes.length]
+        : currentZone;
+    };
+
+    return players.map((player) => ({
+      ...player,
+      zone_code: getNextZone(player.zone_code || ""),
+    }));
   };
 
-  const awayTeamLotationClick = () => {
-    const updatedAwayPlayers = awayOnCourtPlayer.map((player) => {
-      let newZone;
-      switch (player.zone_code) {
-        case "Z1":
-          newZone = "Z2";
-          break;
-        case "Z2":
-          newZone = "Z3";
-          break;
-        case "Z3":
-          newZone = "Z6";
-          break;
-        case "Z6":
-          newZone = "Z5";
-          break;
-        case "Z5":
-          newZone = "Z4";
-          break;
-        case "Z4":
-          newZone = "Z1";
-          break;
-        default:
-          newZone = player.zone_code;
-      }
-      return { ...player, zone_code: newZone };
-    });
-    setAwayOnCourtPlayer(updatedAwayPlayers);
+  const teamLotationClick = (team: "home" | "away") => {
+    const updatedPlayers = rotateTeamPlayers(
+      team === "home" ? homeOnCourtPlayer : awayOnCourtPlayer
+    );
+    if (team === "home") {
+      setHomeOnCourtPlayer(updatedPlayers);
+    } else {
+      setAwayOnCourtPlayer(updatedPlayers);
+    }
   };
 
   return (
     <div>
-      {loading ? (
+      {matchError && (
+        <ErrorMessage
+          message={matchError}
+          clearError={() => setMatchError(null)}
+        />
+      )}
+      {matchLoading ? (
         <LoadingSpinner />
       ) : (
         <div className="flex">
@@ -143,7 +106,7 @@ const AnalysisCreate: React.FC = () => {
               text-gray-700
               hover:bg-gray-300
               font-bold py-2 px-4 rounded"
-              onClick={() => homeTeamLotationClick()}
+              onClick={() => teamLotationClick("home")}
             >
               次のローテーション
             </button>
@@ -174,7 +137,7 @@ const AnalysisCreate: React.FC = () => {
               hover:bg-gray-300
               font-bold py-2 px-4 rounded"
               onClick={() => {
-                awayTeamLotationClick();
+                teamLotationClick("away");
               }}
             >
               次のローテーション

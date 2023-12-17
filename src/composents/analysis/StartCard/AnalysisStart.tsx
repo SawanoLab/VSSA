@@ -1,8 +1,8 @@
 import React from "react";
 
-import PlayCardLayout from "../PlayCardLayout";
 import { MatchRequest } from "../../../api-client/api";
 import { useCard } from "../../../hooks/card/useCardController";
+import PlayCardLayout from "../PlayCardLayout";
 
 interface AnalysisStartProps {
   match?: MatchRequest;

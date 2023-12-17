@@ -89,11 +89,13 @@ function RouteConfig() {
             path="analysis/:matchId"
             element={
               <PrivateRoute>
-                <AttackHistoryContext>
-                  <CardProvider>
-                    <AnalysisCreate />
-                  </CardProvider>
-                </AttackHistoryContext>
+                <MatchProvider>
+                  <AttackHistoryContext>
+                    <CardProvider>
+                      <AnalysisCreate />
+                    </CardProvider>
+                  </AttackHistoryContext>
+                </MatchProvider>
               </PrivateRoute>
             }
           />

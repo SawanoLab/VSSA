@@ -1,10 +1,10 @@
 import React from "react";
 
-import { PlayerGet } from "../../api-client/api";
+import { PlayerInfo } from "../../api-client/api";
 
 interface PlayerInfoDisplayProps {
   selectedPlayer: string;
-  players: PlayerGet[];
+  players: PlayerInfo[];
   isSetter: boolean;
 }
 

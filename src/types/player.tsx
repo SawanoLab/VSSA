@@ -1,23 +1,10 @@
-import { PlayerGet } from "../api-client/api";
+import { TeamPlayers } from "../api-client/api";
 
 export type OnCourt = boolean;
 
-export interface Player {
-  PlayerInfo: PlayerGet;
-  onCourt: OnCourt;
-  zone_code: string | null;
-  setter: boolean;
-  libero: boolean;
-}
 
 export interface Players {
-  [uuid: string]: Player;
-}
-
-export interface Team {
-  team_name: string;
-  players: Players;
-  setter_position: SetterPositionName;
+  [uuid: string]: TeamPlayers;
 }
 
 export enum SetterPositionName {
@@ -28,11 +15,6 @@ export enum SetterPositionName {
   Z5 = "Z5",
   Z6 = "Z6",
   NULL = "NULL",
-}
-
-export interface Match {
-  home_team: Team;
-  away_team: Team;
 }
 
 export enum positonName {

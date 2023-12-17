@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Players } from "types/player";
 import ErrorMessage from "utility/ErrorMessage";
 
 import { SelectBox } from "./SelectBox";
@@ -11,7 +12,6 @@ import { usePlayer } from "../../hooks/match/usePlayer";
 import { useSeason } from "../../hooks/match/useSeason";
 import { useTeam } from "../../hooks/match/useTeam";
 import { useAuth } from "../../hooks/use-auth";
-import { Player } from "../../types/player";
 
 const MatchCreate: React.FC = () => {
   const { username } = useAuth();
@@ -67,8 +67,8 @@ const MatchCreate: React.FC = () => {
 
   const handleCreate = () => {
     const allPlayers = getPlayers("home").concat(getPlayers("away"));
-    const allPlayerData = Object(allPlayers).map((player: Player) => ({
-      player_id: player.PlayerInfo.uuid,
+    const allPlayerData = Object(allPlayers).map((player: Players) => ({
+      player_id: player.PlayerInfo.PlayerInfo.uuid,
       on_court: player.onCourt,
       zone_code: player.zone_code,
       libero: player.libero,

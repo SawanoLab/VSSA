@@ -1,6 +1,6 @@
 import React from "react";
 
-import { PlayerGet } from "../../api-client/api";
+import { PlayerInfo } from "../../api-client/api";
 import Table from "../Table";
 
 interface Column {
@@ -9,7 +9,7 @@ interface Column {
 }
 
 interface PlayerTableProps {
-  playerData: PlayerGet[];
+  playerData: PlayerInfo[];
   columns: Column[];
 }
 

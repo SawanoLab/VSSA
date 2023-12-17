@@ -1,14 +1,12 @@
 import React from "react";
 
-import PlayCardLayout from "../PlayCardLayout";
 import Table from "../../Table";
+import PlayCardLayout from "../PlayCardLayout";
 
 interface BlockEvalutionProps {
   type: "home" | "away";
 }
-export const BlockEvalution: React.FC<BlockEvalutionProps> = (
-  { type },
-) => {
+export const BlockEvalution: React.FC<BlockEvalutionProps> = ({ type }) => {
   const header = [{ header: "説明", accessor: "description" }];
   const tableData = [
     { description: "アタック" },
