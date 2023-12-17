@@ -1,10 +1,9 @@
 import React from "react";
 
 import { MatchRequest, TeamPlayers } from "../../../api-client/api";
-import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
+import { useCard } from "../../../hooks/card/useCardController";
 import PlayerCardLayout from "../PlayCardLayout";
-
 
 interface AttackTeamSelectProps {
   match?: MatchRequest;
@@ -15,19 +14,19 @@ interface AttackTeamSelectProps {
 
 export const AttackTeamSelect: React.FC<AttackTeamSelectProps> = ({
   match,
-  nextStep
+  nextStep,
 }) => {
   const { setAttackTeamSelect, setTeamId } = useAttackHistory();
   const { setCurrentStep, setCurrentTeam, currentTeam } = useCard();
 
-
   const handleHomeTeamClick = (netTeam: "home" | "away") => {
-    const netTeamId = netTeam === "home" ? match?.home_team.uuid : match?.away_team.uuid;
+    const netTeamId =
+      netTeam === "home" ? match?.home_team.uuid : match?.away_team.uuid;
     setTeamId(netTeamId || "");
     setCurrentTeam(netTeam);
     setCurrentStep(nextStep);
     setAttackTeamSelect(netTeam);
-  }
+  };
 
   return (
     <PlayerCardLayout title="アタック" subTitle="チーム選択" type={currentTeam}>

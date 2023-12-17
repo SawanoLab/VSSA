@@ -16,6 +16,7 @@ export interface TeamContextType {
   setTeams: (teams: TeamsData[]) => void;
   setTeamsData: (teams: TeamsData[]) => void;
   getTeamNames: (teams: TeamsData[]) => TeamNames[];
+  getTeamName: (teamId: string) => string;
   fetchTeams: () => void;
   teamLoading: boolean;
 }
@@ -32,6 +33,7 @@ const initialContextState: TeamContextType = {
     return
   },
   getTeamNames: () => [],
+  getTeamName: () => "",
   fetchTeams: () => {
     return
   },
@@ -62,6 +64,11 @@ export default function TeamProvider({ children }: { children: React.ReactNode }
         name: team.name,
       };
     });
+  };
+
+  const getTeamName = (teamId: string) => {
+    const selectedTeam = teams.find((team) => team.uuid === teamId);
+    return selectedTeam ? selectedTeam.name : "";
   };
 
   const fetchTeams = async () => {
@@ -99,6 +106,7 @@ export default function TeamProvider({ children }: { children: React.ReactNode }
         setTeams,
         setTeamsData,
         getTeamNames,
+        getTeamName,
         fetchTeams,
       }}
     >

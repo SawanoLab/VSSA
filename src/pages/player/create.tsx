@@ -1,8 +1,8 @@
 import React from "react";
 import { useState } from "react";
 
-import { renderField } from "./renderField";
 import { PlayerGet } from "../../api-client/api";
+import { renderField } from "../../composents/renderField";
 import { useAuth } from "../../hooks/use-auth";
 import { playerClient } from "../../lib/api/main";
 import { PositonNameEnum } from "../../types/player";

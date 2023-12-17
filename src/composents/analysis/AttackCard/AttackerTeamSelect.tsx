@@ -1,10 +1,9 @@
 import React from "react";
 
 import { MatchRequest, TeamPlayers } from "../../../api-client/api";
-import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
+import { useCard } from "../../../hooks/card/useCardController";
 import PlayerCardLayout from "../PlayCardLayout";
-
 
 interface AttackerTeamSelectProps {
   match?: MatchRequest;
@@ -17,7 +16,7 @@ export const AttackerTeamSelect: React.FC<AttackerTeamSelectProps> = ({
   match,
   homeOnCourtPlayer,
   awayOnCourtPlayer,
-  nextStep
+  nextStep,
 }) => {
   const { setAttackTeamSelect } = useAttackHistory();
   const { setCurrentStep, setCurrentTeam, currentTeam } = useCard();
@@ -25,7 +24,7 @@ export const AttackerTeamSelect: React.FC<AttackerTeamSelectProps> = ({
     setCurrentTeam(netTeam);
     setCurrentStep(nextStep);
     setAttackTeamSelect(netTeam);
-  }
+  };
 
   const getServePlayer = (team: "home" | "away") => {
     if (team === "home") {

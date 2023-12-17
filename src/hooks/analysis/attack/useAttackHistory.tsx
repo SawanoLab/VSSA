@@ -138,7 +138,6 @@ export default function AttackHistoryProvider({
       player_id: playerId,
     };
     postAttackData(newData);
-
     setAttackTeamSelect("");
     setAttackEvalution(null);
     setAttackPlayer("");
@@ -163,10 +162,8 @@ export default function AttackHistoryProvider({
       if (totalSetScoreA !== totalSetScoreB) {
         return totalSetScoreB - totalSetScoreA;
       }
-
       const totalScoreA = a.home_team_score + a.away_team_score;
       const totalScoreB = b.home_team_score + b.away_team_score;
-
       return totalScoreB - totalScoreA;
     });
 

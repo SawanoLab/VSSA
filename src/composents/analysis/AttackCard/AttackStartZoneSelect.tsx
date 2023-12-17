@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
+import { useCard } from "../../../hooks/card/useCardController";
 import ZoneSelect from "../ZoneSelect/ZoneSelect";
 
 interface ReceptionZoneSelectProps {
@@ -16,7 +16,7 @@ const AttackStartZoneSelect: React.FC<ReceptionZoneSelectProps> = ({
   const onClick = (Zone_id: number) => {
     setCurrentStep(nextStep);
     setAttackStartZone(Zone_id);
-  }
+  };
   return (
     <ZoneSelect
       type={currentTeam}

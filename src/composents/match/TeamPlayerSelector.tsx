@@ -5,11 +5,13 @@ import LiberoPlayerSelect from "./LiberoPlayerSelection";
 import PlayerTable from "./PlayerTable";
 import { renderOnCourtSelectTable } from "./renderOnCourtSelectTable";
 import SetPositionSelect from "./SetPositionSelect";
-import { useMatch } from "../../hooks/match/matchProvider";
+import { useMatch } from "../../hooks/match/useMatch";
 import { SetterPositionName } from "../../types/player";
-import { typeOfTeam } from "../../types/team"
-import { home_team_zone_name_row, away_team_zone_name_row } from "../../types/team_zone_name_column";
-
+import { typeOfTeam } from "../../types/team";
+import {
+  home_team_zone_name_row,
+  away_team_zone_name_row,
+} from "../../types/team_zone_name_column";
 
 interface TeamSelectorTableProps {
   register: UseFormRegister<FieldValues>;
@@ -18,8 +20,7 @@ interface TeamSelectorTableProps {
 
 const TeamPlayerSelector: React.FC<TeamSelectorTableProps> = ({
   register,
-  errors
-
+  errors,
 }) => {
   const { getOffCourtPlayers, getSetterPosition } = useMatch();
   const setterPositionHome = getSetterPosition(typeOfTeam.home);
@@ -68,8 +69,14 @@ const TeamPlayerSelector: React.FC<TeamSelectorTableProps> = ({
         />
       </div>
       <div className="flex flex-row justify-between">
-        <SetPositionSelect type={typeOfTeam.home} courtZoneName={courtHomeZoneName} />
-        <SetPositionSelect type={typeOfTeam.away} courtZoneName={courtAwayZoneName} />
+        <SetPositionSelect
+          type={typeOfTeam.home}
+          courtZoneName={courtHomeZoneName}
+        />
+        <SetPositionSelect
+          type={typeOfTeam.away}
+          courtZoneName={courtAwayZoneName}
+        />
       </div>
       <div className="flex flex-row">
         <div className="flex flex-col w-1/2">

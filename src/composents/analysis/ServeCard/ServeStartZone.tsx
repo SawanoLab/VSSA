@@ -1,24 +1,21 @@
 import React from "react";
 
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useCard } from "../../../hooks/card/useCardController";
 import PlayCardLayout from "../PlayCardLayout";
-
 
 interface ServeStartZoneProps {
   nextStep: string;
 }
 
-const ServeStartZone: React.FC<ServeStartZoneProps> = ({
-  nextStep
-}) => {
+const ServeStartZone: React.FC<ServeStartZoneProps> = ({ nextStep }) => {
   const { currentTeam, setCurrentStep } = useCard();
   const onClick = () => setCurrentStep(nextStep);
   const serve_zone = ["1", "9", "6", "7", "5"];
   return (
     <PlayCardLayout
-    title="サーブ"
-    subTitle="サーブスタートゾーン"
-    type={currentTeam}
+      title="サーブ"
+      subTitle="サーブスタートゾーン"
+      type={currentTeam}
     >
       <div className="relative w-max h-50">
         {currentTeam === "home" ? (

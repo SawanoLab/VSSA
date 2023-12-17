@@ -8,7 +8,7 @@ import AttackSkillType from "./AttackCard/AttackSkillType";
 import AttackStartZoneSelect from "./AttackCard/AttackStartZoneSelect";
 import { AttackTeamSelect } from "./AttackCard/AttackTeamSelect";
 import { MatchRequest, TeamPlayers } from "../../api-client/api";
-import { useCard } from "../../hooks/card/use-cardController";
+import { useCard } from "../../hooks/card/useCardController";
 
 interface AttackerCardProps {
   match?: MatchRequest;
@@ -30,26 +30,21 @@ export const AttackerCard: React.FC<AttackerCardProps> = ({
   const renderStepComponent = () => {
     switch (currentStep) {
       case "SelectTeam":
-        return (
-          <AttackTeamSelect
-            match={match}
-            nextStep="AttackPlayer"
-          />
-        );
-        case "AttackPlayer":
-          if (currentTeam === "home")
+        return <AttackTeamSelect match={match} nextStep="AttackPlayer" />;
+      case "AttackPlayer":
+        if (currentTeam === "home")
           return (
-        <AttackPlayer
-        onCourtPlayer={homeOnCourtPlayer}
-        nextStep="AttackStartZoneSelect"
-        />
-        );
+            <AttackPlayer
+              onCourtPlayer={homeOnCourtPlayer}
+              nextStep="AttackStartZoneSelect"
+            />
+          );
         return (
           <AttackPlayer
-          onCourtPlayer={awayOnCourtPlayer}
-          nextStep="AttackStartZoneSelect"
+            onCourtPlayer={awayOnCourtPlayer}
+            nextStep="AttackStartZoneSelect"
           />
-          );
+        );
       case "AttackStartZoneSelect":
         return <AttackStartZoneSelect nextStep="AttackEvaluation" />;
       case "AttackEvaluation":
@@ -64,11 +59,7 @@ export const AttackerCard: React.FC<AttackerCardProps> = ({
         return null;
     }
   };
-  return (
-    <div>
-      {renderStepComponent()}
-    </div>
-  );
+  return <div>{renderStepComponent()}</div>;
 };
 
 export default AttackerCard;

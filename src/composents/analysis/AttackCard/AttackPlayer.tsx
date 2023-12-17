@@ -1,8 +1,8 @@
 import React from "react";
 
 import { TeamPlayers } from "../../../api-client/api";
-import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
+import { useCard } from "../../../hooks/card/useCardController";
 import PlayerSelect from "../PlayerSelect/PlayerSelect";
 
 interface AttackPlayerProps {
@@ -21,7 +21,7 @@ const AttackPlayer: React.FC<AttackPlayerProps> = ({
     setCurrentStep(nextStep);
     setAttackPlayer(playerName);
     setPlayerId(playerId);
-  }
+  };
   return (
     <PlayerSelect
       type={currentTeam}

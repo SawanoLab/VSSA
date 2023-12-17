@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useCard } from "../../../hooks/card/useCardController";
 import ZoneSelect from "../ZoneSelect/ZoneSelect";
 
 interface ReceptionZoneSelectProps {

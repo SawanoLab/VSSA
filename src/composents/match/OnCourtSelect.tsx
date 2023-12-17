@@ -2,16 +2,15 @@ import React, { ChangeEvent, useState } from "react";
 import { UseFormRegister, FieldErrors, FieldValues } from "react-hook-form";
 
 import PlayerInfoDisplay from "./PlayerInfoDisplay";
-import { useMatch } from "../../hooks/match/matchProvider";
-
+import { useMatch } from "../../hooks/match/useMatch";
 
 interface OnCourtSelectProps {
   type: "home" | "away";
   uniformImage: string;
   courtZoneName?: string;
   isSetter: boolean;
-  register: UseFormRegister<FieldValues>,
-  errors: FieldErrors<FieldValues>
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
 }
 
 const OnCourtSelect: React.FC<OnCourtSelectProps> = ({
@@ -20,15 +19,18 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({
   courtZoneName,
   isSetter,
   register,
-  errors
- }) => {
-  const { togglePlayerOnCourt, getPlayers, setPlayerZoneCode } = useMatch();
-  const [ selectedPlayer, setSelectedPlayer ] = useState<string>('');
+  errors,
+}) => {
+  const {
+    togglePlayerOnCourt,
+    getPlayers,
+    setPlayerZoneCode,
+  } = useMatch();
+  const [selectedPlayer, setSelectedPlayer] = useState<string>("");
   const players = getPlayers(type);
 
   const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-    if (selectedPlayer !== "")
-      togglePlayerOnCourt(type, selectedPlayer);
+    if (selectedPlayer !== "") togglePlayerOnCourt(type, selectedPlayer);
     const selectedValue = e.target.value;
     setSelectedPlayer(selectedValue);
     courtZoneName && setPlayerZoneCode(type, selectedValue, courtZoneName);
@@ -40,7 +42,11 @@ const OnCourtSelect: React.FC<OnCourtSelectProps> = ({
   return (
     <td style={{ width: "150px", height: "90px" }}>
       <div className="h-full flex flex-col justify-center items-center relative">
-        <img src={uniformImage} alt="uniform" style={{ width: "70px", height: "80px" }} />
+        <img
+          src={uniformImage}
+          alt="uniform"
+          style={{ width: "70px", height: "80px" }}
+        />
         <PlayerInfoDisplay
           selectedPlayer={selectedPlayer}
           players={players.map((player) => player.PlayerInfo)}

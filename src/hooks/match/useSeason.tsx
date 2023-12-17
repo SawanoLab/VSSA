@@ -12,17 +12,23 @@ interface SeasonNames {
 
 export interface SeasonContextType {
   seasons: SeasonData[];
+  seasonLoading: boolean;
+  seasonError: string|null;
+  setSeasonError: (error: string|null) => void;
   addSeason: (season: SeasonData) => void;
   setSeasons: (seasons: SeasonData[]) => void;
   setSeasonsData: (seasons: SeasonData[]) => void;
   getSeasonNames: (seasons: SeasonData[]) => SeasonNames[];
   fetchSeasons: () => void;
-  seasonLoading: boolean;
 }
 
-// Set initial context state
 const initialContextState: SeasonContextType = {
   seasons: [],
+  seasonLoading: true,
+  seasonError: null,
+  setSeasonError: () => {
+    return
+  },
   addSeason: () => {
     return
   },
@@ -36,7 +42,6 @@ const initialContextState: SeasonContextType = {
   fetchSeasons: () => {
     return
   },
-  seasonLoading: true,
 };
 
 export const SeasonContext =
@@ -48,6 +53,7 @@ export default function SeasonProvider({ children }: { children: React.ReactNode
   const { username } = useAuth();
   const [seasonLoading, setLoading] = React.useState(true);
   const [seasons, setSeasons] = React.useState<SeasonData[]>([]);
+  const [seasonError, setSeasonError] = React.useState<string|null>(null);
 
   const addSeason = (season: SeasonData) => {
     setSeasons((prevSeasons) => [...prevSeasons, season]);
@@ -73,7 +79,7 @@ export default function SeasonProvider({ children }: { children: React.ReactNode
       const data = response.data;
       setSeasonsData(data);
     } catch (error) {
-      console.error("データの取得中にエラーが発生しました:", error);
+      setSeasonError("データの取得中にエラーが発生しました");
     } finally {
       setLoading(false);
     }
@@ -83,6 +89,8 @@ export default function SeasonProvider({ children }: { children: React.ReactNode
     <SeasonContext.Provider value={{
       seasons,
       seasonLoading,
+      seasonError,
+      setSeasonError,
       addSeason,
       setSeasons,
       setSeasonsData,

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { TeamPlayers } from "../../../api-client/api";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useCard } from "../../../hooks/card/useCardController";
 import PlayerSelect from "../PlayerSelect/PlayerSelect";
 
 interface ReceptionPlayerProps {

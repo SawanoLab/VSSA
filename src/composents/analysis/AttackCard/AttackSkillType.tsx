@@ -1,8 +1,8 @@
 import React from "react";
 
-import { AttackSkill } from '../../../api-client/api';
-import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { AttackSkill } from "../../../api-client/api";
+import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
+import { useCard } from "../../../hooks/card/useCardController";
 import Table from "../../Table";
 import PlayCardLayout from "../PlayCardLayout";
 
@@ -10,7 +10,7 @@ interface AttackEvalutionProps {
   nextStep: string;
 }
 export const AttackEvalution: React.FC<AttackEvalutionProps> = ({
-  nextStep
+  nextStep,
 }) => {
   const { setAttackSkill } = useAttackHistory();
   const { currentTeam, setCurrentStep } = useCard();
@@ -18,13 +18,13 @@ export const AttackEvalution: React.FC<AttackEvalutionProps> = ({
   const onClick = (row: any) => {
     setCurrentStep(nextStep);
     setAttackSkill(row.description);
-  }
+  };
 
   const header = [{ header: "説明", accessor: "description" }];
   const tableData = [
     { description: AttackSkill.HeadSpike },
     { description: AttackSkill.SoftSpike },
-    { description: AttackSkill.Dink }
+    { description: AttackSkill.Dink },
   ];
   return (
     <PlayCardLayout title="アタック" subTitle="スキルタイプ" type={currentTeam}>

@@ -3,7 +3,7 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 import { ShowMatchScore } from "./ShowMatchScore";
 import { MatchRequest } from "../../api-client/api";
-import { useAttackHistory } from "../../hooks/analysis/attack/use-attackHistory";
+import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 
 export interface MatchTeamComponent {
   match?: MatchRequest;

@@ -4,7 +4,7 @@ import SeasonCreate from "./create";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
 import Table from "../../composents/Table";
-import { useSeason } from "../../hooks/match/use-season";
+import { useSeason } from "../../hooks/match/useSeason";
 import { useAuth } from "../../hooks/use-auth";
 import { seasonClient } from "../../lib/api/main";
 

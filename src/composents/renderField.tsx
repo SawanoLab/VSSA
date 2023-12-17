@@ -1,7 +1,7 @@
 import React from "react";
 
-import { PlayerGet } from "../../api-client/api";
-import { InputForm, SelectForm } from "../../composents/InputForm";
+import { InputForm, SelectForm } from "./InputForm";
+import { PlayerGet } from "../api-client/api";
 
 interface renderFieldProps {
   field: {

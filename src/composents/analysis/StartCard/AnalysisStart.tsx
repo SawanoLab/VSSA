@@ -2,7 +2,7 @@ import React from "react";
 
 import PlayCardLayout from "../PlayCardLayout";
 import { MatchRequest } from "../../../api-client/api";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useCard } from "../../../hooks/card/useCardController";
 
 interface AnalysisStartProps {
   match?: MatchRequest;
@@ -10,7 +10,7 @@ interface AnalysisStartProps {
 }
 export const AnalysisStart: React.FC<AnalysisStartProps> = ({
   match,
-  nextStep
+  nextStep,
 }) => {
   const { currentTeam, setCurrentStep } = useCard();
   const onClick = () => setCurrentStep(nextStep);

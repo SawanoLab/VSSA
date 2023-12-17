@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { useSeason } from "../../hooks/match/use-season";
+import { useSeason } from "../../hooks/match/useSeason";
 import { useAuth } from "../../hooks/use-auth";
 import { teamClient } from "../../lib/api/main";
 
@@ -79,7 +79,9 @@ const TeamCreate: React.FC = () => {
             onChange={(e) => setSeasonName(e.target.value)}
           >
             {seasonNames.map((seasonName) => (
-              <option value={seasonName.uuid} key={seasonName.uuid}>{seasonName.season_name}</option>
+              <option value={seasonName.uuid} key={seasonName.uuid}>
+                {seasonName.season_name}
+              </option>
             ))}
           </select>
         </div>

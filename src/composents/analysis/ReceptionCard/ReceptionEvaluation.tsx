@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useCard } from "../../../hooks/card/use-cardController";
+import { useCard } from "../../../hooks/card/useCardController";
 import Table from "../../Table";
 import PlayCardLayout from "../PlayCardLayout";
 
@@ -13,10 +13,7 @@ export const ServeEvaluation: React.FC<ServeEvaluationProps> = ({
   const { currentTeam, setCurrentStep } = useCard();
   const onClick = () => setCurrentStep(nextStep);
   const header = [{ header: "説明", accessor: "description" }];
-  const tableData = [
-    { description: "アタック" },
-    { description: "セット" },
-  ];
+  const tableData = [{ description: "アタック" }, { description: "セット" }];
   return (
     <PlayCardLayout title="レセプション" subTitle="評価" type={currentTeam}>
       <Table columns={header} data={tableData} onRowClick={onClick} />

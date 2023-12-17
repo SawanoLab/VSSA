@@ -6,7 +6,7 @@ import { PlayerGet } from "../../api-client/api";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
 import Table from "../../composents/Table";
-import { usePlayer } from "../../hooks/match/use-player";
+import { usePlayer } from "../../hooks/match/usePlayer";
 import { useAuth } from "../../hooks/use-auth";
 import { playerClient, teamClient, seasonClient } from "../../lib/api/main";
 import { SeasonData } from "../../types/season";
@@ -14,15 +14,15 @@ import { TeamName } from "../../types/team";
 import { TeamsData } from "../../types/team";
 import ErrorMessage from "../../utility/ErrorMessage";
 
-
 const PlayerIndex: React.FC = () => {
   const { username } = useAuth();
   const { players, setPlayersData } = usePlayer();
   const [teams, setTeams] = useState<TeamName[]>([]);
   const [seasons, setSeasons] = useState<SeasonData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPlayer, setSelectedPlayer] = useState<PlayerGet | 
-    undefined>(undefined);
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerGet | undefined>(
+    undefined
+  );
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isNewModalOpen, setNewModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -63,7 +63,7 @@ const PlayerIndex: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   const fetchSeasonData = async () => {
     setLoading(true);
     try {
@@ -76,14 +76,14 @@ const PlayerIndex: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   const deletePlayer = async (playerId: string) => {
     try {
       await playerClient.deletePlayerPlayersDelete(username, playerId);
     } catch (error) {
       setErrorMessage("プレイヤーの削除");
     }
-  }
+  };
 
   const handleDeleteClick = async (playerId: string) => {
     await deletePlayer(playerId);
@@ -95,7 +95,7 @@ const PlayerIndex: React.FC = () => {
     setSelectedPlayer(player);
     setEditModalOpen(true);
     fetchPlayer();
-  }
+  };
 
   const formatPlayerData = (data: PlayerGet[]) => {
     return data.map(
@@ -125,7 +125,6 @@ const PlayerIndex: React.FC = () => {
     );
   };
 
-
   useEffect(() => {
     getTeams();
     fetchSeasonData();
@@ -141,16 +140,22 @@ const PlayerIndex: React.FC = () => {
 
   return (
     <div>
-      {errorMessage && (<ErrorMessage message={errorMessage} clearError={() => setErrorMessage("")} />)}
-      {loading ? ( <LoadingSpinner />)
-      : (
+      {errorMessage && (
+        <ErrorMessage
+          message={errorMessage}
+          clearError={() => setErrorMessage("")}
+        />
+      )}
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
         <div>
           <div className="flex justify-between p-4">
             <h1 className="text-3sm">プレイヤー</h1>
             <button
               className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded"
               onClick={() => setNewModalOpen(true)}
-              >
+            >
               新しいプレイヤー
             </button>
           </div>
@@ -161,7 +166,7 @@ const PlayerIndex: React.FC = () => {
             hover={true}
             deleteButton={handleDeleteClick}
             editButton={handleEditClick}
-            />
+          />
         </div>
       )}
       {isEditModalOpen && (

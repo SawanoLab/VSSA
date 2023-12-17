@@ -1,25 +1,22 @@
 import React from "react";
 
-import { AttackBallType } from '../../../api-client/api';
-import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { AttackBallType } from "../../../api-client/api";
+import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
+import { useCard } from "../../../hooks/card/useCardController";
 import Table from "../../Table";
 import PlayCardLayout from "../PlayCardLayout";
-
 
 interface AttackBallProps {
   nextStep: string;
 }
-export const AttackBall: React.FC<AttackBallProps> = ({
-  nextStep,
-}) => {
+export const AttackBall: React.FC<AttackBallProps> = ({ nextStep }) => {
   const { setAttackBallType } = useAttackHistory();
   const { currentTeam, setCurrentStep } = useCard();
   /* eslint-disable */
   const onClick = (row: any) => {
     setCurrentStep(nextStep);
     setAttackBallType(row.description);
-  }
+  };
   const header = [{ header: "説明", accessor: "description" }];
   const tableData = [
     { description: AttackBallType.High },

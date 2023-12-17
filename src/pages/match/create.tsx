@@ -1,24 +1,32 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import ErrorMessage from "utility/ErrorMessage";
 
+import { SelectBox } from "./SelectBox";
 import { Match, MatchPostRequest } from "../../api-client";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import TeamSelectorTable from "../../composents/match/TeamPlayerSelector";
-import { useMatch } from "../../hooks/match/matchProvider";
-import { usePlayer } from "../../hooks/match/use-player";
-import { useSeason } from "../../hooks/match/use-season";
-import { useTeam } from "../../hooks/match/use-team";
+import { useMatch } from "../../hooks/match/useMatch";
+import { usePlayer } from "../../hooks/match/usePlayer";
+import { useSeason } from "../../hooks/match/useSeason";
+import { useTeam } from "../../hooks/match/useTeam";
 import { useAuth } from "../../hooks/use-auth";
-import { matchClient } from "../../lib/api/main";
 import { Player } from "../../types/player";
-import { typeOfTeam } from "../../types/team";
 
 const MatchCreate: React.FC = () => {
   const { username } = useAuth();
-  const { setTeamPlayer, getPlayers } = useMatch();
-  const { fetchTeams, teams, teamLoading } = useTeam();
-  const { getSeasonNames, fetchSeasons, seasons, seasonLoading } = useSeason();
-  const { getTeamPlayers, fetchPlayers, players, playerLoading } = usePlayer();
+  const { matchError, setMatchError, setTeamPlayer, getPlayers, postMatch } =
+    useMatch();
+  const { players, playerLoading, getTeamPlayers, fetchPlayers } = usePlayer();
+  const { teams, teamLoading, fetchTeams, getTeamName } = useTeam();
+  const {
+    seasons,
+    seasonLoading,
+    seasonError,
+    getSeasonNames,
+    fetchSeasons,
+    setSeasonError,
+  } = useSeason();
   const [loading, setLoading] = useState(true);
   const [homeTeamUUID, setHomeTeamUUID] = useState<string>("");
   const [awayTeamUUID, setAwayTeamUUID] = useState<string>("");
@@ -30,71 +38,70 @@ const MatchCreate: React.FC = () => {
   } = useForm();
 
   useEffect(() => {
-    fetchTeams();
-    fetchPlayers();
-    fetchSeasons();
+    const fetchDatas = async () => {
+      setLoading(true);
+      await Promise.all([fetchTeams(), fetchPlayers(), fetchSeasons()]);
+      setLoading(false);
+    };
+    fetchDatas();
   }, []);
 
   useEffect(() => {
-    if (teamLoading || playerLoading || seasonLoading) {
-      setLoading(true);
-    } else {
+    if (!teamLoading && !playerLoading && !seasonLoading) {
       setLoading(false);
     }
   }, [teamLoading, playerLoading, seasonLoading]);
 
-  const getTeamName = useCallback(
-    (teamId: string) => {
-      const selectedTeam = teams.find((team) => team.uuid === teamId);
-      return selectedTeam ? selectedTeam.name : "";
-    },
-    [teams]
-  );
-
   useEffect(() => {
-    const teamNameHome = getTeamName(homeTeamUUID);
-    const homePlayers = getTeamPlayers(players, homeTeamUUID);
-    setTeamPlayer(typeOfTeam.home, teamNameHome, homePlayers);
-  }, [homeTeamUUID]);
-
-  useEffect(() => {
-    const teamNameAway = getTeamName(awayTeamUUID);
-    const awayPlayers = getTeamPlayers(players, awayTeamUUID);
-    setTeamPlayer(typeOfTeam.away, teamNameAway, awayPlayers);
-  }, [awayTeamUUID]);
+    setTeamPlayer(
+      "home",
+      getTeamName(homeTeamUUID),
+      getTeamPlayers(players, homeTeamUUID)
+    );
+    setTeamPlayer(
+      "away",
+      getTeamName(awayTeamUUID),
+      getTeamPlayers(players, awayTeamUUID)
+    );
+  }, [homeTeamUUID, awayTeamUUID, teams, players]);
 
   const handleCreate = () => {
-    const allPlayers = getPlayers(typeOfTeam.home).concat(
-      getPlayers(typeOfTeam.away)
-    );
+    const allPlayers = getPlayers("home").concat(getPlayers("away"));
     const allPlayerData = Object(allPlayers).map((player: Player) => ({
       player_id: player.PlayerInfo.uuid,
       on_court: player.onCourt,
       zone_code: player.zone_code,
       libero: player.libero,
     }));
-
     const matchData: Match = {
       home_team_id: homeTeamUUID,
       away_team_id: awayTeamUUID,
       user_id: username,
       season_id: seasonUUID,
     };
-
     const matchPostRequest: MatchPostRequest = {
       Match: matchData,
       PlayerMatchInfo: { ...allPlayerData },
     };
-
-    matchClient.createMatchMatchesPost(matchPostRequest).catch((err) => {
-      console.log(err);
-    });
+    postMatch(matchPostRequest);
   };
 
   const seasonNames = getSeasonNames(seasons);
 
   return (
     <div>
+      {seasonError && (
+        <ErrorMessage
+          message={seasonError}
+          clearError={() => setSeasonError(null)}
+        />
+      )}
+      {matchError && (
+        <ErrorMessage
+          message={matchError}
+          clearError={() => setMatchError(null)}
+        />
+      )}
       {loading ? (
         <LoadingSpinner />
       ) : (
@@ -102,74 +109,40 @@ const MatchCreate: React.FC = () => {
           <div className="flex flex-col justify-center items-center">
             <div className="m-2 p-5 border bg-gray-100 border-gray-300 rounded-lg">
               <h1 className="text-2xl text-gray-500">新規の試合を作成</h1>
+              <SelectBox
+                title="シーズン"
+                options={seasonNames.map((season) => ({
+                  uuid: season.uuid,
+                  context: season.season_name,
+                }))}
+                optionDefalut="シーズンを選択"
+                selectedValue={seasonUUID}
+                onChange={setSeasonUUID}
+                error={errors.seasonUUID?.message?.toString()}
+              />
               <div className="flex flex-row m-1">
-                <select
-                  {...register("seasonUUID", {
-                    required: "シーズンを選択してください。",
-                  })}
-                  className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-                  onChange={(e) => setSeasonUUID(e.target.value)}
-                >
-                  <option value="">シーズンを選択</option>
-                  {seasonNames.map((seasonName) => (
-                    <option key={seasonName.uuid} value={seasonName.uuid}>
-                      {seasonName.season_name}
-                    </option>
-                  ))}
-                </select>
-                {errors.seasonUUID && (
-                  <p className="text-red-500">シーズンを選択してください。</p>
-                )}
-              </div>
-              <div className="flex flex-row m-1">
-                <div>
-                  <p className="text-sm text-gray-500 p-1 w-80">ホームチーム</p>
-                  <select
-                    {...register("homeTeamUUID", {
-                      required: "ホームチームを選択してください。",
-                    })}
-                    className="text-sm text-gray-500 border border-spacing-5 p-1 w-80 ml-2"
-                    onChange={(e) => setHomeTeamUUID(e.target.value)}
-                    value={homeTeamUUID}
-                  >
-                    <option value="">ホームチームを選択</option>
-                    {teams.map((team) => (
-                      <option key={team.uuid} value={team.uuid}>
-                        {team.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.homeTeamUUID && (
-                    <p className="text-red-500">
-                      ホームチームを選択してください。
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 p-1 w-80">
-                    アウェイチーム
-                  </p>
-                  <select
-                    {...register("awayTeamUUID", {
-                      required: "アウェイチームを選択してください。",
-                    })}
-                    className="text-sm text-gray-500 border border-spacing-5 p-1 w-80 ml-2"
-                    onChange={(e) => setAwayTeamUUID(e.target.value)}
-                    value={awayTeamUUID}
-                  >
-                    <option value="">アウェイチームを選択</option>
-                    {teams.map((team) => (
-                      <option key={team.uuid} value={team.uuid}>
-                        {team.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.awayTeamUUID && (
-                    <p className="text-red-500">
-                      アウェイチームを選択してください。
-                    </p>
-                  )}
-                </div>
+                <SelectBox
+                  title="ホームチーム"
+                  options={teams.map((team) => ({
+                    uuid: team.uuid,
+                    context: team.name,
+                  }))}
+                  optionDefalut="ホームチームを選択"
+                  selectedValue={homeTeamUUID}
+                  onChange={setHomeTeamUUID}
+                  error={errors.homeTeamUUID?.message?.toString()}
+                />
+                <SelectBox
+                  title="アウェイチーム"
+                  options={teams.map((team) => ({
+                    uuid: team.uuid,
+                    context: team.name,
+                  }))}
+                  optionDefalut="アウェイチームを選択"
+                  selectedValue={awayTeamUUID}
+                  onChange={setAwayTeamUUID}
+                  error={errors.awayTeamUUID?.message?.toString()}
+                />
               </div>
               <div className="flex flex-row m-1">
                 <TeamSelectorTable register={register} errors={errors} />

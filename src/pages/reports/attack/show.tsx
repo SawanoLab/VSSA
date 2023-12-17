@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { TeamPlayers } from "../../../api-client/api";
 import GameHistory from "../../../composents/reports/attack/GameHistory";
-import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
+import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
 import { useAuth } from "../../../hooks/use-auth";
 import { matchClient } from "../../../lib/api/main";
 

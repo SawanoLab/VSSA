@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { renderField } from "./renderField";
 import { PlayerGet } from "../../api-client/api";
+import { renderField } from "../../composents/renderField";
 import { useAuth } from "../../hooks/use-auth";
 import { playerClient } from "../../lib/api/main";
 import { PositonNameEnum } from "../../types/player";
@@ -39,7 +39,7 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     }));
   };
 
-  const feachPutPlayer = async (playerData: PlayerGet) => {
+  const fetchPutPlayer = async (playerData: PlayerGet) => {
     try {
       await playerClient.updatePlayerPlayersPut(
         username,
@@ -55,7 +55,7 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    feachPutPlayer(playerData);
+    fetchPutPlayer(playerData);
   };
 
   const fields: Field[] = [

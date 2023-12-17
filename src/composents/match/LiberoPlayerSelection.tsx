@@ -1,14 +1,20 @@
 import React, { ChangeEvent, useState } from "react";
 
-import { useMatch } from "../../hooks/match/matchProvider";
+import { useMatch } from "../../hooks/match/useMatch";
 import { typeOfTeam } from "../../types/team";
 
 interface LiberoPlayerSelectionProps {
   type: typeOfTeam;
 }
 
-const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({ type }) => {
-  const { togglePlayerOnCourt, togglePlayerLibero, getPlayers } = useMatch();
+const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({
+  type,
+}) => {
+  const {
+    togglePlayerOnCourt,
+    togglePlayerLibero,
+    getPlayers,
+  } = useMatch();
   const [selectedPlayer, setSelectedPlayer] = useState<string>("");
   const players = getPlayers(type);
 
@@ -31,9 +37,7 @@ const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({ type }) =
         onChange={handleSelect}
         className="w-40 h-10 m-1 border flex items-center justify-center cursor-pointer text-gray-500 text-sm"
       >
-        <option
-        value=""
-        className="text-gray-500 text-sm">
+        <option value="" className="text-gray-500 text-sm">
           リベロを選択
         </option>
         {players.map((player) => (
@@ -42,7 +46,7 @@ const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({ type }) =
             key={player.PlayerInfo.uuid}
             value={player.PlayerInfo.uuid}
             disabled={player.onCourt}
-            >
+          >
             {player.PlayerInfo.name}
           </option>
         ))}

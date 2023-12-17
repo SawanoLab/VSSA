@@ -1,15 +1,14 @@
+import { matchClient } from "lib/api/main";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-import { PlayerGet } from "../../api-client/api";
-import {
-  Match,
-  Players,
-  Player,
-  SetterPositionName,
-} from "../../types/player";
+import { PlayerGet, MatchPostRequest } from "../../api-client/api";
+import { Match, Players, Player, SetterPositionName } from "../../types/player";
 
 type MatchContextType = {
   match: Match;
+  matchLoading: boolean;
+  matchError: string | null;
+  setMatchError: (error: string | null) => void;
   setTeamPlayer: (
     teamType: "home" | "away",
     teamName: string,
@@ -31,7 +30,9 @@ type MatchContextType = {
   getOffCourtPlayers: (teamType: "home" | "away") => Player[];
   getPlayer: (teamType: "home" | "away", playerUUID: string) => Player;
   getPlayers: (teamType: "home" | "away") => Player[];
+  getAllPlayers: () => Player[];
   resetTeamInfo: (teamType: "home" | "away") => void;
+  postMatch: (matchPostRequest: MatchPostRequest) => void;
 };
 
 const MatchContext = createContext<MatchContextType | undefined>(undefined);
@@ -62,6 +63,8 @@ const initialMatch: Match = {
 
 const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
   const [match, setMatch] = useState<Match>(initialMatch);
+  const [matchLoading, setLoading] = useState(true);
+  const [matchError, setMatchError] = useState<string | null>(null);
 
   const setTeamPlayer = (
     teamType: "home" | "away",
@@ -162,13 +165,18 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
         },
       },
     }));
-  }
+  };
 
   const getSetterPosition = (teamType: "home" | "away") =>
     match[`${teamType}_team`].setter_position;
 
-  const getPlayersByCourtStatus = (teamType: 'home' | 'away', onCourt: boolean) =>
-    Object.values(match[`${teamType}_team`].players).filter(player => player.onCourt === onCourt);
+  const getPlayersByCourtStatus = (
+    teamType: "home" | "away",
+    onCourt: boolean
+  ) =>
+    Object.values(match[`${teamType}_team`].players).filter(
+      (player) => player.onCourt === onCourt
+    );
 
   const getOnCourtPlayers = (teamType: "home" | "away") =>
     getPlayersByCourtStatus(teamType, true);
@@ -178,34 +186,49 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     match[`${teamType}_team`].players[playerUUID];
   const getPlayers = (teamType: "home" | "away") =>
     Object.values(match[`${teamType}_team`].players);
+  const getAllPlayers = () => getPlayers("home").concat(getPlayers("away"));
 
-    const resetTeamInfo = (teamType: "home" | "away") => {
-      setMatch((prevMatch) => {
-        const updatedMatch = {
-          ...prevMatch,
-          [`${teamType}_team`]: {
-            ...initialTeam,
-          },
-        };
-        console.log(teamType, updatedMatch[`${teamType}_team`]);
-        return updatedMatch;
-      });
-    };
+  const resetTeamInfo = (teamType: "home" | "away") => {
+    setMatch((prevMatch) => {
+      const updatedMatch = {
+        ...prevMatch,
+        [`${teamType}_team`]: {
+          ...initialTeam,
+        },
+      };
+      return updatedMatch;
+    });
+  };
 
-    
+  const postMatch = async (matchPostRequest: MatchPostRequest) => {
+    setLoading(true);
+    try {
+      await matchClient.createMatchMatchesPost(matchPostRequest);
+    } catch (error) {
+      setMatchError("データの登録にエラーが発生しました");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const contextValue: MatchContextType = {
     match,
+    matchLoading,
+    matchError,
+    setMatchError,
     getOnCourtPlayers,
     getOffCourtPlayers,
-    getPlayer,
-    getPlayers,
+    getPlayer: getPlayer,
+    getPlayers: getPlayers,
     setTeamPlayer,
     setSetterPosition,
     setPlayerZoneCode,
     getSetterPosition,
+    getAllPlayers,
     togglePlayerOnCourt,
     togglePlayerLibero,
     resetTeamInfo,
+    postMatch,
   };
 
   return (

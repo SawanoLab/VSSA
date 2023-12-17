@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Table from "../../composents/Table";
-import { useTeam } from "../../hooks/match/use-team";
+import { useTeam } from "../../hooks/match/useTeam";
 
 const TeamIndex: React.FC = () => {
   const [loading, setLoading] = React.useState(true);

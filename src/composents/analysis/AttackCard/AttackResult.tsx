@@ -1,8 +1,8 @@
 import React from "react";
 
-import { AttackEvaluationType } from '../../../api-client/api';
-import { useAttackHistory } from "../../../hooks/analysis/attack/use-attackHistory";
-import { useCard } from "../../../hooks/card/use-cardController";
+import { AttackEvaluationType } from "../../../api-client/api";
+import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
+import { useCard } from "../../../hooks/card/useCardController";
 import Table from "../../Table";
 import PlayCardLayout from "../PlayCardLayout";
 
@@ -10,16 +10,16 @@ interface AttackEvalutionProps {
   nextStep: string;
 }
 
-export const AttackEvalution: React.FC<AttackEvalutionProps> = (
-  { nextStep }
-) => {
-  const {  setAttackEvalution } = useAttackHistory();
+export const AttackEvalution: React.FC<AttackEvalutionProps> = ({
+  nextStep,
+}) => {
+  const { setAttackEvalution } = useAttackHistory();
   const { currentTeam, setCurrentStep } = useCard();
   /* eslint-disable */
   const onClick = (row: any) => {
     setCurrentStep(nextStep);
     setAttackEvalution(row.description);
-  }
+  };
 
   const header = [{ header: "説明", accessor: "description" }];
   const tableData = [
@@ -32,11 +32,7 @@ export const AttackEvalution: React.FC<AttackEvalutionProps> = (
   ];
   return (
     <PlayCardLayout title="アタック" subTitle="評価" type={currentTeam}>
-      <Table
-        columns={header}
-        data={tableData}
-        onRowClick={onClick}
-      />
+      <Table columns={header} data={tableData} onRowClick={onClick} />
     </PlayCardLayout>
   );
 };

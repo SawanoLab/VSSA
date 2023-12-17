@@ -1,7 +1,7 @@
 import React from "react";
 
 import { MatchRequest } from "../../api-client/api";
-import { useAttackHistory } from "../../hooks/analysis/attack/use-attackHistory";
+import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 import Table from "../Table";
 
 interface PlayHistoryComponentProps {

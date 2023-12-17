@@ -7,7 +7,7 @@ import { MatchUtilityComponent } from "../../composents/analysis/MatchUtilityCom
 import { PlayerTableComponent } from "../../composents/analysis/PlayerTableComponent";
 import YouTubeVideoComponent from "../../composents/analysis/Video/YouTubeVideoComponent";
 import LoadingSpinner from "../../composents/LoadingSpinner";
-import { useAttackHistory } from "../../hooks/analysis/attack/use-attackHistory";
+import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 import { useAuth } from "../../hooks/use-auth";
 import { matchClient } from "../../lib/api/main";
 import {
@@ -27,7 +27,6 @@ const AnalysisCreate: React.FC = () => {
   const [awayOnCourtPlayer, setAwayOnCourtPlayer] = React.useState<
     TeamPlayers[]
   >([]);
-
 
   const fetchAnalysis = async (matchId: string) => {
     const response = await matchClient.getMatchMatchesMatchIdGet(
@@ -63,7 +62,7 @@ const AnalysisCreate: React.FC = () => {
   useEffect(() => {
     setLoading(true);
     fetchAnalysisData();
-    setMatchId(matchId? matchId : "");
+    setMatchId(matchId ? matchId : "");
   }, [matchId]);
 
   const homeTeamLotationClick = () => {
