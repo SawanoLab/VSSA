@@ -52,7 +52,7 @@ const Create: React.FC<CreateProps> = ({ seasonData, teamData, onClose }) => {
     }));
   };
 
-  const feachPostPlayer = async (fieldValue: PlayerGet) => {
+  const postPlayer = async (fieldValue: PlayerGet) => {
     try {
       await playerClient.createPlayerPlayersPost(fieldValue);
     } catch (error) {
@@ -64,7 +64,7 @@ const Create: React.FC<CreateProps> = ({ seasonData, teamData, onClose }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    feachPostPlayer(fieldValue);
+    postPlayer(fieldValue);
   };
 
   const fields: Field[] = [

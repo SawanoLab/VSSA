@@ -1,23 +1,23 @@
 import React from "react";
 
 import { InputForm, SelectForm } from "./InputForm";
-import { PlayerGet } from "../api-client/api";
 
-interface renderFieldProps {
+interface renderFieldProps<T> {
   field: {
-    key: keyof PlayerGet;
+    key: Extract<keyof T, string | number>;
     label: string;
     type: "text" | "number" | "select";
     options?: Record<string, string>;
   };
-  handleInputChange: (key: keyof PlayerGet, value: string | number) => void;
+  handleInputChange: (key: keyof T, value: string | number) => void;
   defaultValue: string;
 }
-export const renderField: React.FC<renderFieldProps> = ({
+
+export const renderField = <T,>({
   field,
   handleInputChange,
   defaultValue,
-}) => {
+}: renderFieldProps<T>) => {
   const { key, label, type, options } = field;
   return (
     <div key={key} className="mb-4">

@@ -1797,6 +1797,47 @@ export const SeasonsApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Delete Season
+         * @param {string} seasonId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSeasonSeasonsSeasonIdDelete: async (seasonId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'seasonId' is not null or undefined
+            assertParamExists('deleteSeasonSeasonsSeasonIdDelete', 'seasonId', seasonId)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('deleteSeasonSeasonsSeasonIdDelete', 'userId', userId)
+            const localVarPath = `/seasons/{season_id}`
+                .replace(`{${"season_id"}}`, encodeURIComponent(String(seasonId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['user_id'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get Seasons
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -1857,6 +1898,20 @@ export const SeasonsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete Season
+         * @param {string} seasonId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteSeasonSeasonsSeasonIdDelete(seasonId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeasonGet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSeasonSeasonsSeasonIdDelete(seasonId, userId, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['SeasonsApi.deleteSeasonSeasonsSeasonIdDelete']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get Seasons
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -1890,6 +1945,17 @@ export const SeasonsApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary Delete Season
+         * @param {string} seasonId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteSeasonSeasonsSeasonIdDelete(seasonId: string, userId: string, options?: any): AxiosPromise<SeasonGet> {
+            return localVarFp.deleteSeasonSeasonsSeasonIdDelete(seasonId, userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get Seasons
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -1918,6 +1984,19 @@ export class SeasonsApi extends BaseAPI {
      */
     public createSeasonSeasonsPost(seasonBase: SeasonBase, options?: RawAxiosRequestConfig) {
         return SeasonsApiFp(this.configuration).createSeasonSeasonsPost(seasonBase, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Delete Season
+     * @param {string} seasonId 
+     * @param {string} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SeasonsApi
+     */
+    public deleteSeasonSeasonsSeasonIdDelete(seasonId: string, userId: string, options?: RawAxiosRequestConfig) {
+        return SeasonsApiFp(this.configuration).deleteSeasonSeasonsSeasonIdDelete(seasonId, userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1979,6 +2058,47 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * 
+         * @summary Delete Team
+         * @param {string} teamId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamTeamsTeamIdDelete: async (teamId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('deleteTeamTeamsTeamIdDelete', 'teamId', teamId)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('deleteTeamTeamsTeamIdDelete', 'userId', userId)
+            const localVarPath = `/teams/{team_id}`
+                .replace(`{${"team_id"}}`, encodeURIComponent(String(teamId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['user_id'] = userId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get Teams
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -2014,6 +2134,42 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Update Team
+         * @param {TeamBase} teamBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTeamTeamsTeamIdPut: async (teamBase: TeamBase, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamBase' is not null or undefined
+            assertParamExists('updateTeamTeamsTeamIdPut', 'teamBase', teamBase)
+            const localVarPath = `/teams/{team_id}`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(teamBase, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2039,6 +2195,20 @@ export const TeamsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete Team
+         * @param {string} teamId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTeamTeamsTeamIdDelete(teamId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<any>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamTeamsTeamIdDelete(teamId, userId, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['TeamsApi.deleteTeamTeamsTeamIdDelete']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get Teams
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -2048,6 +2218,19 @@ export const TeamsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamsTeamsGet(userId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['TeamsApi.getTeamsTeamsGet']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update Team
+         * @param {TeamBase} teamBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateTeamTeamsTeamIdPut(teamBase: TeamBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamGet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTeamTeamsTeamIdPut(teamBase, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['TeamsApi.updateTeamTeamsTeamIdPut']?.[index]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
         },
     }
@@ -2072,6 +2255,17 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @summary Delete Team
+         * @param {string} teamId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTeamTeamsTeamIdDelete(teamId: string, userId: string, options?: any): AxiosPromise<Array<any>> {
+            return localVarFp.deleteTeamTeamsTeamIdDelete(teamId, userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get Teams
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -2079,6 +2273,16 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          */
         getTeamsTeamsGet(userId: string, options?: any): AxiosPromise<Array<TeamGet>> {
             return localVarFp.getTeamsTeamsGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update Team
+         * @param {TeamBase} teamBase 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTeamTeamsTeamIdPut(teamBase: TeamBase, options?: any): AxiosPromise<TeamGet> {
+            return localVarFp.updateTeamTeamsTeamIdPut(teamBase, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2104,6 +2308,19 @@ export class TeamsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Delete Team
+     * @param {string} teamId 
+     * @param {string} userId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public deleteTeamTeamsTeamIdDelete(teamId: string, userId: string, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).deleteTeamTeamsTeamIdDelete(teamId, userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get Teams
      * @param {string} userId 
      * @param {*} [options] Override http request option.
@@ -2112,6 +2329,18 @@ export class TeamsApi extends BaseAPI {
      */
     public getTeamsTeamsGet(userId: string, options?: RawAxiosRequestConfig) {
         return TeamsApiFp(this.configuration).getTeamsTeamsGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update Team
+     * @param {TeamBase} teamBase 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TeamsApi
+     */
+    public updateTeamTeamsTeamIdPut(teamBase: TeamBase, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).updateTeamTeamsTeamIdPut(teamBase, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

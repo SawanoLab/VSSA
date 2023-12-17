@@ -20,6 +20,7 @@ export interface SeasonContextType {
   setSeasonsData: (seasons: SeasonData[]) => void;
   getSeasonNames: (seasons: SeasonData[]) => SeasonNames[];
   fetchSeasons: () => void;
+  deleteSeasons: (seasonUuid: string) => void;
 }
 
 const initialContextState: SeasonContextType = {
@@ -40,6 +41,9 @@ const initialContextState: SeasonContextType = {
   },
   getSeasonNames: () => [],
   fetchSeasons: () => {
+    return
+  },
+  deleteSeasons: () => {
     return
   },
 };
@@ -86,6 +90,15 @@ export default function SeasonProvider({ children }: { children: React.ReactNode
     }
   };
 
+  const deleteSeasons = async (seasonUuid: string) => {
+    if (!username) return;
+    try {
+      await seasonClient.deleteSeasonSeasonsSeasonIdDelete(seasonUuid, username)
+    } catch (error) {
+      setSeasonError("シーズンの削除中にエラーが発生しました");
+    }
+  };
+
   return (
     <SeasonContext.Provider value={{
       seasons,
@@ -97,6 +110,7 @@ export default function SeasonProvider({ children }: { children: React.ReactNode
       setSeasonsData,
       getSeasonNames,
       fetchSeasons,
+      deleteSeasons
     }}>
       {children}
     </SeasonContext.Provider>

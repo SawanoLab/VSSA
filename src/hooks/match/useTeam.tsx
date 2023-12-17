@@ -1,9 +1,9 @@
+import { TeamGet } from "api-client";
 import React from "react";
 
 import { teamClient } from "../../lib/api/main";
 import { TeamsData } from "../../types/team";
 import { useAuth } from "../use-auth";
-
 
 interface TeamNames {
   uuid: string;
@@ -12,32 +12,50 @@ interface TeamNames {
 
 export interface TeamContextType {
   teams: TeamsData[];
+  teamLoading: boolean;
+  teamError: string | null;
+  setTeamError: (error: string | null) => void;
   addTeam: (team: TeamsData) => void;
   setTeams: (teams: TeamsData[]) => void;
   setTeamsData: (teams: TeamsData[]) => void;
   getTeamNames: (teams: TeamsData[]) => TeamNames[];
   getTeamName: (teamId: string) => string;
+  createTeams: (team: TeamsData) => void;
   fetchTeams: () => void;
-  teamLoading: boolean;
+  deleteTeam: (teamUuid: string) => void;
+  updateTeam: (teamItem: TeamGet) => void;
 }
 
 const initialContextState: TeamContextType = {
   teams: [],
+  teamLoading: true,
+  teamError: null,
+  setTeamError: () => {
+    return;
+  },
   addTeam: () => {
-    return
+    return;
   },
   setTeams: () => {
-    return
+    return;
   },
   setTeamsData: () => {
-    return
+    return;
   },
   getTeamNames: () => [],
   getTeamName: () => "",
-  fetchTeams: () => {
-    return
+  createTeams: () => {
+    return;
   },
-  teamLoading: true,
+  fetchTeams: () => {
+    return;
+  },
+  deleteTeam: () => {
+    return;
+  },
+  updateTeam: () => {
+    return;
+  },
 };
 
 export const TeamContext =
@@ -45,9 +63,14 @@ export const TeamContext =
 
 export const useTeam = () => React.useContext(TeamContext);
 
-export default function TeamProvider({ children }: { children: React.ReactNode }) {
+export default function TeamProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { username } = useAuth();
   const [teamLoading, setLoading] = React.useState(true);
+  const [teamError, setTeamError] = React.useState<string | null>(null);
   const [teams, setTeams] = React.useState<TeamsData[]>([]);
   const addTeam = (team: TeamsData) => {
     setTeams((prevTeams) => [...prevTeams, team]);
@@ -71,6 +94,16 @@ export default function TeamProvider({ children }: { children: React.ReactNode }
     return selectedTeam ? selectedTeam.name : "";
   };
 
+  const createTeams = async (team: TeamGet) => {
+    if (!username) return;
+    try {
+      await teamClient.createTeamTeamsPost(team);
+      setTeams((prevTeams) => [...prevTeams, team]);
+    } catch (error) {
+      setTeamError("チームの作成中にエラーが発生しました");
+    }
+  };
+
   const fetchTeams = async () => {
     if (!username) return;
     setLoading(true);
@@ -92,23 +125,56 @@ export default function TeamProvider({ children }: { children: React.ReactNode }
       });
       setTeamsData(items);
     } catch (error) {
-      console.error("チームデータの取得中にエラーが発生しました:", error);
+      setTeamError("チームデータの取得中にエラーが発生しました");
     } finally {
       setLoading(false);
     }
   };
 
+  const deleteTeam = async (teamUuid: string) => {
+    if (!username) return;
+    if (!teamUuid) return;
+    try {
+      await teamClient.deleteTeamTeamsTeamIdDelete(teamUuid, username);
+      const newTeams = teams.filter((team) => team.uuid !== teamUuid);
+      setTeamsData(newTeams);
+    } catch (error) {
+      setTeamError("チームデータの削除中にエラーが発生しました");
+    }
+  };
+
+  const updateTeam = async (teamItem: TeamGet) => {
+    if (!username) return;
+    if (!teamItem) return;
+    try {
+      await teamClient.updateTeamTeamsTeamIdPut(teamItem);
+      const newTeams = teams.map((team) => {
+        if (team.uuid === teamItem.uuid) {
+          return teamItem;
+        }
+        return team;
+      });
+      setTeamsData(newTeams);
+    } catch (error) {
+      setTeamError("チームデータの更新中にエラーが発生しました");
+    }
+  };
   return (
     <TeamContext.Provider
       value={{
         teams,
         teamLoading,
+        teamError,
+        setTeamError,
         addTeam,
         setTeams,
         setTeamsData,
+        createTeams,
         getTeamNames,
         getTeamName,
         fetchTeams,
+        deleteTeam,
+        updateTeam,
       }}
     >
       {children}

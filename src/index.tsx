@@ -23,7 +23,6 @@ import AttackReportShow from "./pages/reports/attack/show";
 import SeasonIndex from "./pages/season";
 import { SignIn } from "./pages/SignIn";
 import TeamIndex from "./pages/team";
-import TeamCreate from "./pages/team/create";
 import reportWebVitals from "./reportWebVitals";
 
 function RouteConfig() {
@@ -77,14 +76,14 @@ function RouteConfig() {
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="team/create"
             element={
               <PrivateRoute>
                 <TeamCreate />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route
             path="analysis/:matchId"
             element={

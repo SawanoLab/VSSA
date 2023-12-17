@@ -1,140 +1,82 @@
+import { TeamGet } from "api-client";
+import { renderField } from "composents/renderField";
 import React from "react";
-import { Link } from "react-router-dom";
+import { SeasonData } from "types/season";
 
-import { useSeason } from "../../hooks/match/useSeason";
 import { useAuth } from "../../hooks/use-auth";
-import { teamClient } from "../../lib/api/main";
 
-const TeamCreate: React.FC = () => {
+interface Field {
+  key: keyof TeamGet;
+  label: string;
+  type: "text" | "number" | "select";
+  options?: Record<string, string>;
+}
+
+interface CreateProps {
+  seasonData: SeasonData[];
+  postTeam: (data: TeamGet) => void;
+}
+
+const TeamCreate: React.FC<CreateProps> = ({
+  seasonData,
+  postTeam,
+}) => {
   const { username } = useAuth();
-  const { getSeasonNames, seasons } = useSeason();
-  const seasonNames = getSeasonNames(seasons);
-  const [teamName, setTeamName] = React.useState("");
-  const [code, setCode] = React.useState("");
-  const [seasonName, setSeasonName] = React.useState("");
-  const [director, setDirector] = React.useState("");
-  const [coach, setCoach] = React.useState("");
-  const [trainer, setTrainer] = React.useState("");
-  const [doctor, setDoctor] = React.useState("");
-  const handleSubmit = async () => {
-    if (teamName === "" || code === "") {
-      alert("全ての入力を完了してください");
-      return;
-    } else {
-      const data = {
-        name: teamName,
-        code: code,
-        director: director,
-        coach: coach,
-        trainer: trainer,
-        doctor: doctor,
-        season_id: seasonName,
-        user_id: username,
-      };
-      try {
-        await teamClient.createTeamTeamsPost(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+  const [fieldValue, setFieldValue] = React.useState<TeamGet>({
+    uuid: "",
+    name: "",
+    code: "",
+    director: "",
+    coach: "",
+    trainer: "",
+    doctor: "",
+    season_id: "",
+    user_id: username,
+  });
+
+  const handleInputChange = (key: keyof TeamGet, value: string | number) => {
+    setFieldValue((prevValue) => ({
+      ...prevValue,
+      [key]: value,
+    }));
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {    
+    e.preventDefault();
+    postTeam(fieldValue);
+  };
+
+  const fields: Field[] = [
+    { key: "name", label: "名称", type: "text" },
+    { key: "code", label: "コード", type: "text" },
+    {
+      key: "season_id",
+      label: "シーズン",
+      type: "select",
+      options: seasonData.reduce(
+        (acc, season) => ({ ...acc, [season.uuid]: season.season_name }),
+        {}
+      ),
+    },
+    { key: "director", label: "監督", type: "text" },
+    { key: "coach", label: "コーチ", type: "text" },
+    { key: "trainer", label: "トレーナー", type: "text" },
+    { key: "doctor", label: "ドクター", type: "text" },
+  ];
+
   return (
-    <div className="m-2">
-      <h1>チーム情報</h1>
-      <form className="flex flex-wrap border bg-blue-50 p-5">
-        <div className="flex flex-row m-1">
-          <label className="text-gray-500 text-sm">
-            名称
-            <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            defaultValue={"名称"}
-            className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-            onChange={(e) => setTeamName(e.target.value)}
-          />
-        </div>
-
-        <div className="flex flex-row  m-1">
-          <label className="text-gray-500 text-sm">
-            コード
-            <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            defaultValue={"コード"}
-            className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-            onChange={(e) => setCode(e.target.value)}
-          />
-        </div>
-
-        <div className="flex flex-row  m-1">
-          <label className="text-gray-500 text-sm">
-            シーズン
-            <span className="text-red-500">*</span>
-          </label>
-          <select
-            className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-            onChange={(e) => setSeasonName(e.target.value)}
-          >
-            {seasonNames.map((seasonName) => (
-              <option value={seasonName.uuid} key={seasonName.uuid}>
-                {seasonName.season_name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="flex flex-row  m-1">
-          <label className="text-gray-500 text-sm">監督</label>
-          <input
-            type="text"
-            defaultValue={"名"}
-            className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-            onChange={(e) => setDirector(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-row  m-1">
-          <label className="text-gray-500 text-sm">コーチ</label>
-          <input
-            type="text"
-            defaultValue={"名"}
-            className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-            onChange={(e) => setCoach(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-row  m-1">
-          <label className="text-gray-500 text-sm">トレーナー</label>
-          <input
-            type="text"
-            defaultValue={"名"}
-            className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-            onChange={(e) => setTrainer(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-row  m-1">
-          <label className="text-gray-500 text-sm">ドクター</label>
-          <input
-            type="text"
-            defaultValue={"名"}
-            className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
-            onChange={(e) => setDoctor(e.target.value)}
-          />
-        </div>
-        <Link
-          to="/team"
-          className="bg-blue-400 hover:bg-blue-500 text-white  py-1 px-4 rounded"
-          onClick={handleSubmit}
-        >
-          作成
-        </Link>
-        <Link
-          to="/team"
-          className="bg-gray-200 hover:text-gray-600 text-gray-500  py-1 px-4 rounded"
-        >
-          キャンセル
-        </Link>
+    <div>
+      <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
+        {fields.map((field) =>
+          renderField({
+            field,
+            handleInputChange,
+            defaultValue: fieldValue[field.key] as string,
+          })
+        )}
+        <button className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded col-span-2">
+          登録
+        </button>
       </form>
     </div>
   );
