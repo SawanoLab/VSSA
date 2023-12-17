@@ -10,7 +10,6 @@ import {
 import { attackClient } from "../../../lib/api/main";
 import { useAuth } from "../../use-auth";
 
-
 export interface AttackHistoryContextType {
   history: AttackGet[];
   serveTeamSelect: string | null;
@@ -23,7 +22,9 @@ export interface AttackHistoryContextType {
   awayTeamScore: number;
   homeTeamSetScore: number;
   awayTeamSetScore: number;
-  getAttackData: (match_id: string) => void;
+  attackHistoryloading: boolean;
+  attackHistoryError: string | null;
+  fetchAttackData: (match_id: string) => void;
   setAttackTeamSelect: React.Dispatch<React.SetStateAction<string>>;
   setAttackPlayer: React.Dispatch<React.SetStateAction<string>>;
   setAttackStartZone: React.Dispatch<React.SetStateAction<number>>;
@@ -43,6 +44,7 @@ export interface AttackHistoryContextType {
   setAwayTeamScore: React.Dispatch<React.SetStateAction<number>>;
   setHomeTeamSetScore: React.Dispatch<React.SetStateAction<number>>;
   setAwayTeamSetScore: React.Dispatch<React.SetStateAction<number>>;
+  setAttackHistoryError: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const initialContextState: AttackHistoryContextType = {
@@ -57,7 +59,9 @@ const initialContextState: AttackHistoryContextType = {
   awayTeamScore: 0,
   homeTeamSetScore: 0,
   awayTeamSetScore: 0,
-  getAttackData: () => {},
+  attackHistoryloading: false,
+  attackHistoryError: null,
+  fetchAttackData: () => {},
   setAttackTeamSelect: () => {},
   setAttackEvalution: () => {},
   setAttackPlayer: () => {},
@@ -73,6 +77,7 @@ const initialContextState: AttackHistoryContextType = {
   setAwayTeamScore: () => {},
   setHomeTeamSetScore: () => {},
   setAwayTeamSetScore: () => {},
+  setAttackHistoryError: () => {},
 };
 
 export const AttackHistoryContext =
@@ -104,10 +109,11 @@ export default function AttackHistoryProvider({
   const [playerId, setPlayerId] = useState<string>("");
   const [serveTeamSelect, setAttackTeamSelect] = useState<string>("");
   const [attackPlayer, setAttackPlayer] = useState<string>("");
+  const [attackHistoryError, setAttackHistoryError] = useState<string | null>(null);
+  const [attackHistoryloading, setAttackHistoryLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    getAttackData(matchId);
-
+    fetchAttackData(matchId);
   }, [matchId]);
 
   useEffect(() => {
@@ -166,7 +172,6 @@ export default function AttackHistoryProvider({
       const totalScoreB = b.home_team_score + b.away_team_score;
       return totalScoreB - totalScoreA;
     });
-
   };
 
   const addAttackData = (newData: AttackGet) => {
@@ -182,16 +187,20 @@ export default function AttackHistoryProvider({
   };
 
   const postAttackData = async (newData: AttackBase) => {
+    setAttackHistoryLoading(true);
     try {
       const response = await attackClient.createAttackAttacksPost(newData);
       const data = response.data;
       addAttackData(data);
     } catch (error) {
-      console.error("データの取得中にエラーが発生しました:", error);
+      setAttackHistoryError("データの登録にエラーが発生しました");
     }
+    setAttackHistoryLoading(false);
   };
 
   const deleteAttackData = async (attackId: string) => {
+    if (!attackId) return;
+    setAttackHistoryLoading(true);
     try {
       const response = await attackClient.deleteAttackAttacksAttackIdDelete(
         attackId,
@@ -201,11 +210,15 @@ export default function AttackHistoryProvider({
       dropAttackData(attackId);
       console.log("deleteAttackData", data);
     } catch (error) {
-      console.error("データの取得中にエラーが発生しました:", error);
+      setAttackHistoryError("データの削除にエラーが発生しました");
+    } finally {
+      setAttackHistoryLoading(false);
     }
   };
 
-  const getAttackData = async (match_id: string) => {
+  const fetchAttackData = async (match_id: string) => {
+    if (!match_id) return;
+    setAttackHistoryLoading(true);
     try {
       const response = await attackClient.getAttacksAttacksGet(
         username,
@@ -218,9 +231,10 @@ export default function AttackHistoryProvider({
       setAwayTeamScore(sortedData[0].away_team_score);
       setHomeTeamSetScore(sortedData[0].home_team_set_score);
       setAwayTeamSetScore(sortedData[0].away_team_set_score);
-      console.log("getAttackData", data);
     } catch (error) {
-      console.error("データの取得中にエラーが発生しました:", error);
+      setAttackHistoryError("データの取得にエラーが発生しました");
+    } finally {
+      setAttackHistoryLoading(false);
     }
   };
 
@@ -238,7 +252,9 @@ export default function AttackHistoryProvider({
         awayTeamScore,
         homeTeamSetScore,
         awayTeamSetScore,
-        getAttackData,
+        attackHistoryloading,
+        attackHistoryError,
+        fetchAttackData,
         setAttackTeamSelect,
         setAttackPlayer,
         setAttackEvalution,
@@ -254,6 +270,7 @@ export default function AttackHistoryProvider({
         setAwayTeamScore,
         setHomeTeamSetScore,
         setAwayTeamSetScore,
+        setAttackHistoryError,
       }}
     >
       {children}

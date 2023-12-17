@@ -72,6 +72,7 @@ export default function TeamProvider({ children }: { children: React.ReactNode }
   };
 
   const fetchTeams = async () => {
+    if (!username) return;
     setLoading(true);
     try {
       const response = await teamClient.getTeamsTeamsGet(username);
@@ -91,7 +92,7 @@ export default function TeamProvider({ children }: { children: React.ReactNode }
       });
       setTeamsData(items);
     } catch (error) {
-      console.error("データの取得中にエラーが発生しました:", error);
+      console.error("チームデータの取得中にエラーが発生しました:", error);
     } finally {
       setLoading(false);
     }

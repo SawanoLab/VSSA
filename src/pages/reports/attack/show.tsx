@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import LoadingSpinner from "composents/LoadingSpinner";
+import { useMatch } from "hooks/match/useMatch";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import ErrorMessage from "utility/ErrorMessage";
 
 import { TeamPlayers } from "../../../api-client/api";
 import GameHistory from "../../../composents/reports/attack/GameHistory";
 import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
 import { useAuth } from "../../../hooks/use-auth";
-import { matchClient } from "../../../lib/api/main";
 
 interface Props {}
 
@@ -18,43 +20,52 @@ interface IProps {}
 export const Component: React.FC<IProps> = () => {
   const { username } = useAuth();
   const { matchId } = useParams();
-  const { history, getAttackData } = useAttackHistory();
-  const [homeOnCourtPlayer, setHomeOnCourtPlayer] = React.useState<
+  const [ loading, setLoading ] = useState<boolean>(true);
+  const { matchError, matchLoading, setMatchError, fetchMatch } = useMatch();
+  const {
+    history,
+    attackHistoryloading,
+    attackHistoryError,
+    setAttackHistoryError,
+    fetchAttackData,
+  } = useAttackHistory();
+  const [homeOnCourtPlayer, setHomeOnCourtPlayer] = useState<
     TeamPlayers[]
   >([]);
-  const [awayOnCourtPlayer, setAwayOnCourtPlayer] = React.useState<
+  const [awayOnCourtPlayer, setAwayOnCourtPlayer] = useState<
     TeamPlayers[]
   >([]);
-
-  const fetchAnalysis = async (matchId: string) => {
-    const response = await matchClient.getMatchMatchesMatchIdGet(
-      matchId,
-      username
-    );
-    return response.data;
-  };
-
-  const fetchAnalysisData = async (matchId: string) => {
-    try {
-      const response = await fetchAnalysis(matchId);
-      setHomeOnCourtPlayer(
-        Object.values(response.home_team.players).filter(
-          (player) => player.onCourt === true
-        )
-      );
-      setAwayOnCourtPlayer(
-        Object.values(response.away_team.players).filter(
-          (player) => player.onCourt === true
-        )
-      );
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   useEffect(() => {
-    getAttackData(matchId ? matchId : "");
-    fetchAnalysisData(matchId ? matchId : "");
+    if (!attackHistoryloading && !matchLoading) {
+      setLoading(false);
+    }
+  }, [attackHistoryloading, matchLoading]);
+
+  const fetchAnalysisData = async () => {
+    if (matchId) {
+      try {
+        const matchData = await fetchMatch(matchId, username);
+        if (matchData) {
+          setHomeOnCourtPlayer(
+            Object.values(matchData.home_team.players).filter(
+              (player) => player.onCourt
+            )
+          );
+          setAwayOnCourtPlayer(
+            Object.values(matchData.away_team.players).filter(
+              (player) => player.onCourt
+            )
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchAttackData(matchId ? matchId : "");
+    fetchAnalysisData();
   }, [matchId]);
 
   const getPlayerTeam = (player_id: string) => {
@@ -84,11 +95,29 @@ export const Component: React.FC<IProps> = () => {
   };
 
   return (
-    <GameHistory
-      history={history}
-      getPlayerTeam={getPlayerTeam}
-      getPlayerNumber={getPlayerNumber}
-    />
+    <div className="container mx-auto">
+      {matchError && (
+        <ErrorMessage
+          message={matchError}
+          clearError={() => setMatchError(null)}
+        />
+      )}
+      {attackHistoryError && (
+        <ErrorMessage
+          message={attackHistoryError}
+          clearError={() => setAttackHistoryError(null)}
+        />
+      )}
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <GameHistory
+          history={history}
+          getPlayerTeam={getPlayerTeam}
+          getPlayerNumber={getPlayerNumber}
+        />
+      )}
+    </div>
   );
 };
 

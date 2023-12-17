@@ -19,7 +19,7 @@ const GameHistory: React.FC<GameHistoryProps> = ({
   const [AttackGroup, setAttackGroup] = React.useState<AttackGet[][]>([]);
   const [showTeamHistory, setShowTeamHistory] = useState<
     "home" | "away" | "and"
-  >("and"); // "home" | "away"
+  >("and");
 
   const home_serve_zone = [
     ["4", "3", "2"],
@@ -50,59 +50,93 @@ const GameHistory: React.FC<GameHistoryProps> = ({
   }, [history]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "space-between",
-        width: "800px",
-      }}
-    >
-      {/* 選択ボタン */}
+    <div>
       <div>
-        <button onClick={() => setShowTeamHistory("home")}>home</button>
-        <button onClick={() => setShowTeamHistory("away")}>away</button>
-        <button onClick={() => setShowTeamHistory("and")}>and</button>
-      </div>
-      {Object.values(AttackGroup).map((attckers, index) => (
-        <div
-          key={index}
-          className="items-center flex flex-col"
-          style={{ width: "200px", marginBottom: "10px" }}
+        <span>フィルタリング:</span>
+        <button
+          onClick={() => setShowTeamHistory("home")}
+          className="
+          border
+          border-gray-300
+          p-2
+          text-gray-700
+          hover:bg-gray-300
+          "
         >
-          <ShowMatchScore
-            homeTeamScore={attckers[0].home_team_score}
-            awayTeamScore={attckers[0].away_team_score}
-            homeTeamSetScore={attckers[0].home_team_set_score}
-            awayTeamSetScore={attckers[0].away_team_set_score}
-          />
-          <AnalaysisCourt
-            showTeamHistory={showTeamHistory}
-            homeServeZone={home_serve_zone}
-            awayServeZone={away_serve_zone}
-            homeAttacks={attckers.filter(
-              (attcker) => getPlayerTeam(attcker.player_id) === "home"
-            )}
-            awayAttacks={attckers.filter(
-              (attcker) => getPlayerTeam(attcker.player_id) === "away"
-            )}
-            componentId={index}
-            getPlayerNumber={getPlayerNumber}
-            getPlayerTeam={getPlayerTeam}
-          />
-          <span className="border border-gray-500">
-            {attckers.map((attcker) => (
-              <DrowArrow
-                showTeamHistory={showTeamHistory}
-                attcker={attcker}
-                index={index}
-                team={getPlayerTeam(attcker.player_id)}
-                key={attcker.uuid}
-              />
-            ))}
-          </span>
-        </div>
-      ))}
+          home
+        </button>
+        <button
+          onClick={() => setShowTeamHistory("away")}
+          className="
+          border
+          border-gray-300
+          p-2
+          text-gray-700
+          hover:bg-gray-300
+          "
+        >
+          away
+        </button>
+        <button
+          onClick={() => setShowTeamHistory("and")}
+          className="
+          border
+          border-gray-300
+          p-2
+          text-gray-700
+          hover:bg-gray-300"
+        >
+          and
+        </button>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          width: "800px",
+        }}
+      >
+        {Object.values(AttackGroup).map((attckers, index) => (
+          <div
+            key={index}
+            className="items-center flex flex-col"
+            style={{ width: "200px", marginBottom: "10px" }}
+          >
+            <ShowMatchScore
+              homeTeamScore={attckers[0].home_team_score}
+              awayTeamScore={attckers[0].away_team_score}
+              homeTeamSetScore={attckers[0].home_team_set_score}
+              awayTeamSetScore={attckers[0].away_team_set_score}
+            />
+            <AnalaysisCourt
+              showTeamHistory={showTeamHistory}
+              homeServeZone={home_serve_zone}
+              awayServeZone={away_serve_zone}
+              homeAttacks={attckers.filter(
+                (attcker) => getPlayerTeam(attcker.player_id) === "home"
+              )}
+              awayAttacks={attckers.filter(
+                (attcker) => getPlayerTeam(attcker.player_id) === "away"
+              )}
+              componentId={index}
+              getPlayerNumber={getPlayerNumber}
+              getPlayerTeam={getPlayerTeam}
+            />
+            <span className="border border-gray-500">
+              {attckers.map((attcker) => (
+                <DrowArrow
+                  showTeamHistory={showTeamHistory}
+                  attcker={attcker}
+                  index={index}
+                  team={getPlayerTeam(attcker.player_id)}
+                  key={attcker.uuid}
+                />
+              ))}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

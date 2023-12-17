@@ -51,13 +51,14 @@ export default function PlayerProvider({ children }: { children: React.ReactNode
   )};
 
   const fetchPlayers = async () => {
+    if (!username) return;
     setLoading(true);
     try {
       const response = await playerClient.getPlayersPlayersGet(username);
       const data = response.data;
       setPlayersData(formatPlayerData(data));
     } catch (error) {
-      console.error("データの取得中にエラーが発生しました:", error);
+      console.error("選手データの取得中にエラーが発生しました:", error);
     } finally {
       setLoading(false);
     }

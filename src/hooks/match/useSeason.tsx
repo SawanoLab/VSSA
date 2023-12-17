@@ -73,13 +73,14 @@ export default function SeasonProvider({ children }: { children: React.ReactNode
   }
 
   const fetchSeasons = async () => {
+    if (!username) return;
     setLoading(true);
     try {
       const response = await seasonClient.getSeasonsSeasonsGet(username);
       const data = response.data;
       setSeasonsData(data);
     } catch (error) {
-      setSeasonError("データの取得中にエラーが発生しました");
+      setSeasonError("シーズンデータの取得中にエラーが発生しました");
     } finally {
       setLoading(false);
     }

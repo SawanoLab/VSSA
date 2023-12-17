@@ -234,13 +234,16 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     try {
       await matchClient.createMatchMatchesPost(matchPostRequest);
     } catch (error) {
-      setMatchError("データの登録にエラーが発生しました");
+      setMatchError("試合データの登録にエラーが発生しました");
     } finally {
       setLoading(false);
     }
   };
 
   const fetchMatch = async (matchId: string, userId: string) => {
+    if (!matchId || !userId) {
+      return undefined;
+    }
     setLoading(true);
     try {
       const response = await matchClient.getMatchMatchesMatchIdGet(
