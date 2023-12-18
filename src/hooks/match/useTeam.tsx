@@ -1,6 +1,7 @@
 import { TeamGet } from "api-client";
 import React from "react";
 
+import { TeamBase } from "../../api-client/api";
 import { teamClient } from "../../lib/api/main";
 import { TeamsData } from "../../types/team";
 import { useAuth } from "../use-auth";
@@ -23,7 +24,7 @@ export interface TeamContextType {
   createTeams: (team: TeamsData) => void;
   fetchTeams: () => void;
   deleteTeam: (teamUuid: string) => void;
-  updateTeam: (teamItem: TeamGet) => void;
+  updateTeam: (teamItem: TeamGet, teamId: string) => void;
 }
 
 const initialContextState: TeamContextType = {
@@ -143,22 +144,32 @@ export default function TeamProvider({
     }
   };
 
-  const updateTeam = async (teamItem: TeamGet) => {
-    if (!username) return;
-    if (!teamItem) return;
+  const updateTeam = async (teamItem: TeamBase, teamId: string) => {
     try {
-      await teamClient.updateTeamTeamsTeamIdPut(teamItem);
+      await teamClient.updateTeamTeamsTeamIdPut(teamId, teamItem);
       const newTeams = teams.map((team) => {
-        if (team.uuid === teamItem.uuid) {
-          return teamItem;
+        if (team.uuid === teamId) {
+          return {
+            uuid: team.uuid,
+            name: teamItem.name,
+            code: teamItem.code,
+            director: teamItem.director,
+            doctor: teamItem.doctor,
+            coach: teamItem.coach,
+            trainer: teamItem.trainer,
+            season_id: teamItem.season_id,
+            user_id: teamItem.user_id,
+          };
+        } else {
+          return team;
         }
-        return team;
       });
       setTeamsData(newTeams);
     } catch (error) {
       setTeamError("チームデータの更新中にエラーが発生しました");
     }
   };
+
   return (
     <TeamContext.Provider
       value={{

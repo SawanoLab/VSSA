@@ -2137,14 +2137,18 @@ export const TeamsApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * 
          * @summary Update Team
+         * @param {string} teamId 
          * @param {TeamBase} teamBase 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateTeamTeamsTeamIdPut: async (teamBase: TeamBase, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateTeamTeamsTeamIdPut: async (teamId: string, teamBase: TeamBase, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'teamId' is not null or undefined
+            assertParamExists('updateTeamTeamsTeamIdPut', 'teamId', teamId)
             // verify required parameter 'teamBase' is not null or undefined
             assertParamExists('updateTeamTeamsTeamIdPut', 'teamBase', teamBase)
-            const localVarPath = `/teams/{team_id}`;
+            const localVarPath = `/teams/{team_id}`
+                .replace(`{${"team_id"}}`, encodeURIComponent(String(teamId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2223,12 +2227,13 @@ export const TeamsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Update Team
+         * @param {string} teamId 
          * @param {TeamBase} teamBase 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateTeamTeamsTeamIdPut(teamBase: TeamBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamGet>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTeamTeamsTeamIdPut(teamBase, options);
+        async updateTeamTeamsTeamIdPut(teamId: string, teamBase: TeamBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamGet>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTeamTeamsTeamIdPut(teamId, teamBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['TeamsApi.updateTeamTeamsTeamIdPut']?.[index]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
@@ -2277,12 +2282,13 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
         /**
          * 
          * @summary Update Team
+         * @param {string} teamId 
          * @param {TeamBase} teamBase 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateTeamTeamsTeamIdPut(teamBase: TeamBase, options?: any): AxiosPromise<TeamGet> {
-            return localVarFp.updateTeamTeamsTeamIdPut(teamBase, options).then((request) => request(axios, basePath));
+        updateTeamTeamsTeamIdPut(teamId: string, teamBase: TeamBase, options?: any): AxiosPromise<TeamGet> {
+            return localVarFp.updateTeamTeamsTeamIdPut(teamId, teamBase, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2334,13 +2340,14 @@ export class TeamsApi extends BaseAPI {
     /**
      * 
      * @summary Update Team
+     * @param {string} teamId 
      * @param {TeamBase} teamBase 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TeamsApi
      */
-    public updateTeamTeamsTeamIdPut(teamBase: TeamBase, options?: RawAxiosRequestConfig) {
-        return TeamsApiFp(this.configuration).updateTeamTeamsTeamIdPut(teamBase, options).then((request) => request(this.axios, this.basePath));
+    public updateTeamTeamsTeamIdPut(teamId: string, teamBase: TeamBase, options?: RawAxiosRequestConfig) {
+        return TeamsApiFp(this.configuration).updateTeamTeamsTeamIdPut(teamId, teamBase, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

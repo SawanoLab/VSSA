@@ -70,7 +70,7 @@ export const MatchTeamComponent: React.FC<MatchTeamComponent> = ({ match }) => {
   };
 
   return (
-    <div className="m-5">
+    <div>
       <ShowMatchScore
         match={match}
         homeTeamScore={homeTeamScore}

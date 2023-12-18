@@ -44,7 +44,9 @@ function RouteConfig() {
             path="match"
             element={
               <PrivateRoute>
-                <MatchIndex />
+                <MatchProvider>
+                  <MatchIndex />
+                </MatchProvider>
               </PrivateRoute>
             }
           />

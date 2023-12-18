@@ -14,7 +14,7 @@ export const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = ({
 
   const header = [
     { header: "名前", accessor: "name" },
-    // { header: "行動", accessor: "action" },
+    { header: "行動", accessor: "action" },
     { header: "得点", accessor: "score" },
     { header: "コース", accessor: "course" },
   ];
@@ -43,7 +43,7 @@ export const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = ({
     deleteAttackData(attackId);
   };
   return (
-    <div style={{ width: "550px" }}>
+    <div className="w-full">
       <Table
         data={data}
         columns={header}

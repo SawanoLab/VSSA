@@ -14,8 +14,8 @@ export const MatchUtilityComponent: React.FC<MatchUtilityComponent> = ({
   const [activeTab, setActiveTab] = useState("playHistory");
 
   return (
-    <div>
-      <div className="flex justify-between">
+    <div className="w-full">
+      <div className="flex items-center justify-center">
         <MatchTeamComponent match={match} />
       </div>
       <div style={{ width: "100%" }}>

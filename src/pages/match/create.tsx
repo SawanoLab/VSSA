@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Players } from "types/player";
-import ErrorMessage from "utility/ErrorMessage";
 
+import { MatchCreateError } from "./MatchCreateError";
 import { SelectBox } from "./SelectBox";
 import { Match, MatchPostRequest } from "../../api-client";
 import LoadingSpinner from "../../composents/LoadingSpinner";
@@ -90,76 +90,67 @@ const MatchCreate: React.FC = () => {
 
   return (
     <div>
-      {seasonError && (
-        <ErrorMessage
-          message={seasonError}
-          clearError={() => setSeasonError(null)}
-        />
-      )}
-      {matchError && (
-        <ErrorMessage
-          message={matchError}
-          clearError={() => setMatchError(null)}
-        />
-      )}
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <form onSubmit={handleSubmit(handleCreate)}>
-          <div className="flex flex-col justify-center items-center">
-            <div className="m-2 p-5 border bg-gray-100 border-gray-300 rounded-lg">
-              <h1 className="text-2xl text-gray-500">新規の試合を作成</h1>
+      <MatchCreateError
+        matchError={matchError}
+        seasonError={seasonError}
+        setMatchError={setMatchError}
+        setSeasonError={setSeasonError}
+      />
+      {loading ? <LoadingSpinner /> : null}
+      <form onSubmit={handleSubmit(handleCreate)}>
+        <div className="flex flex-col justify-center items-center">
+          <div className="m-2 p-5 border bg-gray-100 border-gray-300 rounded-lg">
+            <h1 className="text-2xl text-gray-500">新規の試合を作成</h1>
+            <SelectBox
+              title="シーズン"
+              options={seasonNames.map((season) => ({
+                uuid: season.uuid,
+                context: season.season_name,
+              }))}
+              optionDefalut="シーズンを選択"
+              selectedValue={seasonUUID}
+              onChange={setSeasonUUID}
+              error={errors.seasonUUID?.message?.toString()}
+            />
+            <div className="flex flex-row m-1">
               <SelectBox
-                title="シーズン"
-                options={seasonNames.map((season) => ({
-                  uuid: season.uuid,
-                  context: season.season_name,
+                title="ホームチーム"
+                options={teams.map((team) => ({
+                  uuid: team.uuid,
+                  context: team.name,
                 }))}
-                optionDefalut="シーズンを選択"
-                selectedValue={seasonUUID}
-                onChange={setSeasonUUID}
-                error={errors.seasonUUID?.message?.toString()}
+                optionDefalut="ホームチームを選択"
+                selectedValue={homeTeamUUID}
+                onChange={setHomeTeamUUID}
+                error={errors.homeTeamUUID?.message?.toString()}
               />
-              <div className="flex flex-row m-1">
-                <SelectBox
-                  title="ホームチーム"
-                  options={teams.map((team) => ({
-                    uuid: team.uuid,
-                    context: team.name,
-                  }))}
-                  optionDefalut="ホームチームを選択"
-                  selectedValue={homeTeamUUID}
-                  onChange={setHomeTeamUUID}
-                  error={errors.homeTeamUUID?.message?.toString()}
-                />
-                <SelectBox
-                  title="アウェイチーム"
-                  options={teams.map((team) => ({
-                    uuid: team.uuid,
-                    context: team.name,
-                  }))}
-                  optionDefalut="アウェイチームを選択"
-                  selectedValue={awayTeamUUID}
-                  onChange={setAwayTeamUUID}
-                  error={errors.awayTeamUUID?.message?.toString()}
-                />
-              </div>
-              <div className="flex flex-row m-1">
-                <TeamSelectorTable register={register} errors={errors} />
-              </div>
-              <button
-                type="submit"
-                className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded"
-              >
-                作成
-              </button>
-              <button className="bg-gray-200 hover:text-gray-600 text-gray-500 py-1 px-4 rounded">
-                キャンセル
-              </button>
+              <SelectBox
+                title="アウェイチーム"
+                options={teams.map((team) => ({
+                  uuid: team.uuid,
+                  context: team.name,
+                }))}
+                optionDefalut="アウェイチームを選択"
+                selectedValue={awayTeamUUID}
+                onChange={setAwayTeamUUID}
+                error={errors.awayTeamUUID?.message?.toString()}
+              />
             </div>
+            <div className="flex flex-row m-1">
+              <TeamSelectorTable register={register} errors={errors} />
+            </div>
+            <button
+              type="submit"
+              className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded"
+            >
+              作成
+            </button>
+            <button className="bg-gray-200 hover:text-gray-600 text-gray-500 py-1 px-4 rounded">
+              キャンセル
+            </button>
           </div>
-        </form>
-      )}
+        </div>
+      </form>
     </div>
   );
 };

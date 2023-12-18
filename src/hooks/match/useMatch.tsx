@@ -6,9 +6,11 @@ import { PlayerGet, MatchPostRequest } from "../../api-client/api";
 import { Players, SetterPositionName } from "../../types/player";
 
 type MatchContextType = {
+  matchs: MatchRequest[];
   match: MatchRequest;
   matchLoading: boolean;
   matchError: string | null;
+  setMatchs: (matchs: MatchRequest[]) => void;
   setMatch: (match: MatchRequest) => void;
   setMatchError: (error: string | null) => void;
   setTeamPlayer: (
@@ -39,6 +41,7 @@ type MatchContextType = {
     matchId: string,
     userId: string
   ) => Promise<MatchRequest | undefined>;
+  fetchMatchs: (userId: string) => Promise<MatchRequest[] | undefined>;
 };
 
 const MatchContext = createContext<MatchContextType | undefined>(undefined);
@@ -70,6 +73,7 @@ const initialMatch: MatchRequest = {
 };
 
 const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
+  const [matchs, setMatchs] = useState<MatchRequest[]>([]);
   const [match, setMatch] = useState<MatchRequest>(initialMatch);
   const [matchLoading, setLoading] = useState(true);
   const [matchError, setMatchError] = useState<string | null>(null);
@@ -252,12 +256,33 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
       );
       setMatch(response.data);
       if (!response.data || response.data === undefined) {
-        setMatchError("データが存在しません");
+        setMatchError("試合データが存在しません");
         return undefined;
       }
       return response.data;
     } catch (error) {
-      setMatchError("データの取得にエラーが発生しました");
+      setMatchError("試合データの取得にエラーが発生しました");
+      return undefined;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchMatchs = async (userId: string) => {
+    if (!userId) {
+      return undefined;
+    }
+    setLoading(true);
+    try {
+      const response = await matchClient.getMatchesMatchesGet(userId);
+      setMatchs(response.data);
+      if (!response.data || response.data === undefined) {
+        setMatchError("試合データが存在しません");
+        return undefined;
+      }
+      return response.data;
+    } catch (error) {
+      setMatchError("試合データの取得にエラーが発生しました");
       return undefined;
     } finally {
       setLoading(false);
@@ -265,9 +290,11 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
   };
 
   const contextValue: MatchContextType = {
+    matchs,
     match,
     matchLoading,
     matchError,
+    setMatchs,
     setMatch,
     setMatchError,
     getOnCourtPlayers,
@@ -284,6 +311,7 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     resetTeamInfo,
     postMatch,
     fetchMatch,
+    fetchMatchs,
   };
 
   return (

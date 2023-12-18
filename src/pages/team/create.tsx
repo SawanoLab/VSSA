@@ -1,7 +1,7 @@
 import { TeamGet } from "api-client";
 import { renderField } from "composents/renderField";
 import { useTeam } from "hooks/match/useTeam";
-import React from "react";
+import React, { useEffect } from "react";
 import { SeasonData } from "types/season";
 
 import { useAuth } from "../../hooks/use-auth";
@@ -14,13 +14,20 @@ interface Field {
 }
 
 interface CreateProps {
+  type: "create" | "edit";
+  defaultValues?: TeamGet;
   seasonData: SeasonData[];
   closeModal: (value: boolean) => void;
 }
 
-const TeamCreate: React.FC<CreateProps> = ({ seasonData, closeModal }) => {
+const TeamCreate: React.FC<CreateProps> = ({
+  type,
+  defaultValues,
+  seasonData,
+  closeModal,
+}) => {
   const { username } = useAuth();
-  const { fetchTeams, createTeams } = useTeam();
+  const { fetchTeams, createTeams, updateTeam } = useTeam();
   const [fieldValue, setFieldValue] = React.useState<TeamGet>({
     uuid: "",
     name: "",
@@ -32,6 +39,12 @@ const TeamCreate: React.FC<CreateProps> = ({ seasonData, closeModal }) => {
     season_id: "",
     user_id: username,
   });
+
+  useEffect(() => {
+    if (defaultValues) {
+      setFieldValue(defaultValues);
+    }
+  }, [defaultValues]);
 
   const handleInputChange = (key: keyof TeamGet, value: string | number) => {
     setFieldValue((prevValue) => ({
@@ -46,9 +59,19 @@ const TeamCreate: React.FC<CreateProps> = ({ seasonData, closeModal }) => {
     fetchTeams();
   };
 
+  const handleEditButtonClick = (data: TeamGet, teamId: string) => {
+    updateTeam(data, teamId);
+    closeModal(false);
+    fetchTeams();
+  };
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleCreateButtonClick(fieldValue);
+    if (type === "create") {
+      handleCreateButtonClick(fieldValue);
+    }
+    if (type === "edit") {
+      handleEditButtonClick(fieldValue, fieldValue.uuid);
+    }
   };
 
   const fields: Field[] = [

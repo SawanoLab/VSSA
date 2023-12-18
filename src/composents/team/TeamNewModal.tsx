@@ -12,7 +12,11 @@ export const TeamNewModal: React.FC = () => {
     <div>
       {isNewModalOpen && (
         <Modal onClose={() => setNewModalOpen(false)}>
-          <TeamCreate seasonData={seasons} closeModal={setNewModalOpen} />
+          <TeamCreate
+            type="create"
+            seasonData={seasons}
+            closeModal={setNewModalOpen}
+          />
         </Modal>
       )}
       <button
