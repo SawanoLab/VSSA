@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import SeasonCreate from "./create";
-import Modal from "../../composents/Modal";
+import SeasonCreate from "../../pages/season/create";
+import Modal from "../Modal";
 
 export const SeasonHeader: React.FC = () => {
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);

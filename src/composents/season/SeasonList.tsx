@@ -1,7 +1,7 @@
 import React from "react";
 
-import Table from "../../composents/Table";
 import { useSeason } from "../../hooks/match/useSeason";
+import Table from "../Table";
 
 export const SeasonList: React.FC = () => {
   const { seasons } = useSeason();
