@@ -1,5 +1,6 @@
 import { TeamGet } from "api-client";
 import { renderField } from "composents/renderField";
+import { useTeam } from "hooks/match/useTeam";
 import React from "react";
 import { SeasonData } from "types/season";
 
@@ -14,14 +15,12 @@ interface Field {
 
 interface CreateProps {
   seasonData: SeasonData[];
-  postTeam: (data: TeamGet) => void;
+  closeModal: (value: boolean) => void;
 }
 
-const TeamCreate: React.FC<CreateProps> = ({
-  seasonData,
-  postTeam,
-}) => {
+const TeamCreate: React.FC<CreateProps> = ({ seasonData, closeModal }) => {
   const { username } = useAuth();
+  const { fetchTeams, createTeams } = useTeam();
   const [fieldValue, setFieldValue] = React.useState<TeamGet>({
     uuid: "",
     name: "",
@@ -41,9 +40,15 @@ const TeamCreate: React.FC<CreateProps> = ({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {    
+  const handleCreateButtonClick = (data: TeamGet) => {
+    createTeams(data);
+    closeModal(false);
+    fetchTeams();
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    postTeam(fieldValue);
+    handleCreateButtonClick(fieldValue);
   };
 
   const fields: Field[] = [
