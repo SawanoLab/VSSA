@@ -12,7 +12,6 @@ const TeamIndex: React.FC = () => {
   const { seasonError, seasonLoading, setSeasonError, fetchSeasons } =
     useSeason();
   const { teamLoading, teamError, setTeamError, fetchTeams } = useTeam();
-  // const [isNewModalOpen, setNewModalOpen] = React.useState(false);
 
   useEffect(() => {
     fetchTeams();
