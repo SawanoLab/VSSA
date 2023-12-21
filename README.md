@@ -17,8 +17,6 @@ $ npm isntall
 $ npm start
 ```
 Please rename .env.local.example to .env.local and fill in your AWS Cognito details.
-
-## APIの処理は，openAPI-generatorで自動生成しています．
 Our APIs are auto-generated using the openAPI-generator. Place openapi.json in the root directory and run docker-compose up -d to get started.
 
 BackEnd link: https://github.com/SawanoLab/VSSA_backend
