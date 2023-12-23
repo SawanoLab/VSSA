@@ -2,12 +2,12 @@ import { useMatch } from "hooks/match/useMatch";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "utility/ErrorMessage";
+import ShowYouTubeVideo from "utility/ShowYouTubeVideo";
 
 import { RotateTeamPlayersMap } from "./RotateTeamPlayersMap";
 import { TeamPlayers } from "../../api-client/api";
 import { AttackerCard } from "../../composents/analysis/AttackerCard";
 import { MatchUtilityComponent } from "../../composents/analysis/MatchUtilityComponent";
-import YouTubeVideoComponent from "../../composents/analysis/Video/YouTubeVideoComponent";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 import { useAuth } from "../../hooks/use-auth";
@@ -59,7 +59,9 @@ const AnalysisCreate: React.FC = () => {
       ) : null}
       {matchLoading ? <LoadingSpinner /> : null}
       <div className="grid grid-cols-1 gap-2">
-        <YouTubeVideoComponent />
+        <ShowYouTubeVideo
+         url={match?.youtube_url}
+        />
         <div className="grid grid-cols-2 gap-1 justify-items-center">
           <MatchUtilityComponent match={match} />
           <div className="grid grid-cols-2 gap-1 justify-items-center">

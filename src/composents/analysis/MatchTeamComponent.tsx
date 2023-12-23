@@ -2,11 +2,11 @@ import React from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 import { ShowMatchScore } from "./ShowMatchScore";
-import { MatchRequest } from "../../api-client/api";
+import { MatchResponse } from "../../api-client/api";
 import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 
 export interface MatchTeamComponent {
-  match?: MatchRequest;
+  match?: MatchResponse;
 }
 
 export const MatchTeamComponent: React.FC<MatchTeamComponent> = ({ match }) => {

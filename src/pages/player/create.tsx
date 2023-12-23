@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-import { PlayerGet } from "../../api-client/api";
+import { PlayerResponse } from "../../api-client/api";
 import { renderField } from "../../composents/renderField";
 import { useAuth } from "../../hooks/use-auth";
 import { playerClient } from "../../lib/api/main";
@@ -10,7 +10,7 @@ import { SeasonData } from "../../types/season";
 import { TeamName } from "../../types/team";
 
 interface Field {
-  key: keyof PlayerGet;
+  key: keyof PlayerResponse;
   label: string;
   type: "text" | "number" | "select";
   options?: Record<string, string>;
@@ -24,7 +24,7 @@ interface CreateProps {
 
 const Create: React.FC<CreateProps> = ({ seasonData, teamData, onClose }) => {
   const { username } = useAuth();
-  const [fieldValue, setFieldValue] = useState<PlayerGet>({
+  const [fieldValue, setFieldValue] = useState<PlayerResponse>({
     uuid: "",
     name: "",
     player_number: 0,
@@ -45,14 +45,14 @@ const Create: React.FC<CreateProps> = ({ seasonData, teamData, onClose }) => {
     libero: "リベロ",
   };
 
-  const handleInputChange = (key: keyof PlayerGet, value: string | number) => {
+  const handleInputChange = (key: keyof PlayerResponse, value: string | number) => {
     setFieldValue((prevValue) => ({
       ...prevValue,
       [key]: value,
     }));
   };
 
-  const postPlayer = async (fieldValue: PlayerGet) => {
+  const postPlayer = async (fieldValue: PlayerResponse) => {
     try {
       await playerClient.createPlayerPlayersPost(fieldValue);
     } catch (error) {

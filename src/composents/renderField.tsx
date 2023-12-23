@@ -6,7 +6,7 @@ interface renderFieldProps<T> {
   field: {
     key: Extract<keyof T, string | number>;
     label: string;
-    type: "text" | "number" | "select";
+    type: "text" | "number" | "select" | "datetime-local";
     options?: Record<string, string>;
   };
   handleInputChange: (key: keyof T, value: string | number) => void;
@@ -43,6 +43,15 @@ export const renderField = <T,>({
                 }))
               : []
           }
+          onChange={(e) => handleInputChange(key, e.target.value)}
+        />
+      )}
+      {type === "datetime-local" && (
+        <InputForm
+          label={label}
+          isRequired={true}
+          type="datetime-local"
+          defaultValue={defaultValue}
           onChange={(e) => handleInputChange(key, e.target.value)}
         />
       )}

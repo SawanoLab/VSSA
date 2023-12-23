@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { MatchRequest as Match } from "../../../api-client/api";
+import { MatchResponse } from "../../../api-client/api";
 import LoadingSpinner from "../../../composents/LoadingSpinner";
 import Table from "../../../composents/Table";
 import { useAuth } from "../../../hooks/use-auth";
@@ -20,7 +20,7 @@ interface IProps {}
 const Component: React.FC<IProps> = () => {
   const { username } = useAuth();
   const [loading, setLoading] = useState(true);
-  const [matchs, setMatchs] = useState<Match[]>([]);
+  const [matchs, setMatchs] = useState<MatchResponse[]>([]);
 
   const fetchMatchs = async () => {
     setLoading(true);

@@ -1,15 +1,15 @@
 import React  from "react";
 
-import { PlayerGet } from "../../api-client/api";
+import { PlayerResponse } from "../../api-client/api";
 import { playerClient } from "../../lib/api/main";
 import { useAuth } from "../use-auth";
 
 export interface PlayerContextType {
-  players: PlayerGet[];
-  addPlayer: (player: PlayerGet) => void;
-  setPlayers: (players: PlayerGet[]) => void;
-  setPlayersData: (players: PlayerGet[]) => void;
-  getTeamPlayers: (players: PlayerGet[], team_id: string) => PlayerGet[];
+  players: PlayerResponse[];
+  addPlayer: (player: PlayerResponse) => void;
+  setPlayers: (players: PlayerResponse[]) => void;
+  setPlayersData: (players: PlayerResponse[]) => void;
+  getTeamPlayers: (players: PlayerResponse[], team_id: string) => PlayerResponse[];
   fetchPlayers: () => void;
   playerLoading: boolean;
 }
@@ -32,22 +32,22 @@ export const usePlayer = () => React.useContext(PlayerContext);
 export default function PlayerProvider({ children }: { children: React.ReactNode }) {
   const { username } = useAuth();
   const [playerLoading, setLoading] = React.useState(true);
-  const [players, setPlayers] = React.useState<PlayerGet[]>([]);
+  const [players, setPlayers] = React.useState<PlayerResponse[]>([]);
 
-  const addPlayer = (player: PlayerGet) => {
+  const addPlayer = (player: PlayerResponse) => {
     setPlayers((prevPlayers) => [...prevPlayers, player]);
   }
 
-  const setPlayersData = (players: PlayerGet[]) => {
+  const setPlayersData = (players: PlayerResponse[]) => {
     setPlayers(players);
   }
 
-  const getTeamPlayers = (players: PlayerGet[], team_id: string) => {
+  const getTeamPlayers = (players: PlayerResponse[], team_id: string) => {
     return players.filter((player) => player.team_id === team_id);
   }
 
-  const formatPlayerData = (data: PlayerGet[]) => {
-    return data.map(({uuid, name, player_number, code, postion, weight = 0, height = 0, user_id, team_id, season_id}: PlayerGet) => ({uuid, name, player_number, code, postion, weight, height, user_id, team_id, season_id})
+  const formatPlayerData = (data: PlayerResponse[]) => {
+    return data.map(({uuid, name, player_number, code, postion, weight = 0, height = 0, user_id, team_id, season_id}: PlayerResponse) => ({uuid, name, player_number, code, postion, weight, height, user_id, team_id, season_id})
   )};
 
   const fetchPlayers = async () => {

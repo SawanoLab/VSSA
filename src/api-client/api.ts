@@ -147,91 +147,91 @@ export type AttackEvaluationType = typeof AttackEvaluationType[keyof typeof Atta
 /**
  * 
  * @export
- * @interface AttackGet
+ * @interface AttackResponse
  */
-export interface AttackGet {
+export interface AttackResponse {
     /**
      * 
      * @type {number}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'home_team_score': number;
     /**
      * 
      * @type {number}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'away_team_score': number;
     /**
      * 
      * @type {number}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'home_team_set_score': number;
     /**
      * 
      * @type {number}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'away_team_set_score': number;
     /**
      * 
      * @type {number}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'attack_start_zone': number;
     /**
      * 
      * @type {number}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'attack_end_zone': number;
     /**
      * 
      * @type {AttackBallType}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'attack_ball_type': AttackBallType;
     /**
      * 
      * @type {AttackSkill}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'attack_skill': AttackSkill;
     /**
      * 
      * @type {AttackEvaluationType}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'attack_evaluation': AttackEvaluationType;
     /**
      * 
      * @type {string}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'user_id': string;
     /**
      * 
      * @type {string}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'match_id': string;
     /**
      * 
      * @type {string}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'team_id': string;
     /**
      * 
      * @type {string}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'player_id': string;
     /**
      * 
      * @type {string}
-     * @memberof AttackGet
+     * @memberof AttackResponse
      */
     'uuid': string;
 }
@@ -295,6 +295,12 @@ export interface Match {
      * @memberof Match
      */
     'season_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Match
+     */
+    'youtube_url': string;
 }
 /**
  * 
@@ -318,33 +324,39 @@ export interface MatchPostRequest {
 /**
  * 
  * @export
- * @interface MatchRequest
+ * @interface MatchResponse
  */
-export interface MatchRequest {
+export interface MatchResponse {
     /**
      * 
      * @type {string}
-     * @memberof MatchRequest
+     * @memberof MatchResponse
      */
     'uuid': string;
     /**
      * 
      * @type {TeamRequest}
-     * @memberof MatchRequest
+     * @memberof MatchResponse
      */
     'home_team': TeamRequest;
     /**
      * 
      * @type {TeamRequest}
-     * @memberof MatchRequest
+     * @memberof MatchResponse
      */
     'away_team': TeamRequest;
     /**
      * 
      * @type {string}
-     * @memberof MatchRequest
+     * @memberof MatchResponse
      */
     'season_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MatchResponse
+     */
+    'youtube_url': string;
 }
 /**
  * 
@@ -406,73 +418,6 @@ export interface PlayerBase {
      * @memberof PlayerBase
      */
     'season_id': string;
-}
-/**
- * 
- * @export
- * @interface PlayerGet
- */
-export interface PlayerGet {
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerGet
-     */
-    'name': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlayerGet
-     */
-    'player_number': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerGet
-     */
-    'code': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerGet
-     */
-    'postion': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlayerGet
-     */
-    'weight': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PlayerGet
-     */
-    'height': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerGet
-     */
-    'user_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerGet
-     */
-    'team_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerGet
-     */
-    'season_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PlayerGet
-     */
-    'uuid': string;
 }
 /**
  * 
@@ -557,6 +502,73 @@ export interface PlayerMatchInfo {
 /**
  * 
  * @export
+ * @interface PlayerResponse
+ */
+export interface PlayerResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlayerResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlayerResponse
+     */
+    'player_number': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlayerResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlayerResponse
+     */
+    'postion': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlayerResponse
+     */
+    'weight': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlayerResponse
+     */
+    'height': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlayerResponse
+     */
+    'user_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlayerResponse
+     */
+    'team_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlayerResponse
+     */
+    'season_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlayerResponse
+     */
+    'uuid': string;
+}
+/**
+ * 
+ * @export
  * @interface SeasonBase
  */
 export interface SeasonBase {
@@ -600,49 +612,98 @@ export interface SeasonBase {
 /**
  * 
  * @export
- * @interface SeasonGet
+ * @interface SeasonCreate
  */
-export interface SeasonGet {
+export interface SeasonCreate {
     /**
      * 
      * @type {string}
-     * @memberof SeasonGet
+     * @memberof SeasonCreate
      */
     'start_day': string;
     /**
      * 
      * @type {string}
-     * @memberof SeasonGet
+     * @memberof SeasonCreate
      */
     'end_day': string;
     /**
      * 
      * @type {string}
-     * @memberof SeasonGet
+     * @memberof SeasonCreate
      */
     'season_name': string;
     /**
      * 
      * @type {string}
-     * @memberof SeasonGet
+     * @memberof SeasonCreate
      */
     'game_format': string;
     /**
      * 
      * @type {string}
-     * @memberof SeasonGet
+     * @memberof SeasonCreate
      */
     'code': string;
     /**
      * 
      * @type {string}
-     * @memberof SeasonGet
+     * @memberof SeasonCreate
      */
     'user_id': string;
     /**
      * 
      * @type {string}
-     * @memberof SeasonGet
+     * @memberof SeasonCreate
+     */
+    'uuid': string;
+}
+/**
+ * 
+ * @export
+ * @interface SeasonResponse
+ */
+export interface SeasonResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof SeasonResponse
+     */
+    'start_day': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SeasonResponse
+     */
+    'end_day': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SeasonResponse
+     */
+    'season_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SeasonResponse
+     */
+    'game_format': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SeasonResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SeasonResponse
+     */
+    'user_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SeasonResponse
      */
     'uuid': string;
 }
@@ -700,67 +761,6 @@ export interface TeamBase {
      * @memberof TeamBase
      */
     'user_id': string;
-}
-/**
- * 
- * @export
- * @interface TeamGet
- */
-export interface TeamGet {
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'code': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'director': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'coach': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'trainer': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'doctor': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'season_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'user_id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TeamGet
-     */
-    'uuid': string;
 }
 /**
  * 
@@ -823,6 +823,67 @@ export interface TeamRequest {
      * @memberof TeamRequest
      */
     'setter_postion': string;
+}
+/**
+ * 
+ * @export
+ * @interface TeamResponse
+ */
+export interface TeamResponse {
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'code': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'director': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'coach': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'trainer': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'doctor': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'season_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'user_id': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TeamResponse
+     */
+    'uuid': string;
 }
 /**
  * 
@@ -994,7 +1055,7 @@ export const AttacksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createAttackAttacksPost(attackBase: AttackBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttackGet>> {
+        async createAttackAttacksPost(attackBase: AttackBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttackResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createAttackAttacksPost(attackBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['AttacksApi.createAttackAttacksPost']?.[index]?.url;
@@ -1008,7 +1069,7 @@ export const AttacksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteAttackAttacksAttackIdDelete(attackId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttackBase>> {
+        async deleteAttackAttacksAttackIdDelete(attackId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttackResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteAttackAttacksAttackIdDelete(attackId, userId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['AttacksApi.deleteAttackAttacksAttackIdDelete']?.[index]?.url;
@@ -1022,7 +1083,7 @@ export const AttacksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAttacksAttacksGet(userId: string, matchId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AttackGet>>> {
+        async getAttacksAttacksGet(userId: string, matchId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AttackResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAttacksAttacksGet(userId, matchId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['AttacksApi.getAttacksAttacksGet']?.[index]?.url;
@@ -1045,7 +1106,7 @@ export const AttacksApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createAttackAttacksPost(attackBase: AttackBase, options?: any): AxiosPromise<AttackGet> {
+        createAttackAttacksPost(attackBase: AttackBase, options?: any): AxiosPromise<AttackResponse> {
             return localVarFp.createAttackAttacksPost(attackBase, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1056,7 +1117,7 @@ export const AttacksApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteAttackAttacksAttackIdDelete(attackId: string, userId: string, options?: any): AxiosPromise<AttackBase> {
+        deleteAttackAttacksAttackIdDelete(attackId: string, userId: string, options?: any): AxiosPromise<AttackResponse> {
             return localVarFp.deleteAttackAttacksAttackIdDelete(attackId, userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1067,7 +1128,7 @@ export const AttacksApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAttacksAttacksGet(userId: string, matchId: string, options?: any): AxiosPromise<Array<AttackGet>> {
+        getAttacksAttacksGet(userId: string, matchId: string, options?: any): AxiosPromise<Array<AttackResponse>> {
             return localVarFp.getAttacksAttacksGet(userId, matchId, options).then((request) => request(axios, basePath));
         },
     };
@@ -1268,7 +1329,7 @@ export const MatchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createMatchMatchesPost(matchPostRequest: MatchPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MatchPostRequest>> {
+        async createMatchMatchesPost(matchPostRequest: MatchPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MatchResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createMatchMatchesPost(matchPostRequest, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['MatchesApi.createMatchMatchesPost']?.[index]?.url;
@@ -1282,7 +1343,7 @@ export const MatchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMatchMatchesMatchIdGet(matchId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MatchRequest>> {
+        async getMatchMatchesMatchIdGet(matchId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MatchResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMatchMatchesMatchIdGet(matchId, userId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['MatchesApi.getMatchMatchesMatchIdGet']?.[index]?.url;
@@ -1297,7 +1358,7 @@ export const MatchesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMatchesMatchesGet(userId: string, skip?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MatchRequest>>> {
+        async getMatchesMatchesGet(userId: string, skip?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<MatchResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMatchesMatchesGet(userId, skip, limit, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['MatchesApi.getMatchesMatchesGet']?.[index]?.url;
@@ -1320,7 +1381,7 @@ export const MatchesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createMatchMatchesPost(matchPostRequest: MatchPostRequest, options?: any): AxiosPromise<MatchPostRequest> {
+        createMatchMatchesPost(matchPostRequest: MatchPostRequest, options?: any): AxiosPromise<MatchResponse> {
             return localVarFp.createMatchMatchesPost(matchPostRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1331,7 +1392,7 @@ export const MatchesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMatchMatchesMatchIdGet(matchId: string, userId: string, options?: any): AxiosPromise<MatchRequest> {
+        getMatchMatchesMatchIdGet(matchId: string, userId: string, options?: any): AxiosPromise<MatchResponse> {
             return localVarFp.getMatchMatchesMatchIdGet(matchId, userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1343,7 +1404,7 @@ export const MatchesApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMatchesMatchesGet(userId: string, skip?: number, limit?: number, options?: any): AxiosPromise<Array<MatchRequest>> {
+        getMatchesMatchesGet(userId: string, skip?: number, limit?: number, options?: any): AxiosPromise<Array<MatchResponse>> {
             return localVarFp.getMatchesMatchesGet(userId, skip, limit, options).then((request) => request(axios, basePath));
         },
     };
@@ -1588,7 +1649,7 @@ export const PlayersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createPlayerPlayersPost(playerBase: PlayerBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerBase>> {
+        async createPlayerPlayersPost(playerBase: PlayerBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createPlayerPlayersPost(playerBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['PlayersApi.createPlayerPlayersPost']?.[index]?.url;
@@ -1602,7 +1663,7 @@ export const PlayersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePlayerPlayersDelete(userId: string, playerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerBase>> {
+        async deletePlayerPlayersDelete(userId: string, playerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlayerPlayersDelete(userId, playerId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['PlayersApi.deletePlayerPlayersDelete']?.[index]?.url;
@@ -1615,7 +1676,7 @@ export const PlayersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPlayersPlayersGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlayerGet>>> {
+        async getPlayersPlayersGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlayerResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPlayersPlayersGet(userId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['PlayersApi.getPlayersPlayersGet']?.[index]?.url;
@@ -1630,7 +1691,7 @@ export const PlayersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updatePlayerPlayersPut(userId: string, playerId: string, playerBase: PlayerBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerBase>> {
+        async updatePlayerPlayersPut(userId: string, playerId: string, playerBase: PlayerBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updatePlayerPlayersPut(userId, playerId, playerBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['PlayersApi.updatePlayerPlayersPut']?.[index]?.url;
@@ -1653,7 +1714,7 @@ export const PlayersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createPlayerPlayersPost(playerBase: PlayerBase, options?: any): AxiosPromise<PlayerBase> {
+        createPlayerPlayersPost(playerBase: PlayerBase, options?: any): AxiosPromise<PlayerResponse> {
             return localVarFp.createPlayerPlayersPost(playerBase, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1664,7 +1725,7 @@ export const PlayersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePlayerPlayersDelete(userId: string, playerId: string, options?: any): AxiosPromise<PlayerBase> {
+        deletePlayerPlayersDelete(userId: string, playerId: string, options?: any): AxiosPromise<PlayerResponse> {
             return localVarFp.deletePlayerPlayersDelete(userId, playerId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1674,7 +1735,7 @@ export const PlayersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPlayersPlayersGet(userId: string, options?: any): AxiosPromise<Array<PlayerGet>> {
+        getPlayersPlayersGet(userId: string, options?: any): AxiosPromise<Array<PlayerResponse>> {
             return localVarFp.getPlayersPlayersGet(userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1686,7 +1747,7 @@ export const PlayersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updatePlayerPlayersPut(userId: string, playerId: string, playerBase: PlayerBase, options?: any): AxiosPromise<PlayerBase> {
+        updatePlayerPlayersPut(userId: string, playerId: string, playerBase: PlayerBase, options?: any): AxiosPromise<PlayerResponse> {
             return localVarFp.updatePlayerPlayersPut(userId, playerId, playerBase, options).then((request) => request(axios, basePath));
         },
     };
@@ -1873,6 +1934,53 @@ export const SeasonsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Update Season
+         * @param {string} seasonId 
+         * @param {string} userId 
+         * @param {SeasonCreate} seasonCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateSeasonSeasonsSeasonIdPut: async (seasonId: string, userId: string, seasonCreate: SeasonCreate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'seasonId' is not null or undefined
+            assertParamExists('updateSeasonSeasonsSeasonIdPut', 'seasonId', seasonId)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('updateSeasonSeasonsSeasonIdPut', 'userId', userId)
+            // verify required parameter 'seasonCreate' is not null or undefined
+            assertParamExists('updateSeasonSeasonsSeasonIdPut', 'seasonCreate', seasonCreate)
+            const localVarPath = `/seasons/{season_id}`
+                .replace(`{${"season_id"}}`, encodeURIComponent(String(seasonId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (userId !== undefined) {
+                localVarQueryParameter['user_id'] = userId;
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(seasonCreate, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1890,7 +1998,7 @@ export const SeasonsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createSeasonSeasonsPost(seasonBase: SeasonBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeasonBase>> {
+        async createSeasonSeasonsPost(seasonBase: SeasonBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeasonResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createSeasonSeasonsPost(seasonBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['SeasonsApi.createSeasonSeasonsPost']?.[index]?.url;
@@ -1904,7 +2012,7 @@ export const SeasonsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteSeasonSeasonsSeasonIdDelete(seasonId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeasonGet>> {
+        async deleteSeasonSeasonsSeasonIdDelete(seasonId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeasonResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSeasonSeasonsSeasonIdDelete(seasonId, userId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['SeasonsApi.deleteSeasonSeasonsSeasonIdDelete']?.[index]?.url;
@@ -1917,10 +2025,25 @@ export const SeasonsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSeasonsSeasonsGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SeasonGet>>> {
+        async getSeasonsSeasonsGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SeasonResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSeasonsSeasonsGet(userId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['SeasonsApi.getSeasonsSeasonsGet']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Update Season
+         * @param {string} seasonId 
+         * @param {string} userId 
+         * @param {SeasonCreate} seasonCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateSeasonSeasonsSeasonIdPut(seasonId: string, userId: string, seasonCreate: SeasonCreate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SeasonResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateSeasonSeasonsSeasonIdPut(seasonId, userId, seasonCreate, options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['SeasonsApi.updateSeasonSeasonsSeasonIdPut']?.[index]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
         },
     }
@@ -1940,7 +2063,7 @@ export const SeasonsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createSeasonSeasonsPost(seasonBase: SeasonBase, options?: any): AxiosPromise<SeasonBase> {
+        createSeasonSeasonsPost(seasonBase: SeasonBase, options?: any): AxiosPromise<SeasonResponse> {
             return localVarFp.createSeasonSeasonsPost(seasonBase, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1951,7 +2074,7 @@ export const SeasonsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSeasonSeasonsSeasonIdDelete(seasonId: string, userId: string, options?: any): AxiosPromise<SeasonGet> {
+        deleteSeasonSeasonsSeasonIdDelete(seasonId: string, userId: string, options?: any): AxiosPromise<SeasonResponse> {
             return localVarFp.deleteSeasonSeasonsSeasonIdDelete(seasonId, userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1961,8 +2084,20 @@ export const SeasonsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSeasonsSeasonsGet(userId: string, options?: any): AxiosPromise<Array<SeasonGet>> {
+        getSeasonsSeasonsGet(userId: string, options?: any): AxiosPromise<Array<SeasonResponse>> {
             return localVarFp.getSeasonsSeasonsGet(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update Season
+         * @param {string} seasonId 
+         * @param {string} userId 
+         * @param {SeasonCreate} seasonCreate 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateSeasonSeasonsSeasonIdPut(seasonId: string, userId: string, seasonCreate: SeasonCreate, options?: any): AxiosPromise<SeasonResponse> {
+            return localVarFp.updateSeasonSeasonsSeasonIdPut(seasonId, userId, seasonCreate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2009,6 +2144,20 @@ export class SeasonsApi extends BaseAPI {
      */
     public getSeasonsSeasonsGet(userId: string, options?: RawAxiosRequestConfig) {
         return SeasonsApiFp(this.configuration).getSeasonsSeasonsGet(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update Season
+     * @param {string} seasonId 
+     * @param {string} userId 
+     * @param {SeasonCreate} seasonCreate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SeasonsApi
+     */
+    public updateSeasonSeasonsSeasonIdPut(seasonId: string, userId: string, seasonCreate: SeasonCreate, options?: RawAxiosRequestConfig) {
+        return SeasonsApiFp(this.configuration).updateSeasonSeasonsSeasonIdPut(seasonId, userId, seasonCreate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2191,7 +2340,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createTeamTeamsPost(teamBase: TeamBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamBase>> {
+        async createTeamTeamsPost(teamBase: TeamBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createTeamTeamsPost(teamBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['TeamsApi.createTeamTeamsPost']?.[index]?.url;
@@ -2205,7 +2354,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteTeamTeamsTeamIdDelete(teamId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<any>>> {
+        async deleteTeamTeamsTeamIdDelete(teamId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTeamTeamsTeamIdDelete(teamId, userId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['TeamsApi.deleteTeamTeamsTeamIdDelete']?.[index]?.url;
@@ -2218,7 +2367,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTeamsTeamsGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TeamGet>>> {
+        async getTeamsTeamsGet(userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TeamResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTeamsTeamsGet(userId, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['TeamsApi.getTeamsTeamsGet']?.[index]?.url;
@@ -2232,7 +2381,7 @@ export const TeamsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateTeamTeamsTeamIdPut(teamId: string, teamBase: TeamBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamGet>> {
+        async updateTeamTeamsTeamIdPut(teamId: string, teamBase: TeamBase, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TeamResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateTeamTeamsTeamIdPut(teamId, teamBase, options);
             const index = configuration?.serverIndex ?? 0;
             const operationBasePath = operationServerMap['TeamsApi.updateTeamTeamsTeamIdPut']?.[index]?.url;
@@ -2255,7 +2404,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTeamTeamsPost(teamBase: TeamBase, options?: any): AxiosPromise<TeamBase> {
+        createTeamTeamsPost(teamBase: TeamBase, options?: any): AxiosPromise<TeamResponse> {
             return localVarFp.createTeamTeamsPost(teamBase, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2266,7 +2415,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteTeamTeamsTeamIdDelete(teamId: string, userId: string, options?: any): AxiosPromise<Array<any>> {
+        deleteTeamTeamsTeamIdDelete(teamId: string, userId: string, options?: any): AxiosPromise<TeamResponse> {
             return localVarFp.deleteTeamTeamsTeamIdDelete(teamId, userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2276,7 +2425,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTeamsTeamsGet(userId: string, options?: any): AxiosPromise<Array<TeamGet>> {
+        getTeamsTeamsGet(userId: string, options?: any): AxiosPromise<Array<TeamResponse>> {
             return localVarFp.getTeamsTeamsGet(userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2287,7 +2436,7 @@ export const TeamsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateTeamTeamsTeamIdPut(teamId: string, teamBase: TeamBase, options?: any): AxiosPromise<TeamGet> {
+        updateTeamTeamsTeamIdPut(teamId: string, teamBase: TeamBase, options?: any): AxiosPromise<TeamResponse> {
             return localVarFp.updateTeamTeamsTeamIdPut(teamId, teamBase, options).then((request) => request(axios, basePath));
         },
     };

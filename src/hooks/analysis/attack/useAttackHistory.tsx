@@ -4,14 +4,14 @@ import {
   AttackBallType,
   AttackBase,
   AttackEvaluationType,
-  AttackGet,
+  AttackResponse,
   AttackSkill,
 } from "../../../api-client/api";
 import { attackClient } from "../../../lib/api/main";
 import { useAuth } from "../../use-auth";
 
 export interface AttackHistoryContextType {
-  history: AttackGet[];
+  history: AttackResponse[];
   serveTeamSelect: string | null;
   attackEvalution: AttackEvaluationType | null;
   attackPlayer: string | null;
@@ -91,7 +91,7 @@ export default function AttackHistoryProvider({
   children: React.ReactNode;
 }) {
   const { username } = useAuth();
-  const [history, setHistory] = useState<AttackGet[]>([]);
+  const [history, setHistory] = useState<AttackResponse[]>([]);
   const [homeTeamScore, setHomeTeamScore] = useState<number>(0);
   const [awayTeamScore, setAwayTeamScore] = useState<number>(0);
   const [homeTeamSetScore, setHomeTeamSetScore] = useState<number>(0);
@@ -160,7 +160,7 @@ export default function AttackHistoryProvider({
     attackEndZone,
   ]);
 
-  const sortSetScoreAndScoreHistory = (history: AttackGet[]) => {
+  const sortSetScoreAndScoreHistory = (history: AttackResponse[]) => {
     return history.sort((a, b) => {
       const totalSetScoreA = a.home_team_set_score + a.away_team_set_score;
       const totalSetScoreB = b.home_team_set_score + b.away_team_set_score;
@@ -174,7 +174,7 @@ export default function AttackHistoryProvider({
     });
   };
 
-  const addAttackData = (newData: AttackGet) => {
+  const addAttackData = (newData: AttackResponse) => {
     setHistory((currentHistory) => {
       const updatedHistory = [...currentHistory, newData];
       return sortSetScoreAndScoreHistory(updatedHistory);

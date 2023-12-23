@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 
-import { useMatch } from "../../hooks/match/useMatch";
-import { typeOfTeam } from "../../types/team";
+import { useMatch } from "../../../hooks/match/useMatch";
+import { typeOfTeam } from "../../../types/team";
 
 interface LiberoPlayerSelectionProps {
   type: typeOfTeam;
@@ -10,11 +10,7 @@ interface LiberoPlayerSelectionProps {
 const LiberoPlayerSelection: React.FC<LiberoPlayerSelectionProps> = ({
   type,
 }) => {
-  const {
-    togglePlayerOnCourt,
-    togglePlayerLibero,
-    getPlayers,
-  } = useMatch();
+  const { togglePlayerOnCourt, togglePlayerLibero, getPlayers } = useMatch();
   const [selectedPlayer, setSelectedPlayer] = useState<string>("");
   const players = getPlayers(type);
 

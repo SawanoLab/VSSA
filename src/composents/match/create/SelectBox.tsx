@@ -1,4 +1,5 @@
 import React from "react";
+import { UseFormRegister, FieldValues, FieldErrors } from "react-hook-form";
 
 interface option {
   uuid: string;
@@ -9,21 +10,24 @@ interface SelectBoxProps {
   title: string;
   optionDefalut: string;
   selectedValue: string;
+  errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<FieldValues>;
   onChange: (value: string) => void;
-  error?: string;
 }
 export const SelectBox: React.FC<SelectBoxProps> = ({
   options,
   title,
   optionDefalut,
   selectedValue,
+  errors,
+  register,
   onChange,
-  error,
 }) => {
   return (
     <div>
       <p className="text-sm text-gray-500 p-1 w-80">{title}</p>
       <select
+        {...register(title, { required: true })}
         value={selectedValue}
         onChange={(e) => onChange(e.target.value)}
         className="text-sm text-gray-500 border border-spacing-5 p-1 w-80"
@@ -35,7 +39,9 @@ export const SelectBox: React.FC<SelectBoxProps> = ({
           </option>
         ))}
       </select>
-      {error && <p className="text-red-500">{error}</p>}
+      {errors[title] && (
+        <p className="text-red-500 text-xs">{title}を選択してください</p>
+      )}
     </div>
   );
 };

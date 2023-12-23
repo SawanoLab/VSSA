@@ -1,9 +1,9 @@
 import React from "react";
 
-import { MatchRequest } from "../../api-client/api";
+import { MatchResponse } from "../../api-client/api";
 
 interface ShowMatchScoreProps {
-  match?: MatchRequest;
+  match?: MatchResponse;
   homeTeamScore: number;
   awayTeamScore: number;
   homeTeamSetScore: number;

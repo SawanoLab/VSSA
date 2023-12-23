@@ -1,11 +1,11 @@
 import React from "react";
 import Xarrow from "react-xarrows";
 
-import { AttackGet } from "../../../api-client/api";
+import { AttackResponse } from "../../../api-client/api";
 
 interface DrowArrowProps {
   showTeamHistory: "home" | "away" | "and";
-  attcker: AttackGet;
+  attcker: AttackResponse;
   index: number;
   team: string;
 }

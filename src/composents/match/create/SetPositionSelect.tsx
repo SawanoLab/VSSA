@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { useMatch } from "../../hooks/match/useMatch";
-import { SetterPositionName } from "../../types/player";
-import { typeOfTeam } from "../../types/team";
+import { useMatch } from "../../../hooks/match/useMatch";
+import { SetterPositionName } from "../../../types/player";
+import { typeOfTeam } from "../../../types/team";
 
 interface SetPositionSelectProps {
   type: typeOfTeam;

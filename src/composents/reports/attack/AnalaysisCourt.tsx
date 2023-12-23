@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AttackGet } from "../../../api-client/api";
+import { AttackResponse } from "../../../api-client/api";
 import { ServeZone } from "../attack/ServeZone";
 
 interface AnalaysisCourtProps {
@@ -8,8 +8,8 @@ interface AnalaysisCourtProps {
   homeServeZone: string[][];
   awayServeZone: string[][];
   componentId: number;
-  homeAttacks: AttackGet[];
-  awayAttacks: AttackGet[];
+  homeAttacks: AttackResponse[];
+  awayAttacks: AttackResponse[];
   getPlayerNumber: (player_id: string) => number;
   getPlayerTeam: (player_id: string) => string;
 }

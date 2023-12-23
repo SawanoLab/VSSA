@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AttackGet } from "../../../api-client/api";
+import { AttackResponse } from "../../../api-client/api";
 
 
 interface ServeZoneProps {
@@ -8,7 +8,7 @@ interface ServeZoneProps {
   idPrefix: string;
   serveZone: string[][];
   componentId: string;
-  playerAttacks: AttackGet[];
+  playerAttacks: AttackResponse[];
   getPlayerNumber: (player_id: string) => number;
   getPlayerTeam: (player_id: string) => string;
 }

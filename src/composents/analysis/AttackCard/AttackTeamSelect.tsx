@@ -1,12 +1,12 @@
 import React from "react";
 
-import { MatchRequest, TeamPlayers } from "../../../api-client/api";
+import { MatchResponse, TeamPlayers } from "../../../api-client/api";
 import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
 import { useCard } from "../../../hooks/card/useCardController";
 import PlayerCardLayout from "../PlayCardLayout";
 
 interface AttackTeamSelectProps {
-  match?: MatchRequest;
+  match?: MatchResponse;
   homeOnCourtPlayer?: TeamPlayers[];
   awayOnCourtPlayer?: TeamPlayers[];
   nextStep: string;

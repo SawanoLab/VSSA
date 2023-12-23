@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import PlayerCreate from "./create";
 import PlayerEdit from "./edit";
-import { PlayerGet } from "../../api-client/api";
+import { PlayerResponse } from "../../api-client/api";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
 import Table from "../../composents/Table";
@@ -20,7 +20,7 @@ const PlayerIndex: React.FC = () => {
   const [teams, setTeams] = useState<TeamName[]>([]);
   const [seasons, setSeasons] = useState<SeasonData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPlayer, setSelectedPlayer] = useState<PlayerGet | undefined>(
+  const [selectedPlayer, setSelectedPlayer] = useState<PlayerResponse | undefined>(
     undefined
   );
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -97,7 +97,7 @@ const PlayerIndex: React.FC = () => {
     fetchPlayer();
   };
 
-  const formatPlayerData = (data: PlayerGet[]) => {
+  const formatPlayerData = (data: PlayerResponse[]) => {
     return data.map(
       ({
         uuid,
@@ -110,7 +110,7 @@ const PlayerIndex: React.FC = () => {
         user_id,
         team_id,
         season_id,
-      }: PlayerGet) => ({
+      }: PlayerResponse) => ({
         uuid,
         name,
         player_number,

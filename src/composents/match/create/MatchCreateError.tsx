@@ -1,18 +1,12 @@
+import { useMatch } from "hooks/match/useMatch";
+import { useSeason } from "hooks/match/useSeason";
 import React from "react";
 import ErrorMessage from "utility/ErrorMessage";
 
-interface MatchCreatePageErrorProps {
-  matchError: string | null;
-  seasonError: string | null;
-  setMatchError: (error: string | null) => void;
-  setSeasonError: (error: string | null) => void;
-}
-export const MatchCreateError: React.FC<MatchCreatePageErrorProps> = ({
-  matchError,
-  seasonError,
-  setMatchError,
-  setSeasonError,
-}) => {
+interface MatchCreatePageErrorProps {}
+export const MatchCreateError: React.FC<MatchCreatePageErrorProps> = () => {
+  const { matchError, setMatchError } = useMatch();
+  const { seasonError, setSeasonError } = useSeason();
   return (
     <div>
       {seasonError && (

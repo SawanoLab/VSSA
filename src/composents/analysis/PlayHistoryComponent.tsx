@@ -1,11 +1,11 @@
 import React from "react";
 
-import { MatchRequest } from "../../api-client/api";
+import { MatchResponse } from "../../api-client/api";
 import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 import Table from "../Table";
 
 interface PlayHistoryComponentProps {
-  match?: MatchRequest;
+  match?: MatchResponse;
 }
 export const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = ({
   match,
@@ -14,7 +14,7 @@ export const PlayHistoryComponent: React.FC<PlayHistoryComponentProps> = ({
 
   const header = [
     { header: "名前", accessor: "name" },
-    { header: "行動", accessor: "action" },
+    // { header: "行動", accessor: "action" },
     { header: "得点", accessor: "score" },
     { header: "コース", accessor: "course" },
   ];

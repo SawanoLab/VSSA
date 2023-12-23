@@ -1,11 +1,11 @@
 import React from "react";
 
-import { MatchRequest } from "../../../api-client/api";
+import { MatchResponse } from "../../../api-client/api";
 import { useCard } from "../../../hooks/card/useCardController";
 import PlayCardLayout from "../PlayCardLayout";
 
 interface AnalysisStartProps {
-  match?: MatchRequest;
+  match?: MatchResponse;
   nextStep: string;
 }
 export const AnalysisStart: React.FC<AnalysisStartProps> = ({

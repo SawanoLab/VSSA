@@ -1,3 +1,4 @@
+
 import React from "react";
 import { FaVolleyballBall } from "react-icons/fa";
 import { FaPersonBooth } from "react-icons/fa";
@@ -5,7 +6,7 @@ import { FaCalendar } from "react-icons/fa";
 import { FaChessKing } from "react-icons/fa";
 import { HiDocumentReport } from "react-icons/hi";
 
-import Items from "./Items";
+import Items from "./items";
 
 export default function Navgetion() {
   const links = [

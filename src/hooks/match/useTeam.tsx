@@ -1,4 +1,4 @@
-import { TeamGet } from "api-client";
+import { TeamResponse } from "api-client";
 import React from "react";
 
 import { TeamBase } from "../../api-client/api";
@@ -24,7 +24,7 @@ export interface TeamContextType {
   createTeams: (team: TeamsData) => void;
   fetchTeams: () => void;
   deleteTeam: (teamUuid: string) => void;
-  updateTeam: (teamItem: TeamGet, teamId: string) => void;
+  updateTeam: (teamItem: TeamResponse, teamId: string) => void;
 }
 
 const initialContextState: TeamContextType = {
@@ -95,7 +95,7 @@ export default function TeamProvider({
     return selectedTeam ? selectedTeam.name : "";
   };
 
-  const createTeams = async (team: TeamGet) => {
+  const createTeams = async (team: TeamResponse) => {
     if (!username) return;
     try {
       await teamClient.createTeamTeamsPost(team);

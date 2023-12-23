@@ -7,11 +7,11 @@ import AttackResult from "./AttackCard/AttackResult";
 import AttackSkillType from "./AttackCard/AttackSkillType";
 import AttackStartZoneSelect from "./AttackCard/AttackStartZoneSelect";
 import { AttackTeamSelect } from "./AttackCard/AttackTeamSelect";
-import { MatchRequest, TeamPlayers } from "../../api-client/api";
+import { MatchResponse, TeamPlayers } from "../../api-client/api";
 import { useCard } from "../../hooks/card/useCardController";
 
 interface AttackerCardProps {
-  match?: MatchRequest;
+  match?: MatchResponse;
   homeOnCourtPlayer?: TeamPlayers[];
   awayOnCourtPlayer?: TeamPlayers[];
 }

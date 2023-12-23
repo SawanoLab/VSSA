@@ -1,93 +1,71 @@
+import { renderField } from "composents/renderField";
+import { useSeason } from "hooks/match/useSeason";
 import React from "react";
 
-import { InputForm } from "../../composents/InputForm";
+import { SeasonCreate, SeasonBase } from "../../api-client/api";
 import { useAuth } from "../../hooks/use-auth";
-import { seasonClient } from "../../lib/api/main";
+
+interface Field {
+  key : keyof SeasonBase;
+  label: string;
+  type: "text" | "number" | "select" | "datetime-local";
+  options?: Record<string, string>;
+}
 
 interface SeasonCreateProps {
   onClose: () => void;
 }
 
-const SeasonCreate: React.FC<SeasonCreateProps> = ({
-  onClose,
-}) => {
+const SeasonCreatePage: React.FC<SeasonCreateProps> = ({ onClose }) => {
   const { username } = useAuth();
-  const [seasonName, setSeasonName] = React.useState<string>("");
-  const [gameFormat, setGameFormat] = React.useState<string>("");
-  const [code, setCode] = React.useState<string>("");
-  const [startDay, setStartDay] = React.useState<string>("");
-  const [endDay, setEndDay] = React.useState<string>("");
+  const { postSeasons } = useSeason();
+  const [fieldValue, setFieldValue] = React.useState<SeasonBase>({
+    season_name: "",
+    game_format: "",
+    code: "",
+    start_day: new Date().toString(),
+    end_day: new Date().toString(),
+    user_id: username,
+  });
+
   const handleSubmit = async () => {
-    if (
-      seasonName === "" ||
-      gameFormat === "" ||
-      code === "" ||
-      startDay === "" ||
-      endDay === ""
-    ) {
-      alert("全ての入力を完了してください");
-      return;
-    } else {
-      const data = {
-        season_name: seasonName,
-        game_format: gameFormat,
-        code: code,
-        start_day: startDay,
-        end_day: endDay,
-        user_id: username,
-      };
-      try {
-        await seasonClient.createSeasonSeasonsPost(data);
-      } catch (error) {
-        console.error(error);
-      }
-      onClose();
-    }
+    postSeasons(fieldValue);
+    onClose();
   };
 
+  const handleInputChange = (key: keyof SeasonCreate, value: string | number | Date) => {
+    setFieldValue((prevValue) => ({
+      ...prevValue,
+      [key]: value,
+    }));
+  };
+
+  const fields: Field[] = [
+    { key: "season_name", label: "シーズン名", type: "text" },
+    { key: "game_format", label: "ゲームフォーマット", type: "text" },
+    { key: "code", label: "コード", type: "text" },
+    { key: "start_day", label: "開始日", type: "datetime-local" },
+    { key: "end_day", label: "終了日", type: "datetime-local" },
+  ];
+
   return (
-    <div className="m-2">
-      <h1>Info</h1>
-      <form className="flex flex-wrap border bg-blue-50 p-5">
-        <InputForm
-          label="シーズン名"
-          type="text"
-          isRequired={true}
-          onChange={(e) => setSeasonName(e.target.value)}
-        />
-        <InputForm
-          label="ゲームフォーマット"
-          type="text"
-          isRequired={true}
-          onChange={(e) => setGameFormat(e.target.value)}
-        />
-        <InputForm
-          label="コード"
-          type="text"
-          isRequired={true}
-          onChange={(e) => setCode(e.target.value)}
-        />
-        <InputForm
-          label="開始日"
-          type="date"
-          isRequired={true}
-          onChange={(e) => setStartDay(e.target.value)}
-        />
-        <InputForm
-          label="終了日"
-          type="date"
-          isRequired={true}
-          onChange={(e) => setEndDay(e.target.value)}
-        />
+    <div>
+      <form className="grid grid-cols-2 gap-4" onSubmit={handleSubmit}>
+        {fields.map((field) =>
+          renderField({
+            field,
+            handleInputChange,
+            defaultValue: fieldValue[field.key] as string,
+          })
+        )}
         <button
-        className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded col-span-2"
-        onClick={handleSubmit}
+          className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded col-span-2"
         >
-          作成
+          登録
         </button>
       </form>
     </div>
   );
 };
 
-export default SeasonCreate;
+export default SeasonCreatePage;

@@ -1,9 +1,8 @@
 import React from "react";
 
+import { SeasonResponse, SeasonBase } from "../../api-client/api";
 import { seasonClient } from "../../lib/api/main";
-import { SeasonData } from "../../types/season";
 import { useAuth } from "../use-auth";
-
 
 interface SeasonNames {
   uuid: string;
@@ -11,16 +10,17 @@ interface SeasonNames {
 }
 
 export interface SeasonContextType {
-  seasons: SeasonData[];
+  seasons: SeasonResponse[];
   seasonLoading: boolean;
-  seasonError: string|null;
-  setSeasonError: (error: string|null) => void;
-  addSeason: (season: SeasonData) => void;
-  setSeasons: (seasons: SeasonData[]) => void;
-  setSeasonsData: (seasons: SeasonData[]) => void;
-  getSeasonNames: (seasons: SeasonData[]) => SeasonNames[];
+  seasonError: string | null;
+  setSeasonError: (error: string | null) => void;
+  addSeason: (season: SeasonResponse) => void;
+  setSeasons: (seasons: SeasonResponse[]) => void;
+  setSeasonsData: (seasons: SeasonResponse[]) => void;
+  getSeasonNames: (seasons: SeasonResponse[]) => SeasonNames[];
   fetchSeasons: () => void;
   deleteSeasons: (seasonUuid: string) => void;
+  postSeasons: (season: SeasonBase) => void;
 }
 
 const initialContextState: SeasonContextType = {
@@ -28,23 +28,26 @@ const initialContextState: SeasonContextType = {
   seasonLoading: true,
   seasonError: null,
   setSeasonError: () => {
-    return
+    return;
   },
   addSeason: () => {
-    return
+    return;
   },
   setSeasons: () => {
-    return
+    return;
   },
   setSeasonsData: () => {
-    return
+    return;
   },
   getSeasonNames: () => [],
   fetchSeasons: () => {
-    return
+    return;
   },
   deleteSeasons: () => {
-    return
+    return;
+  },
+  postSeasons: () => {
+    return;
   },
 };
 
@@ -53,28 +56,32 @@ export const SeasonContext =
 
 export const useSeason = () => React.useContext(SeasonContext);
 
-export default function SeasonProvider({ children }: { children: React.ReactNode }) {
+export default function SeasonProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { username } = useAuth();
   const [seasonLoading, setLoading] = React.useState(true);
-  const [seasons, setSeasons] = React.useState<SeasonData[]>([]);
-  const [seasonError, setSeasonError] = React.useState<string|null>(null);
+  const [seasons, setSeasons] = React.useState<SeasonResponse[]>([]);
+  const [seasonError, setSeasonError] = React.useState<string | null>(null);
 
-  const addSeason = (season: SeasonData) => {
+  const addSeason = (season: SeasonResponse) => {
     setSeasons((prevSeasons) => [...prevSeasons, season]);
-  }
+  };
 
-  const setSeasonsData = (seasons: SeasonData[]) => {
+  const setSeasonsData = (seasons: SeasonResponse[]) => {
     setSeasons(seasons);
-  }
+  };
 
-  const getSeasonNames = (seasons: SeasonData[]) => {
+  const getSeasonNames = (seasons: SeasonResponse[]) => {
     return seasons.map((season) => {
       return {
         uuid: season.uuid,
         season_name: season.season_name,
       };
     });
-  }
+  };
 
   const fetchSeasons = async () => {
     if (!username) return;
@@ -93,25 +100,57 @@ export default function SeasonProvider({ children }: { children: React.ReactNode
   const deleteSeasons = async (seasonUuid: string) => {
     if (!username) return;
     try {
-      await seasonClient.deleteSeasonSeasonsSeasonIdDelete(seasonUuid, username)
+      await seasonClient.deleteSeasonSeasonsSeasonIdDelete(
+        seasonUuid,
+        username
+      );
     } catch (error) {
       setSeasonError("シーズンの削除中にエラーが発生しました");
     }
   };
 
+  const postSeasons = async (season: SeasonBase) => {
+    if (!username) return;
+    setLoading(true);
+    try {
+      const response = await seasonClient.createSeasonSeasonsPost(
+        season
+      );
+      const data = response.data;
+      setSeasonsData(
+        seasons.concat({
+          ...data,
+          season_name: season.season_name,
+          game_format: season.game_format,
+          code: season.code,
+          start_day: season.start_day,
+          end_day: season.end_day,
+          user_id: season.user_id,
+        })
+      );
+    } catch (error) {
+      setSeasonError("シーズンの作成中にエラーが発生しました");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <SeasonContext.Provider value={{
-      seasons,
-      seasonLoading,
-      seasonError,
-      setSeasonError,
-      addSeason,
-      setSeasons,
-      setSeasonsData,
-      getSeasonNames,
-      fetchSeasons,
-      deleteSeasons
-    }}>
+    <SeasonContext.Provider
+      value={{
+        seasons,
+        seasonLoading,
+        seasonError,
+        setSeasonError,
+        addSeason,
+        setSeasons,
+        setSeasonsData,
+        getSeasonNames,
+        fetchSeasons,
+        deleteSeasons,
+        postSeasons,
+      }}
+    >
       {children}
     </SeasonContext.Provider>
   );

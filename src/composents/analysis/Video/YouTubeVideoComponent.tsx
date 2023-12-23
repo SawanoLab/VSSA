@@ -1,16 +1,35 @@
+import { InputForm } from "composents/InputForm";
 import React from "react";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 import ShowYouTubeVideo from "../../../utility/ShowYouTubeVideo";
 
-const YouTubeVideoComponent: React.FC = () => {
-  const [YouTubeUrl] = React.useState(
-    "https://youtu.be/f-GCt8bQcM0"
-  );
+interface YouTubeVideoComponentProps {
+  errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<FieldValues>;
+  youtubeUrl: string;
+  setYoutubeUrl: React.Dispatch<React.SetStateAction<string>>;
+}
 
+const YouTubeVideoComponent: React.FC<YouTubeVideoComponentProps> = ({
+  errors,
+  register,
+  youtubeUrl,
+  setYoutubeUrl,
+}) => {
   return (
-    <>
-      {ShowYouTubeVideo(YouTubeUrl)}
-    </>
+    <div>
+      <ShowYouTubeVideo url={youtubeUrl} />
+      <InputForm
+        label="YouTubeのURL"
+        type="text"
+        isRequired={true}
+        defaultValue={""}
+        onChange={(e) => setYoutubeUrl(e.target.value)}
+        errors={errors}
+        register={register}
+      />
+    </div>
   );
 };
 

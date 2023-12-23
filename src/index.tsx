@@ -131,7 +131,7 @@ function RouteConfig() {
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <>
+  <div>
     <ProvideAuth>
       <SeasonProvider>
         <TeamProvider>
@@ -141,7 +141,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         </TeamProvider>
       </SeasonProvider>
     </ProvideAuth>
-  </>
+  </div>
 );
 
 reportWebVitals();

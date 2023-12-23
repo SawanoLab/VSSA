@@ -1,25 +1,20 @@
 import React from "react";
 
+interface ShowYouTubeVideoProps {
+  url: string;
+}
 
-const ShowYouTubeVideo = (url: string) => {
-  // if (!url || typeof url !== 'string' || !url.includes('youtube.com')) {
-  //   // URLが無効な場合の処理
-  //   return <div>無効なURL</div>;
-  // }
-  const embedUrl = url.includes("youtu.be")
-    ? `https://www.youtube.com/embed/${url.split("youtu.be/")[1]}`
-    : url
-  console.log("embedUrl", embedUrl);
-  
+const ShowYouTubeVideo: React.FC<ShowYouTubeVideoProps> = ({ url }) => {
+  const embedUrl = `https://www.youtube.com/embed/${url.split("youtu.be/")[1]}?showinfo=0`;
   return (
     <iframe
       width="600"
       height="300"
       src={embedUrl}
-
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowFullScreen
     ></iframe>
   );
 };
+
 export default ShowYouTubeVideo;

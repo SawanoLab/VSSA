@@ -14,9 +14,6 @@ type TableData = {
 export const MatchList: React.FC = () => {
   const { matchs } = useMatch();
   const navigate = useNavigate();
-  const handleRowClick = (row: TableData) => {
-    navigate(`/analysis/${row.id}`);
-  };
 
   const tableData: TableData[] = matchs.map((match) => ({
     id: match.uuid,
@@ -30,7 +27,21 @@ export const MatchList: React.FC = () => {
     { header: "アウェイ", accessor: "away_team" },
   ];
 
+  const handleRowClick = (row: TableData) => {
+    navigate(`/analysis/${row.id}`);
+  };
+
+  const handleEditClick = (id: string) => {
+    navigate(`/match/edit/${id}`);
+  };
+
   return (
-    <Table data={tableData} columns={header} onRowClick={handleRowClick} />
+    <Table
+      data={tableData}
+      columns={header}
+      onRowClick={handleRowClick}
+      hover={true}
+      editButton={handleEditClick}
+    />
   );
 };

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
 import { TeamTableComponent } from "./TeamTableComponent";
-import { MatchRequest } from "../../api-client/api";
+import { MatchResponse } from "../../api-client/api";
 
 interface TeamDisplayComponentProps {
-  match: MatchRequest | undefined;
+  match: MatchResponse | undefined;
 }
 
 export const TeamDisplayComponent: React.FC<TeamDisplayComponentProps> = ({

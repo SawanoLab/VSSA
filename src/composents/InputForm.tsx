@@ -1,4 +1,5 @@
 import React from "react";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 
 interface InputFormProps {
@@ -7,6 +8,8 @@ interface InputFormProps {
   type: string;
   defaultValue?: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  errors?: FieldErrors<FieldValues>;
+  register?: UseFormRegister<FieldValues>;
 }
 
 export const InputForm: React.FC<InputFormProps> = ({
@@ -15,6 +18,8 @@ export const InputForm: React.FC<InputFormProps> = ({
   isRequired,
   defaultValue,
   onChange,
+  errors,
+  register,
 }) => (
   <div className="mb-4">
     <label className="text-sm text-gray-500 mb-1 block">
@@ -25,10 +30,15 @@ export const InputForm: React.FC<InputFormProps> = ({
       type={type}
       defaultValue={defaultValue}
       className="border border-gray-400 p-2 rounded w-full"
+      {...(register ? register(label, { required: isRequired }) : { onChange })}
       onChange={(e) => onChange(e)}
     />
+    {errors && errors[label] && (
+      <p className="text-red-500 text-sm">入力してください．</p>
+    )}
   </div>
 );
+
 
 interface itemTypes {
   uuid: string;

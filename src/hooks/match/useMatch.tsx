@@ -1,22 +1,22 @@
 import { matchClient } from "lib/api/main";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-import { MatchRequest, TeamPlayers, TeamRequest } from "../../api-client/api";
-import { PlayerGet, MatchPostRequest } from "../../api-client/api";
+import { MatchResponse, TeamPlayers, TeamRequest } from "../../api-client/api";
+import { PlayerResponse, MatchPostRequest } from "../../api-client/api";
 import { Players, SetterPositionName } from "../../types/player";
 
 type MatchContextType = {
-  matchs: MatchRequest[];
-  match: MatchRequest;
+  matchs: MatchResponse[];
+  match: MatchResponse;
   matchLoading: boolean;
   matchError: string | null;
-  setMatchs: (matchs: MatchRequest[]) => void;
-  setMatch: (match: MatchRequest) => void;
+  setMatchs: (matchs: MatchResponse[]) => void;
+  setMatch: (match: MatchResponse) => void;
   setMatchError: (error: string | null) => void;
   setTeamPlayer: (
     teamType: "home" | "away",
     teamName: string,
-    players: PlayerGet[]
+    players: PlayerResponse[]
   ) => void;
   setSetterPosition: (
     teamType: "home" | "away",
@@ -40,8 +40,8 @@ type MatchContextType = {
   fetchMatch: (
     matchId: string,
     userId: string
-  ) => Promise<MatchRequest | undefined>;
-  fetchMatchs: (userId: string) => Promise<MatchRequest[] | undefined>;
+  ) => Promise<MatchResponse | undefined>;
+  fetchMatchs: (userId: string) => Promise<MatchResponse[] | undefined>;
 };
 
 const MatchContext = createContext<MatchContextType | undefined>(undefined);
@@ -65,16 +65,17 @@ const initialTeam: TeamRequest = {
   setter_postion: SetterPositionName.Z1,
 };
 
-const initialMatch: MatchRequest = {
+const initialMatch: MatchResponse = {
   uuid: "",
   home_team: { ...initialTeam },
   away_team: { ...initialTeam },
   season_name: "",
+  youtube_url: "",
 };
 
 const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
-  const [matchs, setMatchs] = useState<MatchRequest[]>([]);
-  const [match, setMatch] = useState<MatchRequest>(initialMatch);
+  const [matchs, setMatchs] = useState<MatchResponse[]>([]);
+  const [match, setMatch] = useState<MatchResponse>(initialMatch);
   const [matchLoading, setLoading] = useState(true);
   const [matchError, setMatchError] = useState<string | null>(null);
   const [homeSetterPosition, setHomeSetterPosition] =
@@ -96,7 +97,7 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
   const setTeamPlayer = (
     teamType: "home" | "away",
     teamName: string,
-    players: PlayerGet[]
+    players: PlayerResponse[]
   ) => {
     setMatch((prevMatch) => ({
       ...prevMatch,

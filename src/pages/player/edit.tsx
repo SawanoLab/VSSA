@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { PlayerGet } from "../../api-client/api";
+import { PlayerResponse } from "../../api-client/api";
 import { renderField } from "../../composents/renderField";
 import { useAuth } from "../../hooks/use-auth";
 import { playerClient } from "../../lib/api/main";
@@ -8,21 +8,21 @@ import { PositonNameEnum } from "../../types/player";
 import { TeamName } from "../../types/team";
 
 interface Field {
-  key: keyof PlayerGet;
+  key: keyof PlayerResponse;
   label: string;
   type: "text" | "number" | "select";
   options?: Record<string, string>;
 }
 
 interface EditProps {
-  playerData: PlayerGet;
+  playerData: PlayerResponse;
   teamData: TeamName[];
   onClose: () => void;
 }
 
 const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
   const { username } = useAuth();
-  const [fieldValue, setFieldValue] = useState<PlayerGet>(playerData);
+  const [fieldValue, setFieldValue] = useState<PlayerResponse>(playerData);
 
   const positionOptions: PositonNameEnum = {
     setter: "セッター",
@@ -32,14 +32,14 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     libero: "リベロ",
   };
 
-  const handleInputChange = (key: keyof PlayerGet, value: string | number) => {
+  const handleInputChange = (key: keyof PlayerResponse, value: string | number) => {
     setFieldValue((prevValue) => ({
       ...prevValue,
       [key]: value,
     }));
   };
 
-  const fetchPutPlayer = async (playerData: PlayerGet) => {
+  const fetchPutPlayer = async (playerData: PlayerResponse) => {
     try {
       await playerClient.updatePlayerPlayersPut(
         username,

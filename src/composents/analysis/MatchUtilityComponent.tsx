@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { MatchTeamComponent } from "./MatchTeamComponent";
 import { PlayHistoryComponent } from "./PlayHistoryComponent";
 import { TeamDisplayComponent } from "./TeamDisplayComponet";
-import { MatchRequest } from "../../api-client/api";
+import { MatchResponse } from "../../api-client/api";
 
 export interface MatchUtilityComponent {
-  match?: MatchRequest;
+  match?: MatchResponse;
 }
 export const MatchUtilityComponent: React.FC<MatchUtilityComponent> = ({
   match,

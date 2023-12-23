@@ -1,15 +1,21 @@
 import React from "react";
 
-import { PlayerInfo } from "../../api-client/api";
+import { PlayerInfo } from "../../../api-client/api";
 
 interface PlayerInfoDisplayProps {
   selectedPlayer: string;
   players: PlayerInfo[];
-  isSetter: boolean;
+  isSetter?: boolean;
 }
 
-const PlayerInfoDisplay: React.FC<PlayerInfoDisplayProps> = ({ selectedPlayer, players, isSetter}) => {
-  const selectedPlayerInfo = players.find((player) => player.uuid === selectedPlayer);
+const PlayerInfoDisplay: React.FC<PlayerInfoDisplayProps> = ({
+  selectedPlayer,
+  players,
+  isSetter,
+}) => {
+  const selectedPlayerInfo = players.find(
+    (player) => player.uuid === selectedPlayer
+  );
 
   return (
     <div>
@@ -19,7 +25,7 @@ const PlayerInfoDisplay: React.FC<PlayerInfoDisplayProps> = ({ selectedPlayer, p
             <p className="text-2xl text-white bg-gray-500 border border-gray-500 rounded-full w-6 h-6 items-center justify-center flex">
               {selectedPlayerInfo?.player_number}
             </p>
-            )}
+          )}
         </div>
       </div>
 
