@@ -77,7 +77,7 @@ const PlayerIndex: React.FC = () => {
 
   const deletePlayer = async (playerId: string) => {
     try {
-      await playerClient.deletePlayerApiV1PlayersDelete(playerId);
+      await playerClient.deletePlayerApiV1PlayersPlayerIdDelete(playerId);
     } catch (error) {
       setErrorMessage("プレイヤーの削除");
     }

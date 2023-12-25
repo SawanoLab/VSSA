@@ -1496,10 +1496,11 @@ export const PlayersApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePlayerApiV1PlayersDelete: async (playerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        deletePlayerApiV1PlayersPlayerIdDelete: async (playerId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'playerId' is not null or undefined
-            assertParamExists('deletePlayerApiV1PlayersDelete', 'playerId', playerId)
-            const localVarPath = `/api/v1/players/`;
+            assertParamExists('deletePlayerApiV1PlayersPlayerIdDelete', 'playerId', playerId)
+            const localVarPath = `/api/v1/players/{player_id}`
+                .replace(`{${"player_id"}}`, encodeURIComponent(String(playerId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1514,10 +1515,6 @@ export const PlayersApiAxiosParamCreator = function (configuration?: Configurati
             // authentication JWTBearer required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (playerId !== undefined) {
-                localVarQueryParameter['player_id'] = playerId;
-            }
 
 
     
@@ -1638,10 +1635,10 @@ export const PlayersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deletePlayerApiV1PlayersDelete(playerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlayerApiV1PlayersDelete(playerId, options);
+        async deletePlayerApiV1PlayersPlayerIdDelete(playerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlayerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deletePlayerApiV1PlayersPlayerIdDelete(playerId, options);
             const index = configuration?.serverIndex ?? 0;
-            const operationBasePath = operationServerMap['PlayersApi.deletePlayerApiV1PlayersDelete']?.[index]?.url;
+            const operationBasePath = operationServerMap['PlayersApi.deletePlayerApiV1PlayersPlayerIdDelete']?.[index]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
         },
         /**
@@ -1697,8 +1694,8 @@ export const PlayersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deletePlayerApiV1PlayersDelete(playerId: string, options?: any): AxiosPromise<PlayerResponse> {
-            return localVarFp.deletePlayerApiV1PlayersDelete(playerId, options).then((request) => request(axios, basePath));
+        deletePlayerApiV1PlayersPlayerIdDelete(playerId: string, options?: any): AxiosPromise<PlayerResponse> {
+            return localVarFp.deletePlayerApiV1PlayersPlayerIdDelete(playerId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1750,8 +1747,8 @@ export class PlayersApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof PlayersApi
      */
-    public deletePlayerApiV1PlayersDelete(playerId: string, options?: RawAxiosRequestConfig) {
-        return PlayersApiFp(this.configuration).deletePlayerApiV1PlayersDelete(playerId, options).then((request) => request(this.axios, this.basePath));
+    public deletePlayerApiV1PlayersPlayerIdDelete(playerId: string, options?: RawAxiosRequestConfig) {
+        return PlayersApiFp(this.configuration).deletePlayerApiV1PlayersPlayerIdDelete(playerId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
