@@ -189,7 +189,7 @@ export default function AttackHistoryProvider({
   const postAttackData = async (newData: AttackBase) => {
     setAttackHistoryLoading(true);
     try {
-      const response = await attackClient.createAttackAttacksPost(newData);
+      const response = await attackClient.createAttackApiV1AttacksPost(newData);
       const data = response.data;
       addAttackData(data);
     } catch (error) {
@@ -202,13 +202,10 @@ export default function AttackHistoryProvider({
     if (!attackId) return;
     setAttackHistoryLoading(true);
     try {
-      const response = await attackClient.deleteAttackAttacksAttackIdDelete(
-        attackId,
-        username
+      await attackClient.deleteAttackApiV1AttacksAttackIdDelete(
+        attackId
       );
-      const data = response.data;
       dropAttackData(attackId);
-      console.log("deleteAttackData", data);
     } catch (error) {
       setAttackHistoryError("データの削除にエラーが発生しました");
     } finally {
@@ -220,8 +217,7 @@ export default function AttackHistoryProvider({
     if (!match_id) return;
     setAttackHistoryLoading(true);
     try {
-      const response = await attackClient.getAttacksAttacksGet(
-        username,
+      const response = await attackClient.getAttacksApiV1AttacksGet(
         match_id
       );
       const data = response.data;

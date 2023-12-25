@@ -87,7 +87,7 @@ export default function SeasonProvider({
     if (!username) return;
     setLoading(true);
     try {
-      const response = await seasonClient.getSeasonsSeasonsGet(username);
+      const response = await seasonClient.getSeasonsApiV1SeasonsGet();
       const data = response.data;
       setSeasonsData(data);
     } catch (error) {
@@ -98,11 +98,9 @@ export default function SeasonProvider({
   };
 
   const deleteSeasons = async (seasonUuid: string) => {
-    if (!username) return;
     try {
-      await seasonClient.deleteSeasonSeasonsSeasonIdDelete(
-        seasonUuid,
-        username
+      await seasonClient.deleteSeasonApiV1SeasonsSeasonIdDelete(
+        seasonUuid
       );
     } catch (error) {
       setSeasonError("シーズンの削除中にエラーが発生しました");
@@ -113,7 +111,7 @@ export default function SeasonProvider({
     if (!username) return;
     setLoading(true);
     try {
-      const response = await seasonClient.createSeasonSeasonsPost(
+      const response = await seasonClient.createSeasonApiV1SeasonsPost(
         season
       );
       const data = response.data;

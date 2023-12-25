@@ -26,9 +26,6 @@ export const MatchForm: React.FC<MatchFormProps> = () => {
 
   const handleCreate = () => {
     const allPlayers = getPlayers("home").concat(getPlayers("away"));
-    console.log("create");
-    console.log(JSON.stringify(allPlayers));
-    
     const allPlayerData = Object(allPlayers).map((player: TeamPlayers) => ({
       player_id: player.PlayerInfo.uuid,
       on_court: player.onCourt,

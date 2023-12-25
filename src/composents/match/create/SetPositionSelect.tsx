@@ -21,7 +21,6 @@ const SetPositionSelect: React.FC<SetPositionSelectProps> = ({
     } else {
       setSelectedBox([1, 0]);
     }
-    console.log("selectedBox ", selectedBox);
   }, []);
 
   const handleBoxClick = (rowIndex: number, colIndex: number) => {

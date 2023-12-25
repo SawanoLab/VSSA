@@ -98,7 +98,7 @@ export default function TeamProvider({
   const createTeams = async (team: TeamResponse) => {
     if (!username) return;
     try {
-      await teamClient.createTeamTeamsPost(team);
+      await teamClient.createTeamApiV1TeamsPost(team);
       setTeams((prevTeams) => [...prevTeams, team]);
     } catch (error) {
       setTeamError("チームの作成中にエラーが発生しました");
@@ -106,10 +106,9 @@ export default function TeamProvider({
   };
 
   const fetchTeams = async () => {
-    if (!username) return;
     setLoading(true);
     try {
-      const response = await teamClient.getTeamsTeamsGet(username);
+      const response = await teamClient.getTeamsApiV1TeamsGet();
       const data = response.data;
       const items = data.map((item: TeamsData) => {
         return {
@@ -133,10 +132,9 @@ export default function TeamProvider({
   };
 
   const deleteTeam = async (teamUuid: string) => {
-    if (!username) return;
     if (!teamUuid) return;
     try {
-      await teamClient.deleteTeamTeamsTeamIdDelete(teamUuid, username);
+      await teamClient.deleteTeamApiV1TeamsTeamIdDelete(teamUuid);
       const newTeams = teams.filter((team) => team.uuid !== teamUuid);
       setTeamsData(newTeams);
     } catch (error) {
@@ -146,7 +144,7 @@ export default function TeamProvider({
 
   const updateTeam = async (teamItem: TeamBase, teamId: string) => {
     try {
-      await teamClient.updateTeamTeamsTeamIdPut(teamId, teamItem);
+      await teamClient.updateTeamApiV1TeamsTeamIdPut(teamId, teamItem);
       const newTeams = teams.map((team) => {
         if (team.uuid === teamId) {
           return {

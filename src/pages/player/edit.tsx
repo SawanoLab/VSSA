@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { PlayerResponse } from "../../api-client/api";
 import { renderField } from "../../composents/renderField";
-import { useAuth } from "../../hooks/use-auth";
 import { playerClient } from "../../lib/api/main";
 import { PositonNameEnum } from "../../types/player";
 import { TeamName } from "../../types/team";
@@ -21,7 +20,6 @@ interface EditProps {
 }
 
 const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
-  const { username } = useAuth();
   const [fieldValue, setFieldValue] = useState<PlayerResponse>(playerData);
 
   const positionOptions: PositonNameEnum = {
@@ -41,8 +39,7 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
 
   const fetchPutPlayer = async (playerData: PlayerResponse) => {
     try {
-      await playerClient.updatePlayerPlayersPut(
-        username,
+      await playerClient.updatePlayerApiV1PlayersPlayerIdPut(
         playerData.uuid,
         fieldValue
       );

@@ -7,7 +7,6 @@ import LoadingSpinner from "../../composents/LoadingSpinner";
 import Modal from "../../composents/Modal";
 import Table from "../../composents/Table";
 import { usePlayer } from "../../hooks/match/usePlayer";
-import { useAuth } from "../../hooks/use-auth";
 import { playerClient, teamClient, seasonClient } from "../../lib/api/main";
 import { SeasonData } from "../../types/season";
 import { TeamName } from "../../types/team";
@@ -15,7 +14,6 @@ import { TeamsData } from "../../types/team";
 import ErrorMessage from "../../utility/ErrorMessage";
 
 const PlayerIndex: React.FC = () => {
-  const { username } = useAuth();
   const { players, setPlayersData } = usePlayer();
   const [teams, setTeams] = useState<TeamName[]>([]);
   const [seasons, setSeasons] = useState<SeasonData[]>([]);
@@ -35,7 +33,7 @@ const PlayerIndex: React.FC = () => {
   const getTeams = async () => {
     setLoading(true);
     try {
-      const response = await teamClient.getTeamsTeamsGet(username);
+      const response = await teamClient.getTeamsApiV1TeamsGet();
       const data = response.data;
       const formattedData = data.map((item: TeamsData) => ({
         uuid: item.uuid,
@@ -52,7 +50,7 @@ const PlayerIndex: React.FC = () => {
   const fetchPlayer = async () => {
     setLoading(true);
     try {
-      const response = await playerClient.getPlayersPlayersGet(username);
+      const response = await playerClient.getPlayersApiV1PlayersGet();
       const data = response.data;
       if (data) {
         setPlayersData(formatPlayerData(data));
@@ -67,7 +65,7 @@ const PlayerIndex: React.FC = () => {
   const fetchSeasonData = async () => {
     setLoading(true);
     try {
-      const response = await seasonClient.getSeasonsSeasonsGet(username);
+      const response = await seasonClient.getSeasonsApiV1SeasonsGet();
       const data = response.data;
       setSeasons(data);
     } catch (error) {
@@ -79,7 +77,7 @@ const PlayerIndex: React.FC = () => {
 
   const deletePlayer = async (playerId: string) => {
     try {
-      await playerClient.deletePlayerPlayersDelete(username, playerId);
+      await playerClient.deletePlayerApiV1PlayersDelete(playerId);
     } catch (error) {
       setErrorMessage("プレイヤーの削除");
     }

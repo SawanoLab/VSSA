@@ -7,7 +7,6 @@ import ErrorMessage from "utility/ErrorMessage";
 import { TeamPlayers } from "../../../api-client/api";
 import GameHistory from "../../../composents/reports/attack/GameHistory";
 import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
-import { useAuth } from "../../../hooks/use-auth";
 
 interface Props {}
 
@@ -18,7 +17,6 @@ const AttackReportShow: React.FC<Props> = () => {
 interface IProps {}
 
 export const Component: React.FC<IProps> = () => {
-  const { username } = useAuth();
   const { matchId } = useParams();
   const [ loading, setLoading ] = useState<boolean>(true);
   const { matchError, matchLoading, setMatchError, fetchMatch } = useMatch();
@@ -45,7 +43,7 @@ export const Component: React.FC<IProps> = () => {
   const fetchAnalysisData = async () => {
     if (matchId) {
       try {
-        const matchData = await fetchMatch(matchId, username);
+        const matchData = await fetchMatch(matchId);
         if (matchData) {
           setHomeOnCourtPlayer(
             Object.values(matchData.home_team.players).filter(

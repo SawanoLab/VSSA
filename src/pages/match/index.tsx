@@ -9,12 +9,12 @@ import { useMatch } from "../../hooks/match/useMatch";
 import { useAuth } from "../../hooks/use-auth";
 
 const MatchIndex: React.FC = () => {
-  const { username } = useAuth();
+  const { signOut } = useAuth();
   const [loading, setLoading] = useState(true);
   const { matchError, matchLoading, setMatchError, fetchMatchs } = useMatch();
 
   useEffect(() => {
-    fetchMatchs(username);
+    fetchMatchs();
   }, []);
 
   useEffect(() => {
@@ -29,6 +29,9 @@ const MatchIndex: React.FC = () => {
     <div>
       <MatchIndexError matchError={matchError} setMatchError={setMatchError} />
       {loading ? <LoadingSpinner /> : null}
+      <button onClick={() => 
+        signOut()
+      }>ログアウト</button>
       <MatchIndexHeader />
       <div className=" bg-gray-200 p-4 border" />
       <MatchList />

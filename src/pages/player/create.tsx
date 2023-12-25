@@ -54,7 +54,7 @@ const Create: React.FC<CreateProps> = ({ seasonData, teamData, onClose }) => {
 
   const postPlayer = async (fieldValue: PlayerResponse) => {
     try {
-      await playerClient.createPlayerPlayersPost(fieldValue);
+      await playerClient.createPlayerApiV1PlayersPost(fieldValue);
     } catch (error) {
       console.error("プレイヤーの作成中にエラーが発生しました:", error);
     } finally {

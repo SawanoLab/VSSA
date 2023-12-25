@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { MatchResponse } from "../../../api-client/api";
 import LoadingSpinner from "../../../composents/LoadingSpinner";
 import Table from "../../../composents/Table";
-import { useAuth } from "../../../hooks/use-auth";
 import { matchClient } from "../../../lib/api/main";
 
 
@@ -18,13 +17,12 @@ const AttackReportIndex: React.FC<Props> = () => {
 interface IProps {}
 
 const Component: React.FC<IProps> = () => {
-  const { username } = useAuth();
   const [loading, setLoading] = useState(true);
   const [matchs, setMatchs] = useState<MatchResponse[]>([]);
 
   const fetchMatchs = async () => {
     setLoading(true);
-    const response = await matchClient.getMatchesMatchesGet(username);
+    const response = await matchClient.getMatchesApiV1MatchesGet();
     setLoading(false);
     setMatchs(response.data);
   }

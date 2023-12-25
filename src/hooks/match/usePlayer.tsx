@@ -2,7 +2,6 @@ import React  from "react";
 
 import { PlayerResponse } from "../../api-client/api";
 import { playerClient } from "../../lib/api/main";
-import { useAuth } from "../use-auth";
 
 export interface PlayerContextType {
   players: PlayerResponse[];
@@ -30,7 +29,6 @@ React.createContext<PlayerContextType>(initialContextState);
 export const usePlayer = () => React.useContext(PlayerContext);
 
 export default function PlayerProvider({ children }: { children: React.ReactNode }) {
-  const { username } = useAuth();
   const [playerLoading, setLoading] = React.useState(true);
   const [players, setPlayers] = React.useState<PlayerResponse[]>([]);
 
@@ -51,10 +49,9 @@ export default function PlayerProvider({ children }: { children: React.ReactNode
   )};
 
   const fetchPlayers = async () => {
-    if (!username) return;
     setLoading(true);
     try {
-      const response = await playerClient.getPlayersPlayersGet(username);
+      const response = await playerClient.getPlayersApiV1PlayersGet();
       const data = response.data;
       setPlayersData(formatPlayerData(data));
     } catch (error) {

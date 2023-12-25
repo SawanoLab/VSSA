@@ -14,6 +14,7 @@ window.Amplify = Amplify;
 Amplify.configure(AwsConfigAuth);
 
 interface UseAuth {
+  jwtToken: string | null;
   isLoading: boolean;
   isAuthenticated: boolean;
   username: string;
@@ -34,7 +35,9 @@ interface ProvideAuthProps {
 
 const authContext = createContext({} as UseAuth);
 
-export const ProvideAuth: React.FC<ProvideAuthProps> = ({ children }: ProvideAuthProps) => {
+export const ProvideAuth: React.FC<ProvideAuthProps> = ({
+  children,
+}: ProvideAuthProps) => {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 };
@@ -52,7 +55,7 @@ const useProvideAuth = (): UseAuth => {
   useEffect(() => {
     const initializeAuth = async () => {
       setIsLoading(true);
-      const savedUsername = localStorage.getItem('username');
+      const savedUsername = localStorage.getItem("username");
       if (savedUsername) {
         setUsername(savedUsername);
         setIsAuthenticated(true);
@@ -71,7 +74,6 @@ const useProvideAuth = (): UseAuth => {
 
     initializeAuth();
   }, []);
-  
 
   const signUp = async (username: string, password: string) => {
     try {
@@ -103,11 +105,12 @@ const useProvideAuth = (): UseAuth => {
 
   const signIn = async (username: string, password: string) => {
     try {
-      const result = await Auth.signIn(username, password);
-      setUsername(result.username);
+      const user = await Auth.signIn(username, password);
+      setUsername(user.username);
       setIsAuthenticated(true);
-      localStorage.setItem('username', result.username);
-  
+      const token = user.signInUserSession.idToken.jwtToken;
+
+      localStorage.setItem("jwtToken", token);
       return { success: true, message: "" };
     } catch (error) {
       return {
@@ -116,16 +119,13 @@ const useProvideAuth = (): UseAuth => {
       };
     }
   };
-  
 
   const signOut = async () => {
     try {
       await Auth.signOut();
       setUsername("");
       setIsAuthenticated(false);
-
-      // ローカルストレージからユーザー名を削除
-      localStorage.removeItem('username');
+      localStorage.removeItem("jwtToken");
 
       return { success: true, message: "" };
     } catch (error) {
@@ -136,7 +136,10 @@ const useProvideAuth = (): UseAuth => {
     }
   };
 
+  const jwtToken = localStorage.getItem("jwtToken");
+
   return {
+    jwtToken,
     isLoading,
     isAuthenticated,
     username,

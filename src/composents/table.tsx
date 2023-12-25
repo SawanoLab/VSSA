@@ -100,11 +100,7 @@ const Table: React.FC<TableProps> = ({
                     className="mr-2"
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log(item);
-                      // item.uuidがあるかを確認して，なければitem.id を渡す
                       const id = item.uuid ? item.uuid : item.id;
-                      console.log(id);
-                      
                       editButton && editButton(id);
                     }}
                   >

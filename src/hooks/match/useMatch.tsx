@@ -37,11 +37,8 @@ type MatchContextType = {
   getAllPlayers: () => TeamPlayers[];
   resetTeamInfo: (teamType: "home" | "away") => void;
   postMatch: (matchPostRequest: MatchPostRequest) => void;
-  fetchMatch: (
-    matchId: string,
-    userId: string
-  ) => Promise<MatchResponse | undefined>;
-  fetchMatchs: (userId: string) => Promise<MatchResponse[] | undefined>;
+  fetchMatch: (matchId: string) => Promise<MatchResponse | undefined>;
+  fetchMatchs: () => Promise<MatchResponse[] | undefined>;
 };
 
 const MatchContext = createContext<MatchContextType | undefined>(undefined);
@@ -237,7 +234,7 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
   const postMatch = async (matchPostRequest: MatchPostRequest) => {
     setLoading(true);
     try {
-      await matchClient.createMatchMatchesPost(matchPostRequest);
+      await matchClient.createMatchApiV1MatchesPost(matchPostRequest);
     } catch (error) {
       setMatchError("試合データの登録にエラーが発生しました");
     } finally {
@@ -245,16 +242,14 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     }
   };
 
-  const fetchMatch = async (matchId: string, userId: string) => {
-    if (!matchId || !userId) {
+  const fetchMatch = async (matchId: string) => {
+    if (!matchId) {
       return undefined;
     }
     setLoading(true);
     try {
-      const response = await matchClient.getMatchMatchesMatchIdGet(
-        matchId,
-        userId
-      );
+      const response =
+        await matchClient.getMatchApiV1MatchesMatchIdGet(matchId);
       setMatch(response.data);
       if (!response.data || response.data === undefined) {
         setMatchError("試合データが存在しません");
@@ -269,13 +264,10 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     }
   };
 
-  const fetchMatchs = async (userId: string) => {
-    if (!userId) {
-      return undefined;
-    }
+  const fetchMatchs = async () => {
     setLoading(true);
     try {
-      const response = await matchClient.getMatchesMatchesGet(userId);
+      const response = await matchClient.getMatchesApiV1MatchesGet();
       setMatchs(response.data);
       if (!response.data || response.data === undefined) {
         setMatchError("試合データが存在しません");

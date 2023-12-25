@@ -1,6 +1,18 @@
-import { Configuration, TeamsApi, SeasonsApi, PlayersApi, MatchesApi, AttacksApi } from "../../api-client";
+import {
+  Configuration,
+  TeamsApi,
+  SeasonsApi,
+  PlayersApi,
+  MatchesApi,
+  AttacksApi,
+} from "../../api-client";
 
-const config = new Configuration({ basePath: process.env.REACT_APP_ENTRYPOINT_URL });
+const bearerToken = localStorage.getItem("jwtToken");
+
+const config = new Configuration({
+  basePath: process.env.REACT_APP_ENTRYPOINT_URL,
+  accessToken: bearerToken ? bearerToken : "",
+});
 
 export const playerClient = new PlayersApi(config);
 export const teamClient = new TeamsApi(config);

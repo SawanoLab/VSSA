@@ -30,7 +30,7 @@ const AnalysisCreate: React.FC = () => {
       if (!matchId) {
         return;
       }
-      const matchData = await fetchMatch(matchId, username);
+      const matchData = await fetchMatch(matchId);
       if (matchData) {
         setHomeOnCourtPlayer(
           Object.values(matchData.home_team.players).filter(
