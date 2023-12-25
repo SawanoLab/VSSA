@@ -19,4 +19,4 @@ $ npm start
 Please rename .env.local.example to .env.local and fill in your AWS Cognito details.
 Our APIs are auto-generated using the openAPI-generator. Place openapi.json in the root directory and run docker-compose up -d to get started.
 
-BackEnd link: https://github.com/SawanoLab/VSSA_backend
+BackEnd link: [VSSA_aggregation](https://github.com/SawanoLab/VSSA_aggregation)
