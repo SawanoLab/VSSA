@@ -6,8 +6,8 @@ import { useAuth } from '../hooks/use-auth';
 export function SignIn() {
   const auth = useAuth();
   const navigate = useNavigate();
-  const [username, setUsername] = useState('b23723bb@aitech.ac.jp');
-  const [password, setPassword] = useState('hoge1234');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const executeSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,10 +27,7 @@ export function SignIn() {
           <input
             id="username"
             type="email"
-            // value={username}
-            defaultValue={
-              'fuu05160@gmail.com'
-            }
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="w-full px-3 py-2 border rounded-md"
           />
@@ -40,8 +37,7 @@ export function SignIn() {
           <input
             id="password"
             type="password"
-            defaultValue={'hoge1234'}
-            // value={password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-3 py-2 border rounded-md"
           />
