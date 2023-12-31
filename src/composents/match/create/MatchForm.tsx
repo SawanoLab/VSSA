@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 import { PlayerSelects } from "./PlayerSelects";
 import { SeasonSelect } from "./SeasonSelect";
@@ -12,6 +13,7 @@ import { useAuth } from "../../../hooks/use-auth";
 interface MatchFormProps {}
 
 export const MatchForm: React.FC<MatchFormProps> = () => {
+  const navigate = useNavigate();
   const { username } = useAuth();
   const { getPlayers, postMatch } = useMatch();
   const {
@@ -44,6 +46,7 @@ export const MatchForm: React.FC<MatchFormProps> = () => {
       PlayerMatchInfo: { ...allPlayerData },
     };
     postMatch(matchPostRequest);
+    navigate({ pathname: "/match" });
   };
 
   return (
