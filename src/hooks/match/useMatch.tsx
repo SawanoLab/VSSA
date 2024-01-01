@@ -39,6 +39,7 @@ type MatchContextType = {
   postMatch: (matchPostRequest: MatchPostRequest) => void;
   fetchMatch: (matchId: string) => Promise<MatchResponse | undefined>;
   fetchMatchs: () => Promise<MatchResponse[] | undefined>;
+  deleteMatch: (matchId: string) => void;
 };
 
 const MatchContext = createContext<MatchContextType | undefined>(undefined);
@@ -105,7 +106,6 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
             PlayerInfo: player,
             onCourt: false,
             zone_code: "",
-            // setter: false,
             libero: false,
           };
           return acc;
@@ -159,19 +159,6 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     });
   };
 
-  // const setSetterPosition = (
-  //   teamType: "home" | "away",
-  //   setterPosition: SetterPositionName
-  // ) => {
-  //   setMatch((prevMatch) => ({
-  //     ...prevMatch,
-  //     [`${teamType}_team`]: {
-  //       ...prevMatch[`${teamType}_team`],
-  //       setter_position: setterPosition,
-  //     },
-  //   }));
-  // };
-
   const setPlayerZoneCode = (
     teamType: "home" | "away",
     playerUUID: string,
@@ -192,8 +179,6 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     }));
   };
 
-  // const getSetterPosition = (teamType: "home" | "away") =>
-  //  match[`${teamType}_team`].setter_postion;
   const getSetterPosition = (teamType: "home" | "away") => {
     if (teamType === "home") {
       return homeSetterPosition;
@@ -282,6 +267,19 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     }
   };
 
+  const deleteMatch = async (matchId: string) => {
+    setLoading(true);
+    try {
+      await matchClient.deleteMatchApiV1MatchesMatchIdDelete(matchId);
+      setMatchs((prevMatchs) =>
+        prevMatchs.filter((match) => match.uuid !== matchId)
+      );
+    } catch (error) {
+      setMatchError("試合データの削除にエラーが発生しました");
+    } finally {
+      setLoading(false);
+    }
+  }
   const contextValue: MatchContextType = {
     matchs,
     match,
@@ -305,6 +303,7 @@ const MatchProvider: React.FC<MatchProviderProps> = ({ children }) => {
     postMatch,
     fetchMatch,
     fetchMatchs,
+    deleteMatch
   };
 
   return (

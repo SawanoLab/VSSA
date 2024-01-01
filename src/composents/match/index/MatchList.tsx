@@ -1,4 +1,5 @@
 import React from "react";
+import { AiOutlineCheck } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 import { useMatch } from "../../../hooks/match/useMatch";
@@ -12,7 +13,7 @@ type TableData = {
 };
 
 export const MatchList: React.FC = () => {
-  const { matchs } = useMatch();
+  const { matchs, deleteMatch } = useMatch();
   const navigate = useNavigate();
 
   const tableData: TableData[] = matchs.map((match) => ({
@@ -20,11 +21,17 @@ export const MatchList: React.FC = () => {
     season_name: match.season_name,
     home_team: match.home_team.team_name,
     away_team: match.away_team.team_name,
+    tag_status: (
+      <p>
+        <AiOutlineCheck className="text-green-500" />
+      </p>
+    ),
   }));
   const header = [
     { header: "シーズン", accessor: "season_name" },
     { header: "ホーム", accessor: "home_team" },
     { header: "アウェイ", accessor: "away_team" },
+    { header: "自動タグ付状態", accessor: "tag_status" },
   ];
 
   const handleRowClick = (row: TableData) => {
@@ -35,13 +42,18 @@ export const MatchList: React.FC = () => {
     navigate(`/match/edit/${id}`);
   };
 
+  const handleDeleteClick = (id: string) => {
+    deleteMatch(id);
+  }
+
   return (
     <Table
       data={tableData}
       columns={header}
-      onRowClick={handleRowClick}
       hover={true}
+      onRowClick={handleRowClick}
       editButton={handleEditClick}
+      deleteButton={handleDeleteClick}
     />
   );
 };
