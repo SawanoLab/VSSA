@@ -1,4 +1,4 @@
-import YouTubeVideoComponent from "composents/match/create/YouTubeVideoComponent";
+import YouTubeVideoComponent from "components/match/create/YouTubeVideoComponent";
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 

@@ -1,14 +1,12 @@
 import { MatchResponse } from "api-client";
-import Table from "composents/Table";
+import Table from "components/Table";
 import { useAttackHistory } from "hooks/analysis/attack/useAttackHistory";
 import React from "react";
 
 interface PlayHistoryProps {
   match?: MatchResponse;
 }
-export const PlayHistory: React.FC<PlayHistoryProps> = ({
-  match,
-}) => {
+export const PlayHistory: React.FC<PlayHistoryProps> = ({ match }) => {
   const { history, deleteAttackData } = useAttackHistory();
 
   const header = [

@@ -1,6 +1,5 @@
-import Table from "composents/Table";
+import Table from "components/Table";
 import React from "react";
-
 
 type TeamTableProps = {
   teamData?: Record<string, { PlayerInfo: { name: string; postion: string } }>;

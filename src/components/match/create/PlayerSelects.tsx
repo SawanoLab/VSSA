@@ -1,6 +1,6 @@
-import { BenchPlayerDisplay } from "composents/match/create/BenchPlayerDisplay";
-import { LiberoPlayerSelects } from "composents/match/create/LiberoPlayerSelects";
-import { OnCourtPlayerSelectTable } from "composents/match/create/OnCourtPlayerSelectTable";
+import { BenchPlayerDisplay } from "components/match/create/BenchPlayerDisplay";
+import { LiberoPlayerSelects } from "components/match/create/LiberoPlayerSelects";
+import { OnCourtPlayerSelectTable } from "components/match/create/OnCourtPlayerSelectTable";
 import { useMatch } from "hooks/match/useMatch";
 import { usePlayer } from "hooks/match/usePlayer";
 import { useTeam } from "hooks/match/useTeam";

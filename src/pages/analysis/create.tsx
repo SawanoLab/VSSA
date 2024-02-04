@@ -1,4 +1,4 @@
-import { MatchUtilityComponent } from "composents/analysis_old/MatchUtilityComponent";
+import { MatchUtilityComponent } from "components/analysis_old/MatchUtilityComponent";
 import { useMatch } from "hooks/match/useMatch";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -6,9 +6,9 @@ import ErrorMessage from "utility/ErrorMessage";
 import ShowYouTubeVideo from "utility/ShowYouTubeVideo";
 
 import { TeamPlayers } from "../../api-client/api";
-import { AnalysisInputForm } from "../../composents/analysis/AnalysisInputForm";
-import { Layout } from "../../composents/analysis/Layout";
-import LoadingSpinner from "../../composents/LoadingSpinner";
+import { AnalysisInputForm } from "../../components/analysis/AnalysisInputForm";
+import { Layout } from "../../components/analysis/Layout";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 import { useAuth } from "../../hooks/use-auth";
 

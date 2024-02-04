@@ -1,4 +1,4 @@
-import { InputForm } from "composents/InputForm";
+import { InputForm } from "components/InputForm";
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 

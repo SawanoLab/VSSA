@@ -1,7 +1,7 @@
 import React from "react";
 
+import { ServeZone } from "./ServeZone";
 import { AttackResponse } from "../../../api-client/api";
-import { ServeZone } from "../attack/ServeZone";
 
 interface AnalaysisCourtProps {
   showTeamHistory: "home" | "away" | "and";

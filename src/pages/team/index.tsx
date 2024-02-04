@@ -1,10 +1,10 @@
 import { useSeason } from "hooks/match/useSeason";
 import React, { useEffect } from "react";
 
-import LoadingSpinner from "../../composents/LoadingSpinner";
-import { TeamIndexHeader } from "../../composents/team/TeamIndexHeader";
-import { TeamList } from "../../composents/team/TeamList";
-import { TeamPageError } from "../../composents/team/TeamPageError";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { TeamIndexHeader } from "../../components/team/TeamIndexHeader";
+import { TeamList } from "../../components/team/TeamList";
+import { TeamPageError } from "../../components/team/TeamPageError";
 import { useTeam } from "../../hooks/match/useTeam";
 
 const TeamIndex: React.FC = () => {

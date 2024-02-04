@@ -1,4 +1,4 @@
-import { renderField } from "composents/renderField";
+import { renderField } from "components/renderField";
 import { useSeason } from "hooks/match/useSeason";
 import React from "react";
 
@@ -6,7 +6,7 @@ import { SeasonCreate, SeasonBase } from "../../api-client/api";
 import { useAuth } from "../../hooks/use-auth";
 
 interface Field {
-  key : keyof SeasonBase;
+  key: keyof SeasonBase;
   label: string;
   type: "text" | "number" | "select" | "datetime-local";
   options?: Record<string, string>;
@@ -33,7 +33,10 @@ const SeasonCreatePage: React.FC<SeasonCreateProps> = ({ onClose }) => {
     onClose();
   };
 
-  const handleInputChange = (key: keyof SeasonCreate, value: string | number | Date) => {
+  const handleInputChange = (
+    key: keyof SeasonCreate,
+    value: string | number | Date
+  ) => {
     setFieldValue((prevValue) => ({
       ...prevValue,
       [key]: value,
@@ -58,9 +61,7 @@ const SeasonCreatePage: React.FC<SeasonCreateProps> = ({ onClose }) => {
             defaultValue: fieldValue[field.key] as string,
           })
         )}
-        <button
-          className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded col-span-2"
-        >
+        <button className="bg-blue-400 hover:bg-blue-500 text-white py-1 px-4 rounded col-span-2">
           登録
         </button>
       </form>

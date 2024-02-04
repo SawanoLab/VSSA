@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import PrivateRoute from "./composents/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute";
 import AttackHistoryContext from "./hooks/analysis/attack/useAttackHistory";
 import CardProvider from "./hooks/card/useCardController";
 import MatchProvider from "./hooks/match/useMatch";

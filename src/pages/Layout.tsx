@@ -1,6 +1,6 @@
 import React from "react";
 
-import Navgetion from "../composents/Nav";
+import Navgetion from "../components/Nav";
 
 interface LayoutProps {
   children: React.ReactNode;

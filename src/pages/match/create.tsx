@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
-import { MatchCreateError } from "../../composents/match/create/MatchCreateError";
-import { MatchCreateLoading } from "../../composents/match/create/MatchCreateLoading";
-import { MatchForm } from "../../composents/match/create/MatchForm";
+import { MatchCreateError } from "../../components/match/create/MatchCreateError";
+import { MatchCreateLoading } from "../../components/match/create/MatchCreateLoading";
+import { MatchForm } from "../../components/match/create/MatchForm";
 import { usePlayer } from "../../hooks/match/usePlayer";
 import { useSeason } from "../../hooks/match/useSeason";
 import { useTeam } from "../../hooks/match/useTeam";

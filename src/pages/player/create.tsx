@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 import { PlayerResponse } from "../../api-client/api";
-import { renderField } from "../../composents/renderField";
+import { renderField } from "../../components/renderField";
 import { useAuth } from "../../hooks/use-auth";
 import { playerClient } from "../../lib/api/main";
 import { PositonNameEnum } from "../../types/player";
@@ -45,7 +45,10 @@ const Create: React.FC<CreateProps> = ({ seasonData, teamData, onClose }) => {
     libero: "リベロ",
   };
 
-  const handleInputChange = (key: keyof PlayerResponse, value: string | number) => {
+  const handleInputChange = (
+    key: keyof PlayerResponse,
+    value: string | number
+  ) => {
     setFieldValue((prevValue) => ({
       ...prevValue,
       [key]: value,

@@ -1,5 +1,5 @@
 import { TeamResponse } from "api-client";
-import { renderField } from "composents/renderField";
+import { renderField } from "components/renderField";
 import { useTeam } from "hooks/match/useTeam";
 import React, { useEffect } from "react";
 import { SeasonData } from "types/season";
@@ -46,7 +46,10 @@ const TeamCreate: React.FC<CreateProps> = ({
     }
   }, [defaultValues]);
 
-  const handleInputChange = (key: keyof TeamResponse, value: string | number) => {
+  const handleInputChange = (
+    key: keyof TeamResponse,
+    value: string | number
+  ) => {
     setFieldValue((prevValue) => ({
       ...prevValue,
       [key]: value,

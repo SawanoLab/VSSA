@@ -3,16 +3,15 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { MatchResponse } from "../../../api-client/api";
-import LoadingSpinner from "../../../composents/LoadingSpinner";
-import Table from "../../../composents/Table";
+import LoadingSpinner from "../../../components/LoadingSpinner";
+import Table from "../../../components/Table";
 import { matchClient } from "../../../lib/api/main";
-
 
 interface Props {}
 
 const AttackReportIndex: React.FC<Props> = () => {
-  return <Component />
-}
+  return <Component />;
+};
 
 interface IProps {}
 
@@ -25,7 +24,7 @@ const Component: React.FC<IProps> = () => {
     const response = await matchClient.getMatchesApiV1MatchesGet();
     setLoading(false);
     setMatchs(response.data);
-  }
+  };
   useEffect(() => {
     fetchMatchs();
   }, []);
@@ -43,11 +42,11 @@ const Component: React.FC<IProps> = () => {
     { header: "アウェイ", accessor: "away_team" },
   ];
   const navigate = useNavigate();
-  
+
   /* eslint-disable */
   const handleRowClick = (row: any) => {
     navigate(`${row.id}`);
-  }
+  };
 
   return (
     <div>
@@ -68,6 +67,6 @@ const Component: React.FC<IProps> = () => {
       )}
     </div>
   );
-}
+};
 
-export default AttackReportIndex
+export default AttackReportIndex;

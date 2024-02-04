@@ -4,11 +4,11 @@ import { Link, useParams } from "react-router-dom";
 import ErrorMessage from "utility/ErrorMessage";
 
 import { TeamPlayers } from "../../api-client/api";
-import { AttackerCard } from "../../composents/analysis_old/Cards/AttackCard/AttackerCard";
-import { DisplayYoutubeVideo } from "../../composents/analysis_old/ComputerVision/DisplayYoutubeVideo";
-import { RotateTeamPlayersMap } from "../../composents/analysis_old/ComputerVision/RotateTeamPlayersMap";
-import { MatchUtilityComponent } from "../../composents/analysis_old/MatchUtilityComponent";
-import LoadingSpinner from "../../composents/LoadingSpinner";
+import { AttackerCard } from "../../components/analysis_old/Cards/AttackCard/AttackerCard";
+import { DisplayYoutubeVideo } from "../../components/analysis_old/ComputerVision/DisplayYoutubeVideo";
+import { RotateTeamPlayersMap } from "../../components/analysis_old/ComputerVision/RotateTeamPlayersMap";
+import { MatchUtilityComponent } from "../../components/analysis_old/MatchUtilityComponent";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 import { useAuth } from "../../hooks/use-auth";
 

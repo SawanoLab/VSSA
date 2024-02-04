@@ -1,4 +1,4 @@
-import Table from "composents/Table";
+import Table from "components/Table";
 import React, { FunctionComponent } from "react";
 
 import { AttackBallType } from "../../../api-client/api";

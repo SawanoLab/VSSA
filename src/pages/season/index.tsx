@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import LoadingSpinner from "../../composents/LoadingSpinner";
-import { SeasonHeader } from "../../composents/season/SeasonHeader";
-import { SeasonList } from "../../composents/season/SeasonList";
-import { SeasonPageError } from "../../composents/season/SeasonPageError";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { SeasonHeader } from "../../components/season/SeasonHeader";
+import { SeasonList } from "../../components/season/SeasonList";
+import { SeasonPageError } from "../../components/season/SeasonPageError";
 import { useSeason } from "../../hooks/match/useSeason";
 
 const SeasonIndex: React.FC = () => {

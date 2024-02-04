@@ -1,10 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
 
-import LoadingSpinner from "../../composents/LoadingSpinner";
-import { MatchIndexError } from "../../composents/match/index/MatchIndexError";
-import { MatchIndexHeader } from "../../composents/match/index/MatchIndexHeader";
-import { MatchList } from "../../composents/match/index/MatchList";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { MatchIndexError } from "../../components/match/index/MatchIndexError";
+import { MatchIndexHeader } from "../../components/match/index/MatchIndexHeader";
+import { MatchList } from "../../components/match/index/MatchList";
 import { useMatch } from "../../hooks/match/useMatch";
 
 const MatchIndex: React.FC = () => {

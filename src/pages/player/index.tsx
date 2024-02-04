@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import PlayerCreate from "./create";
 import PlayerEdit from "./edit";
 import { PlayerResponse } from "../../api-client/api";
-import LoadingSpinner from "../../composents/LoadingSpinner";
-import Modal from "../../composents/Modal";
-import Table from "../../composents/Table";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import Modal from "../../components/Modal";
+import Table from "../../components/Table";
 import { usePlayer } from "../../hooks/match/usePlayer";
 import { playerClient, teamClient, seasonClient } from "../../lib/api/main";
 import { SeasonData } from "../../types/season";
@@ -18,9 +18,9 @@ const PlayerIndex: React.FC = () => {
   const [teams, setTeams] = useState<TeamName[]>([]);
   const [seasons, setSeasons] = useState<SeasonData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPlayer, setSelectedPlayer] = useState<PlayerResponse | undefined>(
-    undefined
-  );
+  const [selectedPlayer, setSelectedPlayer] = useState<
+    PlayerResponse | undefined
+  >(undefined);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isNewModalOpen, setNewModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");

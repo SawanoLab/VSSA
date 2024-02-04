@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { PlayerResponse } from "../../api-client/api";
-import { renderField } from "../../composents/renderField";
+import { renderField } from "../../components/renderField";
 import { playerClient } from "../../lib/api/main";
 import { PositonNameEnum } from "../../types/player";
 import { TeamName } from "../../types/team";
@@ -30,7 +30,10 @@ const Edit: React.FC<EditProps> = ({ playerData, teamData, onClose }) => {
     libero: "リベロ",
   };
 
-  const handleInputChange = (key: keyof PlayerResponse, value: string | number) => {
+  const handleInputChange = (
+    key: keyof PlayerResponse,
+    value: string | number
+  ) => {
     setFieldValue((prevValue) => ({
       ...prevValue,
       [key]: value,

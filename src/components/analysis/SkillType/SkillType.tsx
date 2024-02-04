@@ -1,5 +1,5 @@
 import { ToggleButton } from "@mui/material";
-import Table from "composents/Table";
+import Table from "components/Table";
 import React, { FunctionComponent } from "react";
 
 import { AttackSkill } from "../../../api-client/api";

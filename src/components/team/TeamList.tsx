@@ -1,5 +1,5 @@
 // import { TeamsData } from "api-client";
-import Modal from "composents/Modal";
+import Modal from "components/Modal";
 import { useSeason } from "hooks/match/useSeason";
 import TeamCreate from "pages/team/create";
 import React, { useState } from "react";

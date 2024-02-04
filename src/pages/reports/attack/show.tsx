@@ -1,11 +1,11 @@
-import LoadingSpinner from "composents/LoadingSpinner";
+import LoadingSpinner from "components/LoadingSpinner";
 import { useMatch } from "hooks/match/useMatch";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "utility/ErrorMessage";
 
 import { TeamPlayers } from "../../../api-client/api";
-import GameHistory from "../../../composents/reports/attack/GameHistory";
+import GameHistory from "../../../components/reports/attack/GameHistory";
 import { useAttackHistory } from "../../../hooks/analysis/attack/useAttackHistory";
 
 interface Props {}
@@ -18,7 +18,7 @@ interface IProps {}
 
 export const Component: React.FC<IProps> = () => {
   const { matchId } = useParams();
-  const [ loading, setLoading ] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const { matchError, matchLoading, setMatchError, fetchMatch } = useMatch();
   const {
     history,
@@ -27,12 +27,8 @@ export const Component: React.FC<IProps> = () => {
     setAttackHistoryError,
     fetchAttackData,
   } = useAttackHistory();
-  const [homeOnCourtPlayer, setHomeOnCourtPlayer] = useState<
-    TeamPlayers[]
-  >([]);
-  const [awayOnCourtPlayer, setAwayOnCourtPlayer] = useState<
-    TeamPlayers[]
-  >([]);
+  const [homeOnCourtPlayer, setHomeOnCourtPlayer] = useState<TeamPlayers[]>([]);
+  const [awayOnCourtPlayer, setAwayOnCourtPlayer] = useState<TeamPlayers[]>([]);
 
   useEffect(() => {
     if (!attackHistoryloading && !matchLoading) {

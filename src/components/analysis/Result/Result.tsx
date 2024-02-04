@@ -1,5 +1,5 @@
 // import PlayCardLayout from "composents/analysis/Cards/PlayCardLayout";
-import Table from "composents/Table";
+import Table from "components/Table";
 import React, { FunctionComponent } from "react";
 
 import { AttackEvaluationType } from "../../../api-client/api";
