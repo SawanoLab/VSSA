@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AnalaysisCourt } from "./AnalaysisCourt";
 import { DrowArrow } from "./DrowArrow";
 import { AttackResponse } from "../../../api-client/api";
-import { ShowMatchScore } from "../../analysis/ShowMatchScore";
+import { ShowMatchScore } from "../../analysis_old/ShowMatchScore";
 
 interface GameHistoryProps {
   history: AttackResponse[];

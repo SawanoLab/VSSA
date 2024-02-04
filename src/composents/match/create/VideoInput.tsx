@@ -1,4 +1,4 @@
-import YouTubeVideoComponent from "composents/analysis/Video/YouTubeVideoComponent";
+import YouTubeVideoComponent from "composents/match/create/YouTubeVideoComponent";
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
@@ -17,10 +17,10 @@ export const VideoInput: React.FC<VideoInputProps> = ({
   return (
     <div>
       <YouTubeVideoComponent
-      errors={errors}
-      register={register}
-      youtubeUrl={youtubeUrl}
-      setYoutubeUrl={setYoutubeUrl}
+        errors={errors}
+        register={register}
+        youtubeUrl={youtubeUrl}
+        setYoutubeUrl={setYoutubeUrl}
       />
     </div>
   );

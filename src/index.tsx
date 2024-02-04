@@ -1,3 +1,4 @@
+import ComputerVisionAnalysisCreate from "pages/computerVision/create";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
@@ -78,14 +79,20 @@ function RouteConfig() {
               </PrivateRoute>
             }
           />
-          {/* <Route
-            path="team/create"
+          <Route
+            path="analysis/:matchId/cv"
             element={
               <PrivateRoute>
-                <TeamCreate />
+                <MatchProvider>
+                  <AttackHistoryContext>
+                    <CardProvider>
+                      <ComputerVisionAnalysisCreate />
+                    </CardProvider>
+                  </AttackHistoryContext>
+                </MatchProvider>
               </PrivateRoute>
             }
-          /> */}
+          />
           <Route
             path="analysis/:matchId"
             element={

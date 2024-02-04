@@ -2,12 +2,12 @@ import { useMatch } from "hooks/match/useMatch";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ErrorMessage from "utility/ErrorMessage";
+import ShowYouTubeVideo from "utility/ShowYouTubeVideo";
 
-import { AnalysisYoutube } from "./AnalysisYoutube";
-import { RotateTeamPlayersMap } from "./RotateTeamPlayersMap";
 import { TeamPlayers } from "../../api-client/api";
-import { AttackerCard } from "../../composents/analysis/AttackerCard";
-import { MatchUtilityComponent } from "../../composents/analysis/MatchUtilityComponent";
+import { AnalysisInputForm } from "../../composents/analysis/AnalysisInputForm";
+import { Layout } from "../../composents/analysis/Layout";
+import { MatchUtilityComponent } from "../../composents/analysis_old/MatchUtilityComponent";
 import LoadingSpinner from "../../composents/LoadingSpinner";
 import { useAttackHistory } from "../../hooks/analysis/attack/useAttackHistory";
 import { useAuth } from "../../hooks/use-auth";
@@ -58,25 +58,26 @@ const AnalysisCreate: React.FC = () => {
         />
       ) : null}
       {matchLoading ? <LoadingSpinner /> : null}
-      <div className="grid grid-cols-1 gap-2">
-        <AnalysisYoutube url={match.youtube_url} />
-        <div className="grid grid-cols-2 gap-1 justify-items-center">
-          <MatchUtilityComponent match={match} />
-          <div className="grid grid-cols-2 gap-1 justify-items-center">
-            <RotateTeamPlayersMap
-              homeOnCourtPlayer={homeOnCourtPlayer}
-              awayOnCourtPlayer={awayOnCourtPlayer}
-              setHomeOnCourtPlayer={setHomeOnCourtPlayer}
-              setAwayOnCourtPlayer={setAwayOnCourtPlayer}
-            />
-            <AttackerCard
-              match={match}
-              homeOnCourtPlayer={homeOnCourtPlayer}
-              awayOnCourtPlayer={awayOnCourtPlayer}
-            />
-          </div>
-        </div>
-      </div>
+      <Layout
+        videoComponent={
+          <ShowYouTubeVideo
+            url={match.youtube_url}
+            width={600}
+            height={230}
+            time={0}
+          />
+        }
+        analysisInputForm={
+          <AnalysisInputForm
+            match={match}
+            homeOnCourtPlayer={homeOnCourtPlayer}
+            awayOnCourtPlayer={awayOnCourtPlayer}
+            setHomeOnCourtPlayer={setHomeOnCourtPlayer}
+            setAwayOnCourtPlayer={setAwayOnCourtPlayer}
+          />
+        }
+        matchUtilityComponent={<MatchUtilityComponent match={match} />}
+      />
     </div>
   );
 };

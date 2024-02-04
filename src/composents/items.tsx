@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface LinkItem {
   icon: React.ReactNode;
@@ -8,46 +8,34 @@ interface LinkItem {
 }
 
 interface Category {
-  category: string;
   items: LinkItem[];
 }
 
 interface ItemsProps {
   links: Category[];
+  isOpen: boolean;
 }
 
-export default function Items({ links }: ItemsProps) {
-  const location = useLocation();
-
+export default function Items({ links, isOpen }: ItemsProps) {
   return (
-    <nav className="flex flex-col" role="navigation">
-      <img
-        src="./logo192.png"
-        alt="Logo"
-        className="h-20 w-20 mx-auto m-2 border-r border-gray-300 rounded-70"
-      />
+    <nav className="flex flex-col w-full" role="navigation">
       {links.map((category, categoryIndex) => (
         <div key={categoryIndex}>
-          <h3>{category.category}</h3>
           {category.items.map((link, linkIndex) => (
             <div
-            key={linkIndex}
-            className="border-y border-gray-300  hover:bg-slate-50"
+              key={linkIndex}
+              className="border-y border-gray-300  hover:bg-slate-50"
             >
-            <div
-              className={`text-sm w-full text-left p-2 mb-0.5 text-blue-950
-              ${
-                link.to === location.pathname ? "bg-slate-50" : "bg-transparent"
-              }`}
+              <Link
+                to={link.to}
+                className="flex items-center p-3 text-blue-950 hover:text-black"
               >
-              <Link to={link.to}>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <span className="ml-5">{link.icon}</span>
-                  <span className="ml-2">{link.text}</span>
-                </div>
+                <span className="ml-7">{link.icon}</span>
+                <span className={`ml-2 ${isOpen ? "block" : "hidden"}`}>
+                  {link.text}
+                </span>
               </Link>
             </div>
-          </div>
           ))}
         </div>
       ))}

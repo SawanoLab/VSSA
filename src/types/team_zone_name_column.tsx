@@ -18,3 +18,15 @@ export const away_team_zone_name_row = [
   ["Z3", "Z6"],
   ["Z4", "Z5"],
 ];
+
+export const home_serve_zone = [
+  ["4", "3", "2"],
+  ["7", "8", "9"],
+  ["5", "6", "1"],
+];
+
+export const away_serve_zone = [
+  ["1", "6", "5"],
+  ["9", "8", "7"],
+  ["2", "3", "4"],
+];

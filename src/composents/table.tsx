@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface Column {
   header: string;
@@ -35,8 +35,12 @@ const Table: React.FC<TableProps> = ({
   const [hoveredRowIndex, setHoveredRowIndex] = React.useState<number | null>(
     null
   );
+  const [clickedRowIndex, setClickedRowIndex] = React.useState<number | null>(
+    null
+  );
 
-  const handleRowClick = (item: any) => {
+  const handleRowClick = (index: number, item: any) => {
+    setClickedRowIndex(index);
     if (onRowClick) {
       onRowClick(item);
     }
@@ -62,7 +66,7 @@ const Table: React.FC<TableProps> = ({
             {columns?.map((column, index) => (
               <th
                 key={index}
-                className={`px-4 py-3 text-left ${
+                className={`px-4 py-1 text-left ${
                   fontSize ? fontSize : "text-xs"
                 } font-medium text-gray-500 tracking-wider ${
                   column.className || ""
@@ -77,15 +81,17 @@ const Table: React.FC<TableProps> = ({
           {data?.map((item, index) => (
             <tr
               key={index}
-              className="hover:bg-gray-100 relative"
-              onClick={() => handleRowClick(item)}
+              className={`hover:bg-gray-100 relative ${
+                clickedRowIndex === index ? "bg-blue-500" : ""
+              }`}
+              onClick={() => handleRowClick(index, item)}
               onMouseOver={() => handleRowHover(index)}
               onMouseLeave={handleRowLeave}
             >
               {columns?.map((column, colIndex) => (
                 <td
                   key={colIndex}
-                  className={`px-6 py-4 text-sm leading-5 text-gray-500 border-b ${
+                  className={`px-6 py-2 text-sm leading-5 text-gray-500 border-b ${
                     column.className || ""
                   }`}
                 >
@@ -95,7 +101,7 @@ const Table: React.FC<TableProps> = ({
                 </td>
               ))}
               {hoveredRowIndex === index && (
-                <div className="absolute right-0 top-2 mt-2 mr-2 text-gray-500 animate-slide-in-blurred-right">
+                <tr className="absolute right-0 top-2 mt-2 mr-2 text-gray-500 animate-slide-in-blurred-right">
                   <button
                     className="mr-2"
                     onClick={(e) => {
@@ -115,7 +121,7 @@ const Table: React.FC<TableProps> = ({
                   >
                     <AiFillDelete />
                   </button>
-                </div>
+                </tr>
               )}
             </tr>
           ))}

@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { useAuth } from '../hooks/use-auth';
+import { useAuth } from "../hooks/use-auth";
 
 export function SignIn() {
   const auth = useAuth();
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  useEffect(() => {
+    if (auth.jwtToken !== "") {
+      navigate({ pathname: "/" });
+    }
+  }, []);
 
   const executeSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const result = await auth.signIn(username, password);
     if (result.success) {
-      navigate({ pathname: '/dashboard' });
+      navigate({ pathname: "/dashboard" });
     } else {
       alert(result.message);
     }
@@ -21,9 +26,15 @@ export function SignIn() {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-      <form noValidate onSubmit={executeSignIn} className="bg-white p-8 rounded">
+      <form
+        noValidate
+        onSubmit={executeSignIn}
+        className="bg-white p-8 rounded"
+      >
         <div className="mb-4">
-          <label htmlFor="username" className="block mb-2 text-sm">メールアドレス: </label>
+          <label htmlFor="username" className="block mb-2 text-sm">
+            メールアドレス:{" "}
+          </label>
           <input
             id="username"
             type="email"
@@ -33,7 +44,9 @@ export function SignIn() {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="password" className="block mb-2 text-sm">パスワード: </label>
+          <label htmlFor="password" className="block mb-2 text-sm">
+            パスワード:{" "}
+          </label>
           <input
             id="password"
             type="password"
@@ -42,7 +55,12 @@ export function SignIn() {
             className="w-full px-3 py-2 border rounded-md"
           />
         </div>
-        <button type="submit" className="w-full p-2 bg-blue-500 text-white rounded">ログイン</button>
+        <button
+          type="submit"
+          className="w-full p-2 bg-blue-500 text-white rounded"
+        >
+          ログイン
+        </button>
       </form>
     </div>
   );

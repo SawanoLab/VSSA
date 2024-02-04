@@ -7,19 +7,42 @@ interface LayoutProps {
 }
 
 export default function Layout(props: LayoutProps) {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const hover = () => {
+    console.log(isMenuOpen);
+    if (!isMenuOpen) {
+      setIsMenuOpen(true);
+    }
+  };
+
+  const leave = () => {
+    console.log(isMenuOpen);
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  };
+
   return (
     <div>
       <div
-        className="grid grid-cols-6 grid-row-1 h-screen
-      "
+        className={`grid
+      ${isMenuOpen ? "grid-cols-6" : "grid-cols-12"}
+      grid-row-1 h-screen`}
       >
         <div
-          className="col-span-1 row-span-1 bg-white border-r border-gray-300
-        "
+          className={`
+          ${
+            isMenuOpen ? null : ""
+          } col-span-1 row-span-1 bg-white border-r border-gray-300`}
+          onMouseOver={hover}
+          onMouseLeave={leave}
         >
-          <Navgetion />
+          <Navgetion isMenuOpen={isMenuOpen} />
         </div>
-        <div className="col-span-5">{props.children}</div>
+        <div className={isMenuOpen ? "col-span-5" : "col-span-11"}>
+          {props.children}
+        </div>
       </div>
     </div>
   );
